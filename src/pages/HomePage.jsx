@@ -705,24 +705,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
       </section>
 
       {/* 6. Interactive Platform Simulation Workbench */}
-      <section className="py-20 lg:py-24 bg-[#F5F7F5] border-b border-slate-200">
-        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-          <div className="text-center max-w-3xl mx-auto mb-12">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
-              <Eye className="h-3.5 w-3.5 text-[#14532D]" />
-              <span>Interactive Platform Simulation</span>
-            </div>
-            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
-              Test Real Governed Records Live
-            </h2>
-            <p className="mt-3 text-base text-slate-700 leading-relaxed font-normal">
-              Toggle between actual sample records from the SmartiDP brochure to test metadata extraction, immutable audit logs, and version histories in real time.
-            </p>
-          </div>
-
-          <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
-        </div>
-      </section>
+      <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
 
       {/* 7. Industry Solutions Hub */}
       <section className="py-20 lg:py-28 bg-white border-b border-slate-200">
