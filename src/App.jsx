@@ -1,5 +1,8 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useRef } from 'react'
 import initialLogo from './assets/initial.png'
+import brandLogo from './assets/logo1.png'
+import smartIdpGif from './assets/smartIDP.gif'
+import demoVideo from './assets/SmartIDP3_2.mp4'
 import {
   FileText,
   ScanText,
@@ -28,7 +31,16 @@ import {
   UploadCloud,
   FileCheck2,
   Building2,
-  RefreshCw
+  RefreshCw,
+  Play,
+  Volume2,
+  VolumeX,
+  Terminal,
+  Server,
+  Cloud,
+  Share2,
+  ArrowUpRight,
+  MousePointerClick
 } from 'lucide-react'
 
 // Sample document templates for interactive demo
@@ -41,15 +53,15 @@ const DOCUMENT_SAMPLES = [
     confidence: 99.8,
     processingTime: '340ms',
     fields: [
-      { label: 'Vendor Name', value: 'TechCorp Logistics LLC', confidence: 99.9, verified: true },
-      { label: 'Invoice Number', value: 'INV-2026-88412', confidence: 100, verified: true },
-      { label: 'Issue Date', value: '2026-10-18', confidence: 99.6, verified: true },
-      { label: 'Due Date', value: '2026-11-18', confidence: 99.7, verified: true },
-      { label: 'PO Reference', value: 'PO-99104-X', confidence: 98.9, verified: true },
-      { label: 'Tax ID / VAT', value: 'US-94-2819034', confidence: 99.4, verified: true },
-      { label: 'Subtotal', value: '$14,250.00', confidence: 99.8, verified: true },
-      { label: 'Tax Amount (8.5%)', value: '$1,211.25', confidence: 99.5, verified: true },
-      { label: 'Total Due', value: '$15,461.25', confidence: 100, verified: true }
+      { id: 'f1', label: 'Vendor Name', value: 'TechCorp Logistics LLC', confidence: 99.9, boxClass: 'top-[12%] left-[8%] w-[48%] h-[12%]' },
+      { id: 'f2', label: 'Invoice Number', value: 'INV-2026-88412', confidence: 100, boxClass: 'top-[12%] right-[8%] w-[28%] h-[12%]' },
+      { id: 'f3', label: 'Issue Date', value: '2026-10-18', confidence: 99.6, boxClass: 'top-[28%] right-[8%] w-[28%] h-[8%]' },
+      { id: 'f4', label: 'Due Date', value: '2026-11-18', confidence: 99.7, boxClass: 'top-[38%] right-[8%] w-[28%] h-[8%]' },
+      { id: 'f5', label: 'PO Reference', value: 'PO-99104-X', confidence: 98.9, boxClass: 'top-[28%] left-[8%] w-[38%] h-[8%]' },
+      { id: 'f6', label: 'Tax ID / VAT', value: 'US-94-2819034', confidence: 99.4, boxClass: 'top-[38%] left-[8%] w-[38%] h-[8%]' },
+      { id: 'f7', label: 'Subtotal', value: '$14,250.00', confidence: 99.8, boxClass: 'bottom-[22%] right-[8%] w-[32%] h-[8%]' },
+      { id: 'f8', label: 'Tax Amount (8.5%)', value: '$1,211.25', confidence: 99.5, boxClass: 'bottom-[13%] right-[8%] w-[32%] h-[8%]' },
+      { id: 'f9', label: 'Total Due', value: '$15,461.25', confidence: 100, boxClass: 'bottom-[4%] right-[8%] w-[32%] h-[8%]' }
     ],
     lineItems: [
       { desc: 'Enterprise Server Rack Mounting unit 42U', qty: 2, unitPrice: '$2,450.00', total: '$4,900.00' },
@@ -89,12 +101,12 @@ const DOCUMENT_SAMPLES = [
     confidence: 99.2,
     processingTime: '410ms',
     fields: [
-      { label: 'Patient Name', value: 'Eleanor Vance', confidence: 99.8, verified: true },
-      { label: 'Insured ID', value: 'MED-9948201', confidence: 99.7, verified: true },
-      { label: 'Diagnosis Code (ICD-10)', value: 'M54.5 (Low Back Pain)', confidence: 98.9, verified: true },
-      { label: 'Procedure Code (CPT)', value: '99214 (Office Visit Lvl 4)', confidence: 99.4, verified: true },
-      { label: 'Billing Provider NPI', value: '1487290112', confidence: 99.9, verified: true },
-      { label: 'Charge Amount', value: '$345.00', confidence: 99.5, verified: true }
+      { id: 'f1', label: 'Patient Name', value: 'Eleanor Vance', confidence: 99.8, boxClass: 'top-[14%] left-[8%] w-[42%] h-[10%]' },
+      { id: 'f2', label: 'Insured ID', value: 'MED-9948201', confidence: 99.7, boxClass: 'top-[14%] right-[8%] w-[38%] h-[10%]' },
+      { id: 'f3', label: 'Diagnosis Code (ICD-10)', value: 'M54.5 (Low Back Pain)', confidence: 98.9, boxClass: 'top-[30%] left-[8%] w-[44%] h-[10%]' },
+      { id: 'f4', label: 'Procedure Code (CPT)', value: '99214 (Office Visit Lvl 4)', confidence: 99.4, boxClass: 'top-[45%] left-[8%] w-[44%] h-[10%]' },
+      { id: 'f5', label: 'Billing Provider NPI', value: '1487290112', confidence: 99.9, boxClass: 'top-[60%] left-[8%] w-[38%] h-[10%]' },
+      { id: 'f6', label: 'Charge Amount', value: '$345.00', confidence: 99.5, boxClass: 'bottom-[8%] right-[8%] w-[32%] h-[10%]' }
     ],
     lineItems: [
       { desc: 'Comprehensive Musculoskeletal Exam (99214)', qty: 1, unitPrice: '$210.00', total: '$210.00' },
@@ -120,12 +132,12 @@ const DOCUMENT_SAMPLES = [
     confidence: 98.7,
     processingTime: '480ms',
     fields: [
-      { label: 'Carrier / Vessel', value: 'MAERSK MC-KINNEY / V.2401', confidence: 99.1, verified: true },
-      { label: 'Port of Loading', value: 'Singapore (SGSIN)', confidence: 99.5, verified: true },
-      { label: 'Port of Discharge', value: 'Rotterdam (NLRTM)', confidence: 99.2, verified: true },
-      { label: 'Container No.', value: 'MSKU-820194-2 (40ft High Cube)', confidence: 98.8, verified: true },
-      { label: 'Gross Weight', value: '24,850 KG', confidence: 98.5, verified: true },
-      { label: 'Customs HS Code', value: '8471.50 (Data Processing Units)', confidence: 98.9, verified: true }
+      { id: 'f1', label: 'Carrier / Vessel', value: 'MAERSK MC-KINNEY / V.2401', confidence: 99.1, boxClass: 'top-[10%] left-[8%] w-[50%] h-[10%]' },
+      { id: 'f2', label: 'Port of Loading', value: 'Singapore (SGSIN)', confidence: 99.5, boxClass: 'top-[24%] left-[8%] w-[38%] h-[10%]' },
+      { id: 'f3', label: 'Port of Discharge', value: 'Rotterdam (NLRTM)', confidence: 99.2, boxClass: 'top-[24%] right-[8%] w-[38%] h-[10%]' },
+      { id: 'f4', label: 'Container No.', value: 'MSKU-820194-2 (40ft High Cube)', confidence: 98.8, boxClass: 'top-[40%] left-[8%] w-[45%] h-[10%]' },
+      { id: 'f5', label: 'Gross Weight', value: '24,850 KG', confidence: 98.5, boxClass: 'top-[54%] left-[8%] w-[35%] h-[10%]' },
+      { id: 'f6', label: 'Customs HS Code', value: '8471.50 (Data Processing Units)', confidence: 98.9, boxClass: 'top-[68%] left-[8%] w-[45%] h-[10%]' }
     ],
     lineItems: [
       { desc: 'Industrial Edge AI Compute Modules - Model E9', qty: 450, unitPrice: '$42.00', total: '$18,900.00' },
@@ -145,6 +157,44 @@ const DOCUMENT_SAMPLES = [
   }
 ]
 
+const CODE_EXAMPLES = {
+  python: `import smartidp
+
+client = smartidp.Client(api_key="sk_live_smartidp_88921a")
+
+# Extract and validate any document with multi-modal neural models
+result = client.documents.extract(
+    file_path="invoice_2026.pdf",
+    schema="commercial_invoice_v2",
+    auto_reconcile=True,      # 2-way / 3-way PO check
+    hitl_threshold=0.95       # Route to human review if confidence < 95%
+)
+
+print(f"Extracted Invoice: {result.fields['invoice_number'].value}")
+print(f"Total Amount: \${result.fields['total_due'].value} (Confidence: {result.confidence}%)")
+print(f"Status: {result.validation_status}")`,
+
+  curl: `curl -X POST "https://api.smartidp.ai/v1/extract" \\
+  -H "Authorization: Bearer sk_live_smartidp_88921a" \\
+  -H "Content-Type: multipart/form-data" \\
+  -F "file=@./commercial_invoice.pdf" \\
+  -F "schema=commercial_invoice" \\
+  -F "hitl_fallback=true"`,
+
+  node: `import { SmartIDP } from '@smartidp/sdk';
+
+const client = new SmartIDP({ apiKey: process.env.SMARTIDP_KEY });
+
+const result = await client.documents.extract({
+  file: './invoice_2026.pdf',
+  schema: 'commercial_invoice',
+  webhooks: ['https://api.yourcompany.com/idp-callback']
+});
+
+console.log('Vendor:', result.data.vendor);
+console.log('Extracted Line Items:', result.data.line_items.length);`
+}
+
 export default function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [activeDoc, setActiveDoc] = useState(DOCUMENT_SAMPLES[0])
@@ -155,6 +205,10 @@ export default function App() {
   const [billingCycle, setBillingCycle] = useState('annual')
   const [openFaq, setOpenFaq] = useState(0)
   const [demoModalOpen, setDemoModalOpen] = useState(false)
+  const [videoModalOpen, setVideoModalOpen] = useState(false)
+  const [activeCodeTab, setActiveCodeTab] = useState('python')
+  const [copiedCode, setCopiedCode] = useState(false)
+  const [hoveredFieldId, setHoveredFieldId] = useState(null)
   const [submittedLead, setSubmittedLead] = useState(false)
 
   // Trigger scan animation when switching sample document
@@ -163,7 +217,7 @@ export default function App() {
     setActiveDoc(doc)
     setTimeout(() => {
       setIsSimulatingScan(false)
-    }, 600)
+    }, 550)
   }
 
   // Copy JSON handler
@@ -171,6 +225,13 @@ export default function App() {
     navigator.clipboard.writeText(JSON.stringify(activeDoc.jsonOutput, null, 2))
     setCopiedJson(true)
     setTimeout(() => setCopiedJson(false), 2000)
+  }
+
+  // Copy Code snippet handler
+  const handleCopyCode = () => {
+    navigator.clipboard.writeText(CODE_EXAMPLES[activeCodeTab])
+    setCopiedCode(true)
+    setTimeout(() => setCopiedCode(false), 2000)
   }
 
   // Dynamic ROI calculation
@@ -191,35 +252,31 @@ export default function App() {
     <div className="min-h-screen bg-slate-950 text-slate-100 font-sans selection:bg-indigo-600 selection:text-white">
       {/* Background radial glow */}
       <div className="fixed inset-0 pointer-events-none z-0 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1000px] h-[550px] bg-gradient-to-b from-indigo-600/15 via-purple-600/10 to-transparent blur-3xl opacity-80" />
+        <div className="absolute -top-40 left-1/2 -translate-x-1/2 w-[1100px] h-[600px] bg-gradient-to-b from-indigo-600/15 via-purple-600/10 to-transparent blur-3xl opacity-80" />
         <div className="absolute top-[800px] -left-48 w-[600px] h-[500px] bg-blue-600/10 blur-[128px]" />
-        <div className="absolute top-[1600px] -right-48 w-[600px] h-[500px] bg-purple-600/10 blur-[128px]" />
+        <div className="absolute top-[1800px] -right-48 w-[650px] h-[550px] bg-purple-600/10 blur-[128px]" />
       </div>
 
       {/* Navigation Bar */}
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center shadow-lg shadow-indigo-500/20 overflow-hidden">
-              <img src={initialLogo} alt="SmartIDP Logo" className="h-full w-full object-contain" />
-            </div>
-            <div>
-              <div className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-indigo-200">
-                Smart<span className="text-indigo-400">IDP</span>
-              </div>
-              <div className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold -mt-1">
-                Intelligent Document AI
-              </div>
-            </div>
-          </div>
+          <a href="#" className="flex items-center group py-2">
+            <img 
+              src={brandLogo} 
+              alt="SmartIDP — Intelligent Document AI" 
+              className="h-10 sm:h-11 w-auto object-contain group-hover:opacity-95 transition-opacity" 
+            />
+          </a>
 
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-slate-300">
+          <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-300">
             <a href="#features" className="hover:text-white transition-colors">Platform</a>
             <a href="#interactive-demo" className="hover:text-white transition-colors flex items-center gap-1.5">
               Live Demo
               <span className="px-1.5 py-0.5 text-[10px] font-semibold bg-indigo-500/20 text-indigo-300 rounded border border-indigo-500/30">Interactive</span>
             </a>
-            <a href="#pipeline" className="hover:text-white transition-colors">How It Works</a>
+            <a href="#pipeline" className="hover:text-white transition-colors">Architecture</a>
+            <a href="#api" className="hover:text-white transition-colors">API & SDK</a>
+            <a href="#integrations" className="hover:text-white transition-colors">Integrations</a>
             <a href="#calculator" className="hover:text-white transition-colors">ROI Calculator</a>
             <a href="#pricing" className="hover:text-white transition-colors">Pricing</a>
             <a href="#faq" className="hover:text-white transition-colors">FAQ</a>
@@ -228,7 +285,7 @@ export default function App() {
           <div className="hidden md:flex items-center gap-3">
             <button 
               onClick={() => setDemoModalOpen(true)}
-              className="text-sm font-medium px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/60 rounded-lg transition-all"
+              className="text-sm font-medium px-4 py-2 text-slate-300 hover:text-white hover:bg-slate-800/60 rounded-lg transition-all cursor-pointer"
             >
               Sign In
             </button>
@@ -242,10 +299,10 @@ export default function App() {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/80"
+              className="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800/80 cursor-pointer"
               aria-label="Toggle Menu"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -255,52 +312,24 @@ export default function App() {
 
         {/* Mobile dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden bg-slate-900 border-b border-slate-800 px-6 py-5 space-y-4">
-            <a 
-              href="#features" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-slate-300 hover:text-white font-medium"
-            >
-              Platform
-            </a>
-            <a 
-              href="#interactive-demo" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-slate-300 hover:text-white font-medium"
-            >
-              Live Demo
-            </a>
-            <a 
-              href="#pipeline" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-slate-300 hover:text-white font-medium"
-            >
-              How It Works
-            </a>
-            <a 
-              href="#calculator" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-slate-300 hover:text-white font-medium"
-            >
-              ROI Calculator
-            </a>
-            <a 
-              href="#pricing" 
-              onClick={() => setMobileMenuOpen(false)}
-              className="block text-slate-300 hover:text-white font-medium"
-            >
-              Pricing
-            </a>
+          <div className="lg:hidden bg-slate-900 border-b border-slate-800 px-6 py-5 space-y-4">
+            <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">Platform</a>
+            <a href="#interactive-demo" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">Live Demo</a>
+            <a href="#pipeline" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">Architecture</a>
+            <a href="#api" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">API & SDK</a>
+            <a href="#integrations" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">Integrations</a>
+            <a href="#calculator" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">ROI Calculator</a>
+            <a href="#pricing" onClick={() => setMobileMenuOpen(false)} className="block text-slate-300 hover:text-white font-medium">Pricing</a>
             <div className="pt-4 border-t border-slate-800 space-y-2">
               <button 
                 onClick={() => { setMobileMenuOpen(false); setDemoModalOpen(true); }}
-                className="w-full text-center py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg text-sm font-medium"
+                className="w-full text-center py-2.5 text-slate-300 hover:bg-slate-800 rounded-lg text-sm font-medium cursor-pointer"
               >
                 Sign In
               </button>
               <button 
                 onClick={() => { setMobileMenuOpen(false); setDemoModalOpen(true); }}
-                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium"
+                className="w-full py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-sm font-medium cursor-pointer"
               >
                 Book a Demo
               </button>
@@ -310,7 +339,7 @@ export default function App() {
       </header>
 
       {/* Hero Section */}
-      <section className="relative z-10 pt-16 pb-20 md:pt-24 md:pb-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <section className="relative z-10 pt-14 pb-20 md:pt-20 md:pb-28 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-indigo-950/80 border border-indigo-700/40 text-indigo-300 text-xs font-medium mb-8 backdrop-blur shadow-sm">
           <Sparkles className="h-3.5 w-3.5 text-indigo-400 animate-pulse" />
           <span>Next-Gen Vision-Language Models & Human-In-The-Loop AI</span>
@@ -328,18 +357,55 @@ export default function App() {
         <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
           <a
             href="#interactive-demo"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base shadow-xl shadow-indigo-600/30 hover:shadow-indigo-500/40 transition-all border border-indigo-400/30"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-base shadow-xl shadow-indigo-600/30 hover:shadow-indigo-500/40 transition-all border border-indigo-400/30 cursor-pointer"
           >
             <Eye className="h-5 w-5" />
             <span>Try Live Document Demo</span>
           </a>
           <button
-            onClick={() => setDemoModalOpen(true)}
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white font-medium text-base border border-slate-700/70 transition-all shadow-md cursor-pointer"
+            onClick={() => setVideoModalOpen(true)}
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-xl bg-slate-900/90 hover:bg-slate-800 text-slate-200 hover:text-white font-medium text-base border border-slate-700/70 transition-all shadow-md cursor-pointer group"
           >
-            <Building2 className="h-5 w-5 text-slate-400" />
-            <span>Request Enterprise Pilot</span>
+            <div className="h-6 w-6 rounded-full bg-indigo-600/30 border border-indigo-500/40 flex items-center justify-center group-hover:scale-110 transition-transform">
+              <Play className="h-3 w-3 text-indigo-400 fill-indigo-400 ml-0.5" />
+            </div>
+            <span>Watch Platform Tour (60s)</span>
           </button>
+        </div>
+
+        {/* Animated Product Showcase / GIF Frame */}
+        <div className="mt-14 max-w-5xl mx-auto relative rounded-2xl p-2 bg-gradient-to-b from-indigo-500/20 via-slate-800/40 to-slate-900/80 border border-slate-700/70 shadow-2xl overflow-hidden group">
+          <div className="bg-slate-950 rounded-xl overflow-hidden border border-slate-800 relative">
+            {/* Mock browser header */}
+            <div className="px-4 py-2.5 bg-slate-900/90 border-b border-slate-800 flex items-center justify-between text-xs text-slate-400">
+              <div className="flex items-center gap-2">
+                <span className="h-3 w-3 rounded-full bg-rose-500/80 inline-block" />
+                <span className="h-3 w-3 rounded-full bg-amber-500/80 inline-block" />
+                <span className="h-3 w-3 rounded-full bg-emerald-500/80 inline-block" />
+                <span className="ml-2 font-mono text-[11px] text-slate-400">app.smartidp.ai/workbench/live-stream</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-medium border border-emerald-500/20">
+                  <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-ping" />
+                  Neural Stream Active
+                </span>
+              </div>
+            </div>
+
+            {/* Product GIF Preview */}
+            <div className="relative aspect-video max-h-[480px] w-full bg-slate-950 flex items-center justify-center overflow-hidden">
+              <img 
+                src={smartIdpGif} 
+                alt="SmartIDP Neural Processing Animation" 
+                className="w-full h-full object-cover sm:object-contain"
+              />
+              <div className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3.5 py-2 rounded-xl border border-slate-700 text-xs shadow-xl">
+                <Cpu className="h-4 w-4 text-indigo-400 animate-spin" />
+                <span className="text-slate-200 font-medium">Multi-modal OCR & Key-Value Normalization:</span>
+                <span className="text-emerald-400 font-mono font-bold">340ms</span>
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Hero Proof Metrics */}
@@ -354,7 +420,7 @@ export default function App() {
           </div>
           <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur">
             <div className="text-3xl sm:text-4xl font-extrabold text-white">85%+</div>
-            <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Processing Cost Reduction</div>
+            <div className="text-xs text-slate-400 mt-1 uppercase tracking-wider font-medium">Cost Reduction</div>
           </div>
           <div className="p-4 rounded-2xl bg-slate-900/60 border border-slate-800 backdrop-blur">
             <div className="text-3xl sm:text-4xl font-extrabold text-cyan-400">SOC 2 / HIPAA</div>
@@ -389,7 +455,7 @@ export default function App() {
               Test SmartIDP Extraction in Real Time
             </h2>
             <p className="mt-3 text-slate-300 text-base">
-              Select one of our benchmark document types to see multi-modal OCR, key-value normalization, confidence bounding, and instant structured JSON export.
+              Hover over extracted entities on the right to see live bounding boxes on the document scan. Switch to line items or JSON payload instantly.
             </p>
           </div>
 
@@ -497,16 +563,19 @@ export default function App() {
             <div className="p-6">
               {demoViewMode === 'visual' && (
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
-                  {/* Left Column: Document Preview Canvas Simulation */}
+                  {/* Left Column: Interactive Document Canvas Simulation */}
                   <div className="lg:col-span-5 bg-slate-900/90 rounded-xl border border-slate-800 p-5 relative overflow-hidden">
                     <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-800 text-xs text-slate-400">
-                      <span className="font-medium text-slate-300">Document Scan View</span>
+                      <span className="font-medium text-slate-300 flex items-center gap-1.5">
+                        <MousePointerClick className="h-3.5 w-3.5 text-indigo-400" />
+                        <span>Interactive Bounding Canvas</span>
+                      </span>
                       <span className="text-[10px] bg-slate-800 px-2 py-0.5 rounded text-slate-400">300 DPI • Cleaned</span>
                     </div>
 
-                    <div className="bg-slate-950 rounded-lg p-5 border border-slate-800/90 space-y-4 font-mono text-xs">
-                      {/* Simulated Document Header */}
-                      <div className="border-b border-slate-800 pb-3 flex justify-between items-start">
+                    <div className="bg-slate-950 rounded-lg p-5 border border-slate-800/90 space-y-4 font-mono text-xs relative min-h-[380px] select-none">
+                      {/* Document Header representation */}
+                      <div className={`border-b border-slate-800 pb-3 flex justify-between items-start transition-all ${hoveredFieldId === 'f1' || hoveredFieldId === 'f2' ? 'bg-indigo-950/40 ring-1 ring-indigo-500 rounded p-2 -m-2' : ''}`}>
                         <div>
                           <div className="text-indigo-400 font-bold text-sm">{activeDoc.fields[0].value}</div>
                           <div className="text-slate-400 text-[10px] mt-0.5">Automated Extraction Anchor #1</div>
@@ -517,29 +586,32 @@ export default function App() {
                         </div>
                       </div>
 
-                      {/* Simulated Bounding Boxes */}
-                      <div className="p-3 bg-indigo-950/30 border border-indigo-500/40 rounded-lg relative">
-                        <span className="absolute -top-2 left-3 bg-indigo-600 text-white text-[9px] px-1.5 py-0.2 rounded font-sans font-semibold">
-                          OCR Entity: Invoice Details
-                        </span>
-                        <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-300">
-                          <div>Date: <span className="text-white">{activeDoc.fields[2].value}</span></div>
-                          <div>Due: <span className="text-white">{activeDoc.fields[3]?.value || 'N/A'}</span></div>
+                      {/* Dates & Reference Block */}
+                      <div className={`p-3 bg-indigo-950/20 border border-indigo-500/30 rounded-lg transition-all ${hoveredFieldId === 'f3' || hoveredFieldId === 'f4' || hoveredFieldId === 'f5' ? 'ring-2 ring-indigo-400 bg-indigo-950/60' : ''}`}>
+                        <div className="flex justify-between text-[11px] text-slate-300">
+                          <div>Ref: <span className="text-white">{activeDoc.fields[4]?.value || 'REF-8812'}</span></div>
+                          <div>Date: <span className="text-white">{activeDoc.fields[2]?.value || '2026-10-18'}</span></div>
                         </div>
                       </div>
 
-                      {/* Simulated Table Box */}
-                      <div className="p-3 bg-slate-900 border border-dashed border-cyan-500/40 rounded-lg relative">
-                        <span className="absolute -top-2 left-3 bg-cyan-700 text-white text-[9px] px-1.5 py-0.2 rounded font-sans font-semibold">
-                          Multi-row Table Detection
-                        </span>
-                        <div className="text-[11px] text-slate-400 pt-1">
-                          {activeDoc.lineItems?.length || 2} items recognized with 99%+ bounding accuracy
+                      {/* Table Block Mock */}
+                      <div className="p-3 bg-slate-900 border border-dashed border-cyan-500/40 rounded-lg">
+                        <div className="text-[10px] uppercase tracking-wider text-cyan-400 font-sans font-bold flex justify-between">
+                          <span>Multi-row Table Detection</span>
+                          <span>99.8% Bounding Match</span>
+                        </div>
+                        <div className="text-[11px] text-slate-400 pt-2 space-y-1">
+                          {activeDoc.lineItems?.slice(0, 2).map((item, idx) => (
+                            <div key={idx} className="flex justify-between text-[10px]">
+                              <span className="text-slate-300 truncate max-w-[180px]">{item.desc}</span>
+                              <span className="text-emerald-400">{item.total}</span>
+                            </div>
+                          )) || <div className="text-slate-400">Structured claim blocks detected</div>}
                         </div>
                       </div>
 
-                      {/* Simulated Total Box */}
-                      <div className="p-3 bg-emerald-950/20 border border-emerald-500/40 rounded-lg flex justify-between items-center">
+                      {/* Total Box */}
+                      <div className={`p-3 bg-emerald-950/20 border border-emerald-500/40 rounded-lg flex justify-between items-center transition-all ${hoveredFieldId?.includes('f7') || hoveredFieldId?.includes('f9') || hoveredFieldId?.includes('f6') ? 'ring-2 ring-emerald-400 bg-emerald-950/50' : ''}`}>
                         <span className="text-slate-300 font-sans text-xs">Extracted Net Payable:</span>
                         <span className="text-emerald-400 font-bold text-sm font-mono">
                           {activeDoc.fields.find(f => f.label.includes('Total') || f.label.includes('Charge'))?.value || '$15,461.25'}
@@ -556,7 +628,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* Right Column: Extracted Entities List */}
+                  {/* Right Column: Extracted Entities List with Hover Interactions */}
                   <div className="lg:col-span-7 space-y-3">
                     <div className="flex items-center justify-between pb-2">
                       <h3 className="text-sm font-semibold text-white flex items-center gap-2">
@@ -564,28 +636,37 @@ export default function App() {
                         <span>Parsed Entities & Key-Value Pairs</span>
                       </h3>
                       <span className="text-xs text-slate-400">
-                        {activeDoc.fields.length} normalized fields
+                        {activeDoc.fields.length} normalized fields (hover to inspect)
                       </span>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {activeDoc.fields.map((field, idx) => (
-                        <div
-                          key={idx}
-                          className="p-3.5 rounded-xl bg-slate-900/80 border border-slate-800 hover:border-slate-700 transition-all"
-                        >
-                          <div className="flex items-center justify-between text-xs mb-1">
-                            <span className="text-slate-400 font-medium">{field.label}</span>
-                            <span className="text-emerald-400 font-mono text-[11px] flex items-center gap-1">
-                              <Check className="h-3 w-3" />
-                              {field.confidence}%
-                            </span>
+                      {activeDoc.fields.map((field, idx) => {
+                        const isHovered = hoveredFieldId === field.id
+                        return (
+                          <div
+                            key={idx}
+                            onMouseEnter={() => setHoveredFieldId(field.id)}
+                            onMouseLeave={() => setHoveredFieldId(null)}
+                            className={`p-3.5 rounded-xl transition-all cursor-pointer border ${
+                              isHovered 
+                                ? 'bg-indigo-950/80 border-indigo-400 shadow-md shadow-indigo-500/20 scale-[1.02]' 
+                                : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
+                            }`}
+                          >
+                            <div className="flex items-center justify-between text-xs mb-1">
+                              <span className="text-slate-400 font-medium">{field.label}</span>
+                              <span className="text-emerald-400 font-mono text-[11px] flex items-center gap-1">
+                                <Check className="h-3 w-3" />
+                                {field.confidence}%
+                              </span>
+                            </div>
+                            <div className="text-sm font-semibold text-white tracking-wide truncate">
+                              {field.value}
+                            </div>
                           </div>
-                          <div className="text-sm font-semibold text-white tracking-wide truncate">
-                            {field.value}
-                          </div>
-                        </div>
-                      ))}
+                        )
+                      })}
                     </div>
 
                     <div className="mt-4 p-4 rounded-xl bg-indigo-950/30 border border-indigo-900/50 flex items-center justify-between">
@@ -848,6 +929,139 @@ export default function App() {
               </li>
             </ul>
           </div>
+        </div>
+      </section>
+
+      {/* Developer API & SDK Section */}
+      <section id="api" className="relative z-10 py-24 bg-slate-900/40 border-y border-slate-800">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+            <div className="lg:col-span-5 space-y-6">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indigo-950/70 border border-indigo-800/40 text-indigo-300 text-xs font-semibold">
+                <Terminal className="h-3.5 w-3.5" />
+                <span>Developer-First Infrastructure</span>
+              </div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+                Integrate in 3 Lines of Code
+              </h2>
+              <p className="text-slate-300 text-base leading-relaxed">
+                Plug SmartIDP directly into your production backend, ETL pipeline, or cloud function. 
+                Complete with typed SDKs, automatic retries, and comprehensive OpenAPI specs.
+              </p>
+
+              <div className="space-y-3 text-xs text-slate-300">
+                <div className="flex items-center gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>Sync and Async webhook delivery with signed payloads</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>Configurable confidence fallback to human reviewers</span>
+                </div>
+                <div className="flex items-center gap-2.5">
+                  <Check className="h-4 w-4 text-emerald-400 shrink-0" />
+                  <span>SDKs for Python, Node.js, Go, and Java</span>
+                </div>
+              </div>
+
+              <div className="pt-2">
+                <a
+                  href="#interactive-demo"
+                  className="inline-flex items-center gap-2 text-sm font-semibold text-indigo-400 hover:text-indigo-300 transition-colors"
+                >
+                  <span>Explore Developer Documentation</span>
+                  <ArrowRight className="h-4 w-4" />
+                </a>
+              </div>
+            </div>
+
+            {/* Code Snippet Box */}
+            <div className="lg:col-span-7 rounded-2xl bg-slate-950 border border-slate-800 shadow-2xl overflow-hidden">
+              <div className="px-5 py-3 bg-slate-900 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setActiveCodeTab('python')}
+                    className={`px-3 py-1 rounded-md text-xs font-mono font-medium transition-colors cursor-pointer ${
+                      activeCodeTab === 'python' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    python
+                  </button>
+                  <button
+                    onClick={() => setActiveCodeTab('node')}
+                    className={`px-3 py-1 rounded-md text-xs font-mono font-medium transition-colors cursor-pointer ${
+                      activeCodeTab === 'node' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    node.js
+                  </button>
+                  <button
+                    onClick={() => setActiveCodeTab('curl')}
+                    className={`px-3 py-1 rounded-md text-xs font-mono font-medium transition-colors cursor-pointer ${
+                      activeCodeTab === 'curl' ? 'bg-indigo-600 text-white' : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    cURL
+                  </button>
+                </div>
+
+                <button
+                  onClick={handleCopyCode}
+                  className="px-3 py-1 rounded-md bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium flex items-center gap-1.5 transition-colors cursor-pointer"
+                >
+                  {copiedCode ? <Check className="h-3.5 w-3.5 text-emerald-400" /> : <Copy className="h-3.5 w-3.5" />}
+                  <span>{copiedCode ? 'Copied' : 'Copy'}</span>
+                </button>
+              </div>
+
+              <pre className="p-6 text-xs font-mono text-indigo-200 overflow-x-auto leading-relaxed max-h-[380px]">
+                {CODE_EXAMPLES[activeCodeTab]}
+              </pre>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Enterprise Integrations Ecosystem */}
+      <section id="integrations" className="relative z-10 py-24 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <div className="max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-cyan-950/70 border border-cyan-800/40 text-cyan-300 text-xs font-semibold mb-3">
+            <Share2 className="h-3.5 w-3.5" />
+            <span>Connected Ecosystem</span>
+          </div>
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight">
+            Connect Seamlessly with Your Enterprise Tech Stack
+          </h2>
+          <p className="mt-3 text-slate-300 text-base">
+            Push extracted data straight into your ERP, warehouse, or accounting system without custom glue code.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 max-w-4xl mx-auto">
+          {[
+            { name: 'SAP S/4HANA', cat: 'ERP & Finance', tag: 'Native Connector' },
+            { name: 'Oracle NetSuite', cat: 'Cloud ERP', tag: '2-Way PO Sync' },
+            { name: 'Salesforce', cat: 'CRM & Claims', tag: 'Real-time Hook' },
+            { name: 'Snowflake', cat: 'Data Warehouse', tag: 'Direct Stream' },
+            { name: 'Amazon S3 / Blob', cat: 'Cloud Storage', tag: 'Auto Ingest' },
+            { name: 'QuickBooks Online', cat: 'Accounting', tag: 'AP Automation' },
+            { name: 'Workday Financials', cat: 'HR & Finance', tag: 'GL Posting' },
+            { name: 'Custom Webhooks', cat: 'REST / Kafka', tag: 'Sub-second' }
+          ].map((item, idx) => (
+            <div
+              key={idx}
+              className="p-6 rounded-2xl bg-slate-900/60 border border-slate-800 hover:border-indigo-500/40 transition-all hover:scale-[1.02] text-left"
+            >
+              <div className="h-8 w-8 rounded-lg bg-indigo-600/20 text-indigo-400 flex items-center justify-center font-bold text-xs mb-3 border border-indigo-500/30">
+                {item.name.slice(0, 2).toUpperCase()}
+              </div>
+              <div className="font-bold text-white text-sm">{item.name}</div>
+              <div className="text-xs text-slate-400 mt-0.5">{item.cat}</div>
+              <div className="mt-3 inline-block text-[10px] px-2 py-0.5 rounded bg-slate-800 text-indigo-300 font-medium">
+                {item.tag}
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
@@ -1270,12 +1484,15 @@ export default function App() {
       {/* Footer */}
       <footer className="relative z-10 bg-slate-950 border-t border-slate-800/80 py-12 text-slate-400 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-slate-900 border border-slate-700/80 p-0.5 flex items-center justify-center overflow-hidden">
-              <img src={initialLogo} alt="SmartIDP Logo" className="h-full w-full object-contain" />
-            </div>
-            <span className="font-bold text-white text-sm">SmartIDP Platform</span>
-            <span className="text-slate-400">© 2026 SmartIDP Inc. All rights reserved.</span>
+          <div className="flex items-center gap-4">
+            <img 
+              src={brandLogo} 
+              alt="SmartIDP — Intelligent Document AI" 
+              className="h-8 w-auto object-contain opacity-90" 
+            />
+            <span className="text-slate-400 border-l border-slate-800 pl-4 hidden sm:inline">
+              © 2026 SmartIDP Inc. All rights reserved.
+            </span>
           </div>
 
           <div className="flex items-center gap-6">
@@ -1286,6 +1503,37 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* Video Platform Tour Modal */}
+      {videoModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/90 backdrop-blur-md">
+          <div className="relative w-full max-w-4xl rounded-2xl bg-slate-900 border border-slate-800 overflow-hidden shadow-2xl">
+            <div className="px-5 py-3 bg-slate-950 border-b border-slate-800 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Play className="h-4 w-4 text-indigo-400" />
+                <span className="text-xs font-semibold text-white">SmartIDP Platform Architecture & Extraction Tour</span>
+              </div>
+              <button
+                onClick={() => setVideoModalOpen(false)}
+                className="text-slate-400 hover:text-white p-1 cursor-pointer"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+
+            <div className="relative aspect-video bg-black flex items-center justify-center">
+              <video
+                src={demoVideo}
+                controls
+                autoPlay
+                className="w-full h-full object-contain"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Book a Demo Modal */}
       {demoModalOpen && (
@@ -1390,4 +1638,3 @@ export default function App() {
     </div>
   )
 }
-

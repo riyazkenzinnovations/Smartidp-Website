@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import initialLogo from '../assets/initial.png'
+import brandLogo from '../assets/logo1.png'
 import { ArrowRight, Menu, X } from 'lucide-react'
 
 export default function Navbar({ onOpenDemoModal }) {
@@ -8,18 +8,12 @@ export default function Navbar({ onOpenDemoModal }) {
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <a href="#" className="flex items-center gap-3 group">
-          <div className="h-10 w-10 rounded-xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center shadow-lg shadow-indigo-500/20 group-hover:scale-105 transition-transform overflow-hidden">
-            <img src={initialLogo} alt="SmartIDP Logo" className="h-full w-full object-contain" />
-          </div>
-          <div>
-            <div className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-indigo-200">
-              Smart<span className="text-indigo-400">IDP</span>
-            </div>
-            <div className="text-[10px] text-slate-400 uppercase tracking-widest font-semibold -mt-1">
-              Intelligent Document AI
-            </div>
-          </div>
+        <a href="#" className="flex items-center group py-2">
+          <img 
+            src={brandLogo} 
+            alt="SmartIDP — Intelligent Document AI" 
+            className="h-10 sm:h-11 w-auto object-contain group-hover:opacity-95 transition-opacity" 
+          />
         </a>
 
         <nav className="hidden md:flex items-center gap-7 text-sm font-medium text-slate-300">
