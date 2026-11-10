@@ -1,6 +1,6 @@
 import React from 'react'
 import smartIdpGif from '../assets/smartIDP.gif'
-import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, Cpu, FileText, Lock, Users, Clock } from 'lucide-react'
+import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, Cpu, FileText, Check, Lock, Users, Clock } from 'lucide-react'
 
 export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
   return (
