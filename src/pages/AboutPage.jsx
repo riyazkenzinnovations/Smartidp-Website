@@ -12,7 +12,11 @@ import {
   Users,
   Target,
   Compass,
-  Cpu
+  Cpu,
+  MapPin,
+  Mail,
+  Phone,
+  Globe
 } from 'lucide-react'
 
 const TRANSFORMATION_ITEMS = [
@@ -226,6 +230,71 @@ export default function AboutPage({ onOpenDemoModal }) {
                 <p className="text-[11px] text-slate-600 leading-snug">{s.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+
+        {/* Global Presence & Office Locations */}
+        <div className="mb-20">
+          <div className="text-center max-w-2xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F3EC] text-[#14532D] text-xs font-semibold mb-3">
+              <Building2 className="h-3.5 w-3.5" />
+              <span>GLOBAL PRESENCE</span>
+            </div>
+            <h2 className="text-3xl font-extrabold text-[#14532D]">
+              Our Global Offices
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-600 mt-1">
+              Headquartered in Austin, Texas with our primary Offshore Development Center (ODC) in Hyderabad, India.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-5xl mx-auto">
+            {/* Austin HQ */}
+            <div className="p-8 rounded-3xl bg-[#F5F7F5] border border-slate-200 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold font-mono text-[#14532D] bg-[#E8F3EC] px-3 py-1 rounded-md">
+                  GLOBAL HEADQUARTERS
+                </span>
+                <span className="text-xs text-slate-500 font-mono">Austin, Texas, USA</span>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">SmartIDP Group Inc.</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                5900 Balcones Drive STE 13688<br />
+                Austin, TX 78731, USA
+              </p>
+              <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <a href="mailto:info@smartidp.ai" className="text-[#14532D] font-bold hover:underline flex items-center gap-1.5">
+                  <Mail className="h-4 w-4" />
+                  <span>info@smartidp.ai</span>
+                </a>
+                <a href="tel:+918065904278" className="text-slate-700 font-semibold hover:text-[#14532D] flex items-center gap-1.5">
+                  <Phone className="h-4 w-4 text-[#14532D]" />
+                  <span>+91 8065904278</span>
+                </a>
+              </div>
+            </div>
+
+            {/* Hyderabad ODC */}
+            <div className="p-8 rounded-3xl bg-[#F5F7F5] border border-slate-200 space-y-4">
+              <div className="flex items-center justify-between">
+                <span className="text-xs font-bold font-mono text-[#14532D] bg-[#E8F3EC] px-3 py-1 rounded-md">
+                  OFFSHORE DEVELOPMENT CENTER (ODC)
+                </span>
+                <span className="text-xs text-slate-500 font-mono">Hyderabad, India</span>
+              </div>
+              <h3 className="text-xl font-bold text-slate-900">SmartIDP India Operations</h3>
+              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                3rd Floor, Shriya Building, Mothi Nagar, Dwarakapuri,<br />
+                Punjagutta, Hyderabad, Telangana 500082, India
+              </p>
+              <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
+                <span className="text-slate-500">Core R&D, Product Engineering & 24/7 GxP Support</span>
+                <a href="tel:+918065904278" className="text-[#14532D] font-bold hover:underline flex items-center gap-1.5">
+                  <Phone className="h-4 w-4" />
+                  <span>+91 8065904278</span>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 

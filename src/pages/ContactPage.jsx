@@ -253,51 +253,80 @@ export default function ContactPage() {
 
           {/* Contact Details & Info Column */}
           <div className="lg:col-span-5 space-y-6">
+            
+            {/* Global Office Locations */}
             <div className="p-8 rounded-3xl bg-[#F5F7F5] border border-slate-200 space-y-6">
-              <h3 className="text-xl font-bold text-[#14532D]">
-                Corporate Details & Enterprise Channels
+              <h3 className="text-xl font-bold text-[#14532D] flex items-center gap-2">
+                <Building2 className="h-5 w-5 text-[#14532D]" />
+                <span>Global Office Locations</span>
               </h3>
 
-              <div className="space-y-4 text-xs text-slate-700">
-                <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200">
-                    <Globe className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-slate-900 block">Official Product Website</span>
-                    <a href="https://www.smartidp.ai" target="_blank" rel="noopener noreferrer" className="text-[#14532D] font-medium hover:underline">
-                      www.smartidp.ai
-                    </a>
-                  </div>
+              {/* Head Office Austin */}
+              <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold font-mono text-[#14532D] bg-[#E8F3EC] px-2.5 py-0.5 rounded">
+                    GLOBAL HEADQUARTERS
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-mono">Austin, TX</span>
                 </div>
-
-                <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200">
-                    <Building2 className="h-4 w-4" />
-                  </div>
-                  <div>
-                    <span className="font-bold text-slate-900 block">Parent Provider</span>
-                    <span>Kenz Innovations — SmartiDP Enterprise EDMS Division</span>
-                  </div>
+                <div className="font-bold text-slate-900 text-sm">SmartIDP Group Inc.</div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  5900 Balcones Drive STE 13688<br />
+                  Austin, TX 78731, USA
+                </p>
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <a href="mailto:info@smartidp.ai" className="text-[#14532D] font-semibold hover:underline flex items-center gap-1">
+                    <Mail className="h-3.5 w-3.5" />
+                    <span>info@smartidp.ai</span>
+                  </a>
+                  <a href="tel:+918065904278" className="text-slate-700 font-medium hover:text-[#14532D] flex items-center gap-1">
+                    <Phone className="h-3.5 w-3.5" />
+                    <span>+91 8065904278</span>
+                  </a>
                 </div>
+              </div>
 
+              {/* India / ODC Hyderabad */}
+              <div className="p-5 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-2">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-bold font-mono text-[#14532D] bg-[#E8F3EC] px-2.5 py-0.5 rounded">
+                    OFFSHORE DEVELOPMENT CENTER (ODC)
+                  </span>
+                  <span className="text-[11px] text-slate-500 font-mono">Hyderabad, IN</span>
+                </div>
+                <div className="font-bold text-slate-900 text-sm">SmartIDP India Operations</div>
+                <p className="text-xs text-slate-600 leading-relaxed">
+                  3rd Floor, Shriya Building, Mothi Nagar, Dwarakapuri,<br />
+                  Punjagutta, Hyderabad, Telangana 500082, India
+                </p>
+                <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span className="text-slate-500 text-[11px]">R&D, Delivery & 24/7 Support</span>
+                  <a href="tel:+918065904278" className="text-[#14532D] font-semibold hover:underline flex items-center gap-1">
+                    <Phone className="h-3.5 w-3.5" />
+                    <span>+91 8065904278</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Enterprise Channels */}
+              <div className="space-y-3 pt-2 text-xs text-slate-700">
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200">
+                  <div className="h-8 w-8 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200">
                     <Clock className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="font-bold text-slate-900 block">Response Time SLA</span>
-                    <span>Within 2 business hours for enterprise demonstration inquiries</span>
+                    <span className="font-bold text-slate-900 block">Demonstration SLA</span>
+                    <span className="text-slate-600">Response within 2 business hours for qualified enterprise inquiries</span>
                   </div>
                 </div>
 
                 <div className="flex items-start gap-3">
-                  <div className="h-9 w-9 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200">
+                  <div className="h-8 w-8 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200">
                     <ShieldCheck className="h-4 w-4" />
                   </div>
                   <div>
-                    <span className="font-bold text-slate-900 block">NDA & Security Inquiries</span>
-                    <span>Custom Mutual Non-Disclosure Agreements (MNDA) and security questionnaires supported</span>
+                    <span className="font-bold text-slate-900 block">NDA & Security Questionnaires</span>
+                    <span className="text-slate-600">Pre-signed Mutual NDAs and vendor security assessments processed within 24 hours</span>
                   </div>
                 </div>
               </div>
@@ -312,12 +341,12 @@ export default function ContactPage() {
                 Existing customers with active support agreements can access 24/7 ticketing, SLA dashboards, and product documentation through the client portal.
               </p>
               <a
-                href="https://www.smartidp.ai"
+                href="https://edms.smartidp.ai/login"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-xs font-bold text-[#14532D] hover:underline flex items-center gap-1"
               >
-                <span>Access Client Portal</span>
+                <span>Access Client Portal (edms.smartidp.ai)</span>
                 <ArrowRight className="h-3.5 w-3.5" />
               </a>
             </div>
