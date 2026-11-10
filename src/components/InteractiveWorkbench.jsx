@@ -72,6 +72,34 @@ const SAMPLE_DOCS = [
       { time: '10:45:11 UTC', action: 'Human-in-the-loop review station approved PO match', user: 'K. Patel (AP Specialist)', hash: 'sha256:99f301...' },
       { time: '10:42:00 UTC', action: 'OCR extraction & automated cross-validation completed', user: 'SmartIDP Ingest', hash: 'sha256:55e819...' }
     ]
+  },
+  {
+    id: 'dhf',
+    title: 'DHF-MD-0914 · Design History File',
+    category: 'Medical Devices / ISO 13485',
+    status: 'Locked for CE Mark',
+    compliance: 'ISO 13485 · EU MDR · FDA QMSR',
+    signedBy: 'M. Vance (Chief Regulatory Officer)',
+    signedTime: '2026-03-14 14:15 UTC',
+    meaning: 'Technical Documentation Sign-Off',
+    fields: [
+      { label: 'Device Family', value: 'CardioSmart Infusion System Gen-3', conf: 100 },
+      { label: 'Risk File Standard', value: 'ISO 14971:2019 Matrix Aligned', conf: 99.8 },
+      { label: 'Classification', value: 'Class IIb Active Medical Device', conf: 100 },
+      { label: 'Traceability Matrix', value: '100% Verification Coverage (48/48 Req)', conf: 99.9 },
+      { label: 'Change Control Ref', value: 'ECO-2026-0412 (Firmware v2.4)', conf: 99.4 },
+      { label: 'Notified Body Dossier', value: 'Technical File Section 4.2 Approved', conf: 100 }
+    ],
+    versions: [
+      { ver: 'v2.0', status: 'Locked (Effective)', date: '2026-03-14', user: 'M. Vance (Reg Affairs)' },
+      { ver: 'v1.2', status: 'Superseded Draft', date: '2025-11-20', user: 'T. Becker (Lead Eng)' },
+      { ver: 'v1.0', status: 'Archived Baseline', date: '2025-06-15', user: 'T. Becker (Lead Eng)' }
+    ],
+    auditLogs: [
+      { time: '14:15:30 UTC', action: 'DHF locked & signed for submission (meaning: Technical Approval)', user: 'M. Vance (Reg Affairs)', hash: 'sha256:129ef4...' },
+      { time: '12:00:10 UTC', action: 'FMEA Risk analysis updated with clinical feedback', user: 'R. Ramos (Safety Officer)', hash: 'sha256:443ac1...' },
+      { time: 'Yesterday', action: 'Design verification report #88 attached to requirement matrix', user: 'T. Becker (Lead Eng)', hash: 'sha256:908fa1...' }
+    ]
   }
 ]
 
