@@ -98,6 +98,9 @@ export default function Footer({ onOpenDemoModal }) {
             <a href="https://www.smartidp.ai" target="_blank" rel="noopener noreferrer" className="hover:text-[#14532D] transition-colors">
               www.smartidp.ai
             </a>
+            <a href="https://edms.smartidp.ai/login" target="_blank" rel="noopener noreferrer" className="hover:text-[#14532D] transition-colors">
+              Client Portal Login
+            </a>
             <Link to="/about" className="hover:text-[#14532D] transition-colors">About Kenz Innovations</Link>
             <Link to="/compliance" className="hover:text-[#14532D] transition-colors">Security Whitepaper</Link>
             <Link to="/contact" className="hover:text-[#14532D] transition-colors">Support & Contact</Link>
