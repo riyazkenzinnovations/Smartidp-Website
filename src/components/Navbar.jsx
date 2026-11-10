@@ -7,12 +7,6 @@ export default function Navbar({ onOpenDemoModal }) {
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/90 border-b border-slate-200/80 shadow-xs">
-      {/* Top Compliance Bar */}
-      <div className="bg-[#14532D] text-white text-[11px] py-1 px-4 text-center font-medium tracking-wide flex items-center justify-center gap-2">
-        <ShieldCheck className="h-3.5 w-3.5 text-emerald-300" />
-        <span>Built to support 21 CFR Part 11 · EU Annex 11 · ISO 9001 · ISO 13485 · ISO 27001 · GDPR · HIPAA · SOC 2</span>
-      </div>
-
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
         <a href="#" className="flex items-center group py-2">
           <img 

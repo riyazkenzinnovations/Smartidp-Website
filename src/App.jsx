@@ -5,6 +5,7 @@ import About from './components/About'
 import KeyFeatures from './components/KeyFeatures'
 import InteractiveWorkbench from './components/InteractiveWorkbench'
 import ModulesSolutions from './components/ModulesSolutions'
+import ProductivityIntegrations from './components/ProductivityIntegrations'
 import Benefits from './components/Benefits'
 import HowItWorks from './components/HowItWorks'
 import ComplianceDeepDive from './components/ComplianceDeepDive'
@@ -40,6 +41,9 @@ export default function App() {
 
       {/* Industry Modules & Solutions */}
       <ModulesSolutions onOpenDemoModal={() => setDemoModalOpen(true)} />
+
+      {/* Desktop Productivity & Enterprise Ecosystem */}
+      <ProductivityIntegrations onOpenDemoModal={() => setDemoModalOpen(true)} />
 
       {/* Business Value & Measurable Benefits */}
       <Benefits onOpenDemoModal={() => setDemoModalOpen(true)} />

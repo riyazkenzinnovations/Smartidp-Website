@@ -145,3 +145,4 @@ export default function About({ onOpenDemoModal }) {
     </section>
   )
 }
+

@@ -256,3 +256,4 @@ export default function Benefits({ onOpenDemoModal }) {
     </section>
   )
 }
+

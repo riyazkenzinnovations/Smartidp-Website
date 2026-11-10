@@ -298,3 +298,4 @@ export default function HowItWorks({ onOpenDemoModal }) {
     </section>
   )
 }
+

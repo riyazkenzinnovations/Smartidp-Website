@@ -200,3 +200,4 @@ export default function KeyFeatures({ onOpenDemoModal }) {
     </section>
   )
 }
+

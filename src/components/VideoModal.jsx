@@ -41,3 +41,4 @@ export default function VideoModal({ isOpen, onClose }) {
     </div>
   )
 }
+
