@@ -1,77 +1,91 @@
 import React, { useState } from 'react'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import ScrollToTop from './components/ScrollToTop'
 import Navbar from './components/Navbar'
-import Hero from './components/Hero'
-import About from './components/About'
-import KeyFeatures from './components/KeyFeatures'
-import InteractiveWorkbench from './components/InteractiveWorkbench'
-import ModulesSolutions from './components/ModulesSolutions'
-import ProductivityIntegrations from './components/ProductivityIntegrations'
-import Benefits from './components/Benefits'
-import HowItWorks from './components/HowItWorks'
-import ComplianceDeepDive from './components/ComplianceDeepDive'
-import WhyChooseUs from './components/WhyChooseUs'
-import ContactSection from './components/ContactSection'
 import Footer from './components/Footer'
 import DemoModal from './components/DemoModal'
 import VideoModal from './components/VideoModal'
+
+import HomePage from './pages/HomePage'
+import AboutPage from './pages/AboutPage'
+import FeaturesPage from './pages/FeaturesPage'
+import SolutionsPage from './pages/SolutionsPage'
+import HowItWorksPage from './pages/HowItWorksPage'
+import BenefitsPage from './pages/BenefitsPage'
+import CompliancePage from './pages/CompliancePage'
+import ContactPage from './pages/ContactPage'
 
 export default function App() {
   const [demoModalOpen, setDemoModalOpen] = useState(false)
   const [videoModalOpen, setVideoModalOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-white text-[#171717] font-sans selection:bg-[#14532D] selection:text-white">
-      {/* Top Navigation */}
-      <Navbar onOpenDemoModal={() => setDemoModalOpen(true)} />
+    <BrowserRouter>
+      <ScrollToTop />
+      <div className="min-h-screen flex flex-col bg-white text-[#171717] font-sans selection:bg-[#14532D] selection:text-white">
+        {/* Persistent Top Navigation */}
+        <Navbar onOpenDemoModal={() => setDemoModalOpen(true)} />
 
-      {/* Hero Section */}
-      <Hero 
-        onOpenDemoModal={() => setDemoModalOpen(true)} 
-        onOpenVideoModal={() => setVideoModalOpen(true)} 
-      />
+        {/* Multi-Page Routed Content */}
+        <main className="flex-grow">
+          <Routes>
+            <Route 
+              path="/" 
+              element={
+                <HomePage 
+                  onOpenDemoModal={() => setDemoModalOpen(true)} 
+                  onOpenVideoModal={() => setVideoModalOpen(true)} 
+                />
+              } 
+            />
+            <Route 
+              path="/about" 
+              element={<AboutPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/features" 
+              element={<FeaturesPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/solutions" 
+              element={<SolutionsPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/how-it-works" 
+              element={<HowItWorksPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/benefits" 
+              element={<BenefitsPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/compliance" 
+              element={<CompliancePage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/contact" 
+              element={<ContactPage />} 
+            />
+            <Route 
+              path="*" 
+              element={<Navigate to="/" replace />} 
+            />
+          </Routes>
+        </main>
 
-      {/* About Section - Case for Change */}
-      <About onOpenDemoModal={() => setDemoModalOpen(true)} />
+        {/* Persistent Footer */}
+        <Footer onOpenDemoModal={() => setDemoModalOpen(true)} />
 
-      {/* Key Features - 8 Integrated Capability Domains */}
-      <KeyFeatures onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Interactive Platform Simulation Workbench */}
-      <InteractiveWorkbench onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Industry Modules & Solutions */}
-      <ModulesSolutions onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Desktop Productivity & Enterprise Ecosystem */}
-      <ProductivityIntegrations onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Business Value & Measurable Benefits */}
-      <Benefits onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* How It Works - Lifecycle & Capture Pipeline */}
-      <HowItWorks onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Regulatory Deep-Dive & Compliance Matrix */}
-      <ComplianceDeepDive onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Why Choose SmartiDP EDMS & Implementation Methodology */}
-      <WhyChooseUs onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Professional Contact / Demonstration Enquiry */}
-      <ContactSection />
-
-      {/* Clean Footer */}
-      <Footer onOpenDemoModal={() => setDemoModalOpen(true)} />
-
-      {/* Modals */}
-      <DemoModal 
-        isOpen={demoModalOpen} 
-        onClose={() => setDemoModalOpen(false)} 
-      />
-      <VideoModal 
-        isOpen={videoModalOpen} 
-        onClose={() => setVideoModalOpen(false)} 
-      />
-    </div>
+        {/* Global Modals */}
+        <DemoModal 
+          isOpen={demoModalOpen} 
+          onClose={() => setDemoModalOpen(false)} 
+        />
+        <VideoModal 
+          isOpen={videoModalOpen} 
+          onClose={() => setVideoModalOpen(false)} 
+        />
+      </div>
+    </BrowserRouter>
   )
 }

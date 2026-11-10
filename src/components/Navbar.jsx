@@ -1,45 +1,101 @@
 import React, { useState } from 'react'
+import { Link, NavLink } from 'react-router-dom'
 import brandLogo from '../assets/logo1.png'
 import { ArrowRight, Menu, X, ShieldCheck, Sparkles } from 'lucide-react'
+
+const NAV_LINKS = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+  { name: 'Features', path: '/features' },
+  { name: 'Solutions', path: '/solutions' },
+  { name: 'How It Works', path: '/how-it-works' },
+  { name: 'Compliance', path: '/compliance' },
+  { name: 'Benefits & ROI', path: '/benefits' },
+  { name: 'Contact', path: '/contact' }
+]
 
 export default function Navbar({ onOpenDemoModal }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/90 border-b border-slate-200/80 shadow-xs">
+    <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b border-slate-200/80 shadow-xs">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <a href="#" className="flex items-center group py-2">
+        <Link to="/" className="flex items-center group py-2">
           <img 
             src={brandLogo} 
             alt="SmartiDP EDMS — Kenz Innovations" 
             className="h-10 sm:h-11 w-auto object-contain group-hover:opacity-90 transition-opacity" 
           />
-        </a>
+        </Link>
 
-        <nav className="hidden lg:flex items-center gap-7 text-sm font-medium text-slate-700">
-          <a href="#about" className="hover:text-[#14532D] transition-colors">About</a>
-          <a href="#features" className="hover:text-[#14532D] transition-colors">Features</a>
-          <a href="#solutions" className="hover:text-[#14532D] transition-colors">Solutions</a>
-          <a href="#how-it-works" className="hover:text-[#14532D] transition-colors">How It Works</a>
-          <a href="#benefits" className="hover:text-[#14532D] transition-colors">Benefits</a>
-          <a href="#compliance" className="hover:text-[#14532D] transition-colors">Compliance</a>
-          <a href="#why-choose" className="hover:text-[#14532D] transition-colors">Why SmartiDP</a>
-          <a href="#contact" className="hover:text-[#14532D] transition-colors">Contact</a>
+        {/* Desktop Navigation */}
+        <nav className="hidden xl:flex items-center gap-1 sm:gap-2 text-xs font-semibold text-slate-700">
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.path === '/'}
+              className={({ isActive }) =>
+                `px-3 py-2 rounded-xl transition-all ${
+                  isActive
+                    ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
+                    : 'text-slate-700 hover:text-[#14532D] hover:bg-[#F5F7F5]'
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
         </nav>
 
+        {/* Medium-screen Navigation fallback */}
+        <nav className="hidden lg:flex xl:hidden items-center gap-1 text-xs font-semibold text-slate-700">
+          {NAV_LINKS.slice(0, 6).map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.path === '/'}
+              className={({ isActive }) =>
+                `px-2.5 py-1.5 rounded-lg transition-all ${
+                  isActive
+                    ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
+                    : 'text-slate-700 hover:text-[#14532D] hover:bg-[#F5F7F5]'
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              `px-2.5 py-1.5 rounded-lg transition-all ${
+                isActive
+                  ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
+                  : 'text-slate-700 hover:text-[#14532D] hover:bg-[#F5F7F5]'
+              }`
+            }
+          >
+            Contact
+          </NavLink>
+        </nav>
+
+        {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-3">
-          <button 
-            onClick={onOpenDemoModal}
-            className="text-sm font-semibold px-4 py-2 text-slate-700 hover:text-[#14532D] hover:bg-[#E8F3EC] rounded-xl transition-all cursor-pointer"
+          <a
+            href="https://www.smartidp.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-xs font-semibold px-3.5 py-2 text-slate-700 hover:text-[#14532D] hover:bg-[#E8F3EC] rounded-xl transition-all"
           >
             Client Portal
-          </button>
+          </a>
           <button 
             onClick={onOpenDemoModal}
-            className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold text-sm transition-all shadow-md shadow-emerald-950/10 hover:shadow-lg hover:shadow-emerald-950/20 cursor-pointer"
+            className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold text-xs shadow-md shadow-emerald-950/10 hover:shadow-lg transition-all cursor-pointer"
           >
             <span>Request a Demo</span>
-            <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 
@@ -55,25 +111,42 @@ export default function Navbar({ onOpenDemoModal }) {
         </div>
       </div>
 
-      {/* Mobile dropdown */}
+      {/* Mobile dropdown menu */}
       {mobileMenuOpen && (
-        <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-5 space-y-4 shadow-lg">
-          <a href="#about" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">About SmartiDP EDMS</a>
-          <a href="#features" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Key Capabilities</a>
-          <a href="#solutions" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Industry Solutions</a>
-          <a href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Governed Workflow</a>
-          <a href="#benefits" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Business Value</a>
-          <a href="#compliance" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Compliance Framework</a>
-          <a href="#why-choose" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Why SmartiDP EDMS</a>
-          <a href="#contact" onClick={() => setMobileMenuOpen(false)} className="block text-slate-800 hover:text-[#14532D] font-medium">Contact & Enquiries</a>
+        <div className="lg:hidden bg-white border-b border-slate-200 px-6 py-5 space-y-2 shadow-lg">
+          {NAV_LINKS.map((link) => (
+            <NavLink
+              key={link.path}
+              to={link.path}
+              end={link.path === '/'}
+              onClick={() => setMobileMenuOpen(false)}
+              className={({ isActive }) =>
+                `block px-3 py-2 rounded-xl text-sm font-medium ${
+                  isActive
+                    ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
+                    : 'text-slate-800 hover:text-[#14532D] hover:bg-[#F5F7F5]'
+                }`
+              }
+            >
+              {link.name}
+            </NavLink>
+          ))}
           
           <div className="pt-4 border-t border-slate-100 space-y-2">
             <button 
               onClick={() => { setMobileMenuOpen(false); onOpenDemoModal(); }}
-              className="w-full py-2.5 bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold rounded-xl text-sm transition-colors cursor-pointer"
+              className="w-full py-2.5 bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold rounded-xl text-xs transition-colors cursor-pointer"
             >
               Request a Demo
             </button>
+            <a
+              href="https://www.smartidp.ai"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block text-center py-2 text-xs font-semibold text-slate-600 hover:text-[#14532D]"
+            >
+              Open Client Portal
+            </a>
           </div>
         </div>
       )}
