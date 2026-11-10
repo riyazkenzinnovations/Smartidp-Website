@@ -85,59 +85,17 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
             </div>
           </div>
 
-          {/* Right Column: Platform Showcase Frame with smartIDP.gif */}
-          <div className="lg:col-span-6 w-full mt-6 lg:mt-0">
-            <div className="rounded-2xl sm:rounded-3xl border border-slate-300/80 bg-white shadow-xl shadow-slate-200/50 overflow-hidden">
-              {/* Top Window Chrome */}
-              <div className="px-4 py-3 bg-[#F5F7F5] border-b border-slate-200 flex items-center justify-between text-xs text-slate-600">
-                <div className="flex items-center gap-1.5 font-mono text-[11px]">
-                  <span className="h-2.5 w-2.5 rounded-full bg-slate-300 inline-block" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-slate-300 inline-block" />
-                  <span className="h-2.5 w-2.5 rounded-full bg-slate-300 inline-block" />
-                  <span className="ml-2 text-slate-500 font-medium truncate max-w-[150px] sm:max-w-none">
-                    app.smartidp.ai / edms / live-stream
-                  </span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#E8F3EC] text-[#14532D] font-bold text-[10px]">
-                    <span className="h-1.5 w-1.5 rounded-full bg-[#14532D] animate-ping" />
-                    AI Capture Active
-                  </span>
-                </div>
-              </div>
-
-              {/* Animated WhiteBG Video Showcase */}
-              <div className="relative aspect-[4/3] sm:aspect-video w-full bg-white flex items-center justify-center overflow-hidden">
-                <video 
-                  src={whiteBgAnimation} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-full object-contain bg-white" 
-                />
-                <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-200 text-xs shadow-md">
-                  <Cpu className="h-3.5 w-3.5 text-[#14532D] animate-spin" />
-                  <span className="text-slate-800 font-semibold text-[11px]">AI Extraction:</span>
-                  <span className="text-[#14532D] font-mono font-bold text-[11px]">340ms · 99.8% Accuracy</span>
-                </div>
-              </div>
-
-              {/* Bottom Feature Badges */}
-              <div className="p-3.5 bg-[#F5F7F5] border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] text-slate-700">
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#14532D] shrink-0" />
-                  <span className="truncate">Omnichannel Ingestion</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#14532D] shrink-0" />
-                  <span className="truncate">AI Classification</span>
-                </div>
-                <div className="flex items-center gap-1.5">
-                  <CheckCircle2 className="h-3.5 w-3.5 text-[#14532D] shrink-0" />
-                  <span className="truncate">Part 11 Audit Trail</span>
-                </div>
-              </div>
+          {/* Right Column: Clean WhiteBG Video Showcase */}
+          <div className="lg:col-span-6 w-full mt-6 lg:mt-0 flex items-center justify-center">
+            <div className="w-full rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white shadow-xl shadow-slate-200/50 overflow-hidden flex items-center justify-center">
+              <video 
+                src={whiteBgAnimation} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-auto max-h-[500px] object-contain bg-white" 
+              />
             </div>
           </div>
 
