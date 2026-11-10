@@ -83,20 +83,22 @@ export default function Navbar({ onOpenDemoModal }) {
         {/* CTA Buttons */}
         <div className="hidden md:flex items-center gap-3">
           <a
-            href="https://www.smartidp.ai"
+            href="https://edms.smartidp.ai/login"
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm font-semibold px-4 py-2 text-slate-700 hover:text-[#14532D] hover:bg-[#E8F3EC] rounded-xl transition-all whitespace-nowrap"
           >
             Client Portal
           </a>
-          <button 
-            onClick={onOpenDemoModal}
+          <a 
+            href="https://edms.smartidp.ai/login"
+            target="_blank"
+            rel="noopener noreferrer"
             className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold text-sm shadow-md shadow-emerald-950/10 hover:shadow-lg transition-all cursor-pointer whitespace-nowrap"
           >
             <span>Request a Demo</span>
             <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
-          </button>
+          </a>
         </div>
 
         {/* Mobile menu button */}
@@ -133,17 +135,21 @@ export default function Navbar({ onOpenDemoModal }) {
           ))}
           
           <div className="pt-4 border-t border-slate-100 space-y-2">
-            <button 
-              onClick={() => { setMobileMenuOpen(false); onOpenDemoModal(); }}
-              className="w-full py-2.5 bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold rounded-xl text-xs transition-colors cursor-pointer"
-            >
-              Request a Demo
-            </button>
-            <a
-              href="https://www.smartidp.ai"
+            <a 
+              href="https://edms.smartidp.ai/login"
               target="_blank"
               rel="noopener noreferrer"
-              className="block text-center py-2 text-xs font-semibold text-slate-600 hover:text-[#14532D]"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-center w-full py-2.5 bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold rounded-xl text-sm transition-colors cursor-pointer"
+            >
+              Request a Demo
+            </a>
+            <a
+              href="https://edms.smartidp.ai/login"
+              target="_blank"
+              rel="noopener noreferrer"
+              onClick={() => setMobileMenuOpen(false)}
+              className="block text-center py-2 text-sm font-semibold text-slate-600 hover:text-[#14532D]"
             >
               Open Client Portal
             </a>
