@@ -90,17 +90,6 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
                   className="w-full h-full object-contain bg-white" 
                 />
               </div>
-
-              {/* Elegant Micro-Caption */}
-              <div className="mt-3 px-2 flex items-center justify-between text-xs text-slate-600">
-                <span className="flex items-center gap-2 font-medium text-[#14532D]">
-                  <span className="h-2 w-2 rounded-full bg-[#14532D] animate-pulse" />
-                  Next-Gen Document AI & Intelligent Processing
-                </span>
-                <span className="text-slate-400 font-mono text-[11px] hidden sm:inline-block">
-                  SmartiDP EDMS
-                </span>
-              </div>
             </div>
           </div>
 
