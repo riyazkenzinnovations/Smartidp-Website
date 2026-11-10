@@ -1,20 +1,20 @@
 import React from 'react'
 import whiteBgAnimation from '../assets/SmartIDP_WhiteBG_Animation.mp4'
-import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, Cpu, FileText, Check, Lock, Users, Clock } from 'lucide-react'
+import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, FileText, Check, Lock, Users, Clock } from 'lucide-react'
 
 export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
   return (
-    <section className="relative pt-8 pb-16 md:pt-12 md:pb-24 overflow-hidden bg-gradient-to-b from-[#F5F7F5] via-white to-white border-b border-slate-200/70">
-      {/* Background soft green radial accent */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-96 pointer-events-none overflow-hidden opacity-60">
-        <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[800px] h-[500px] bg-[#E8F3EC] rounded-full blur-3xl" />
+    <section className="relative pt-10 pb-16 md:pt-14 md:pb-24 overflow-hidden bg-gradient-to-b from-[#F5F7F5] via-white to-white border-b border-slate-200/70">
+      {/* Background soft green radial ambient glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] pointer-events-none overflow-hidden opacity-60">
+        <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-[#E8F3EC] rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* 2-Column Split Hero Layout */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 xl:gap-12 items-center">
+        {/* Main 2-Column Split: Copy on Left, Elegant Video Showcase on Right */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           
-          {/* Left Column: Heading, Copy, CTAs & Metrics */}
+          {/* Left Column: Heading, Value Proposition & CTAs */}
           <div className="lg:col-span-6 text-left space-y-6">
             {/* Top Product Badge */}
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold shadow-xs">
@@ -23,7 +23,7 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
             </div>
 
             {/* Hero Title */}
-            <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-[#14532D] leading-[1.12]">
+            <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-extrabold tracking-tight text-[#14532D] leading-[1.14]">
               The Intelligent Platform for{' '}
               <span className="bg-clip-text text-transparent bg-gradient-to-r from-[#14532D] via-[#064E3B] to-emerald-700">
                 Enterprise Documents.
@@ -31,7 +31,7 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
             </h1>
 
             {/* Hero Subtitle */}
-            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
+            <p className="text-base sm:text-lg text-slate-700 leading-relaxed font-normal max-w-xl">
               Capture, manage, automate, secure and govern every document across your enterprise — on one 
               AI-powered, compliance-ready platform built for regulated and non-regulated industries.
             </p>
@@ -56,53 +56,101 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
               </button>
             </div>
 
-            {/* Key Metrics directly from Brochure Page 2 (2x2 Grid) */}
-            <div className="pt-2 grid grid-cols-2 gap-3 sm:gap-4">
-              <div className="p-4 rounded-xl glass-card-green">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#14532D] font-mono">12+</div>
-                <div className="text-[11px] font-semibold text-slate-700 mt-1 uppercase tracking-wider leading-snug">
-                  Global Regulations Supported
-                </div>
+            {/* Trust Points */}
+            <div className="flex flex-wrap items-center gap-y-2 gap-x-5 pt-2 text-xs text-slate-600 font-medium">
+              <div className="flex items-center gap-1.5">
+                <ShieldCheck className="h-4 w-4 text-[#14532D]" />
+                <span>21 CFR Part 11 Validated</span>
               </div>
-              <div className="p-4 rounded-xl glass-card-green">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#14532D] font-mono">360°</div>
-                <div className="text-[11px] font-semibold text-slate-700 mt-1 uppercase tracking-wider leading-snug">
-                  Lifecycle Coverage
-                </div>
+              <div className="flex items-center gap-1.5">
+                <CheckCircle2 className="h-4 w-4 text-[#14532D]" />
+                <span>Zero-Trust Security</span>
               </div>
-              <div className="p-4 rounded-xl glass-card-green">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#14532D] font-mono">3</div>
-                <div className="text-[11px] font-semibold text-slate-700 mt-1 uppercase tracking-wider leading-snug">
-                  Deployment Models
-                </div>
-              </div>
-              <div className="p-4 rounded-xl glass-card-green">
-                <div className="text-2xl sm:text-3xl font-extrabold text-[#14532D] font-mono">100%</div>
-                <div className="text-[11px] font-semibold text-slate-700 mt-1 uppercase tracking-wider leading-snug">
-                  Audit Trail Logging
-                </div>
+              <div className="flex items-center gap-1.5">
+                <Sparkles className="h-4 w-4 text-[#14532D]" />
+                <span>AI Multimodal OCR</span>
               </div>
             </div>
           </div>
 
-          {/* Right Column: Clean WhiteBG Video Showcase */}
-          <div className="lg:col-span-6 w-full mt-6 lg:mt-0 flex items-center justify-center">
-            <div className="w-full rounded-2xl sm:rounded-3xl border border-slate-200/90 bg-white shadow-xl shadow-slate-200/50 overflow-hidden flex items-center justify-center">
-              <video 
-                src={whiteBgAnimation} 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                className="w-full h-auto max-h-[500px] object-contain bg-white" 
-              />
+          {/* Right Column: Premium Framed Video Showcase */}
+          <div className="lg:col-span-6 w-full mt-4 lg:mt-0">
+            <div className="relative rounded-3xl p-3 sm:p-4 bg-gradient-to-br from-[#E8F3EC]/90 via-white to-[#E8F3EC]/50 border border-[#14532D]/15 shadow-xl shadow-emerald-950/5">
+              {/* Soft decorative background blur */}
+              <div className="absolute -top-8 -right-8 w-36 h-36 bg-emerald-200/40 rounded-full blur-2xl pointer-events-none" />
+
+              {/* Video Player Container */}
+              <div className="relative rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-xs flex items-center justify-center aspect-[16/10] sm:aspect-[16/9]">
+                <video 
+                  src={whiteBgAnimation} 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-full object-contain bg-white" 
+                />
+              </div>
+
+              {/* Elegant Micro-Caption */}
+              <div className="mt-3 px-2 flex items-center justify-between text-xs text-slate-600">
+                <span className="flex items-center gap-2 font-medium text-[#14532D]">
+                  <span className="h-2 w-2 rounded-full bg-[#14532D] animate-pulse" />
+                  Next-Gen Document AI & Intelligent Processing
+                </span>
+                <span className="text-slate-400 font-mono text-[11px] hidden sm:inline-block">
+                  SmartiDP EDMS
+                </span>
+              </div>
             </div>
           </div>
 
         </div>
 
-        {/* Regulatory Badges Bar */}
-        <div className="mt-12 sm:mt-16 pt-8 border-t border-slate-200 text-center">
+        {/* 4 Quantified Key Metrics from Brochure Page 2 (Horizontal 4-Column Row) */}
+        <div className="mt-12 sm:mt-16 grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
+          <div className="p-5 rounded-2xl glass-card-green hover:shadow-md transition-all text-left">
+            <div className="text-3xl sm:text-4xl font-extrabold text-[#14532D] font-mono">12+</div>
+            <div className="text-xs font-bold text-slate-900 mt-1 uppercase tracking-wide">
+              Global Regulations
+            </div>
+            <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              Technical controls for 21 CFR Part 11, EU Annex 11, ISO 13485, 9001, GDPR & HIPAA.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl glass-card-green hover:shadow-md transition-all text-left">
+            <div className="text-3xl sm:text-4xl font-extrabold text-[#14532D] font-mono">360°</div>
+            <div className="text-xs font-bold text-slate-900 mt-1 uppercase tracking-wide">
+              Lifecycle Coverage
+            </div>
+            <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              Complete governance from omnichannel capture and workflow to e-signatures & retention.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl glass-card-green hover:shadow-md transition-all text-left">
+            <div className="text-3xl sm:text-4xl font-extrabold text-[#14532D] font-mono">3</div>
+            <div className="text-xs font-bold text-slate-900 mt-1 uppercase tracking-wide">
+              Deployment Models
+            </div>
+            <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              Enterprise Multi-Tenant SaaS, Dedicated Private Cloud, or Self-Hosted On-Premise.
+            </p>
+          </div>
+
+          <div className="p-5 rounded-2xl glass-card-green hover:shadow-md transition-all text-left">
+            <div className="text-3xl sm:text-4xl font-extrabold text-[#14532D] font-mono">100%</div>
+            <div className="text-xs font-bold text-slate-900 mt-1 uppercase tracking-wide">
+              Audit Trail Logging
+            </div>
+            <p className="text-[11px] text-slate-600 mt-1 leading-relaxed">
+              Every action, revision, and signature is cryptographically tracked in tamper-evident logs.
+            </p>
+          </div>
+        </div>
+
+        {/* Global Regulatory Badges Carousel / Bar */}
+        <div className="mt-12 pt-8 border-t border-slate-200 text-center">
           <p className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-5">
             Engineered & Certified for Global Regulatory Frameworks
           </p>
