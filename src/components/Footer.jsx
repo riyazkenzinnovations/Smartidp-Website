@@ -6,7 +6,7 @@ import { ShieldCheck, ArrowUpRight, Globe, Lock } from 'lucide-react'
 export default function Footer({ onOpenDemoModal }) {
   return (
     <footer className="bg-white border-t border-slate-200 pt-16 pb-12 text-slate-600 text-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Top Grid */}
         <div className="grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
           {/* Brand Info */}

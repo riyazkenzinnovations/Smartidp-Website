@@ -6,11 +6,11 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
   return (
     <section className="relative pt-10 pb-16 md:pt-14 md:pb-24 overflow-hidden bg-gradient-to-b from-[#F5F7F5] via-white to-white border-b border-slate-200/70">
       {/* Background soft green radial ambient glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-7xl h-[500px] pointer-events-none overflow-hidden opacity-60">
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1720px] h-[500px] pointer-events-none overflow-hidden opacity-60">
         <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-[#E8F3EC] rounded-full blur-3xl" />
       </div>
 
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Main 2-Column Split: Copy on Left, Elegant Video Showcase on Right */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
           

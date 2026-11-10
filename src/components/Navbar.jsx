@@ -19,7 +19,7 @@ export default function Navbar({ onOpenDemoModal }) {
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b border-slate-200/80 shadow-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 h-20 flex items-center justify-between">
         <Link to="/" className="flex items-center group py-2">
           <img 
             src={brandLogo} 
