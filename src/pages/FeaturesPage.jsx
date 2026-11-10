@@ -130,9 +130,8 @@ export default function FeaturesPage({ onOpenDemoModal }) {
   const ActiveIcon = activeDomain.icon
 
   return (
-    <>
-      <div className="py-12 bg-white">
-        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+    <div className="py-12 bg-white">
+      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         
         {/* Breadcrumb */}
         <nav className="flex items-center gap-2 text-xs text-slate-500 mb-8 font-medium">
@@ -276,14 +275,8 @@ export default function FeaturesPage({ onOpenDemoModal }) {
           </div>
         </div>
 
-      </div>
-    </div>
-
-    {/* Platform Workbench Simulator */}
-    <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
-
-    <div className="py-16 bg-white">
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+        {/* Platform Workbench Simulator */}
+        <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
 
         {/* Bottom CTA Banner */}
         <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-[#14532D] text-white text-center space-y-4">
@@ -305,6 +298,5 @@ export default function FeaturesPage({ onOpenDemoModal }) {
 
       </div>
     </div>
-    </>
   )
 }
