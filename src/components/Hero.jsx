@@ -73,23 +73,17 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
             </div>
           </div>
 
-          {/* Right Column: Premium Framed Video Showcase */}
+          {/* Right Column: Clean Single-Border Video Showcase */}
           <div className="lg:col-span-6 w-full mt-4 lg:mt-0">
-            <div className="relative rounded-3xl p-3 sm:p-4 bg-gradient-to-br from-[#E8F3EC]/90 via-white to-[#E8F3EC]/50 border border-[#14532D]/15 shadow-xl shadow-emerald-950/5">
-              {/* Soft decorative background blur */}
-              <div className="absolute -top-8 -right-8 w-36 h-36 bg-emerald-200/40 rounded-full blur-2xl pointer-events-none" />
-
-              {/* Video Player Container */}
-              <div className="relative rounded-2xl bg-white border border-slate-200/80 overflow-hidden shadow-xs flex items-center justify-center aspect-[16/10] sm:aspect-[16/9]">
-                <video 
-                  src={whiteBgAnimation} 
-                  autoPlay 
-                  loop 
-                  muted 
-                  playsInline
-                  className="w-full h-full object-contain bg-white" 
-                />
-              </div>
+            <div className="relative rounded-3xl bg-white border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden flex items-center justify-center aspect-[16/10] sm:aspect-[16/9]">
+              <video 
+                src={whiteBgAnimation} 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-full object-contain bg-white" 
+              />
             </div>
           </div>
 
