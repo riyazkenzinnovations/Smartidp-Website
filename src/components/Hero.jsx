@@ -1,5 +1,6 @@
 import React from 'react'
-import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, FileText, Check, Lock, Users, Clock } from 'lucide-react'
+import smartIdpGif from '../assets/smartIDP.gif'
+import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, Cpu, FileText, Lock, Users, Clock } from 'lucide-react'
 
 export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
   return (
@@ -75,116 +76,51 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
           </div>
         </div>
 
-        {/* Professional EDMS Interface Mockup (Brochure Page 9 Representation) */}
-        <div className="mt-14 max-w-5xl mx-auto text-left rounded-2xl border border-slate-300/80 bg-white shadow-xl overflow-hidden">
+        {/* Professional EDMS Animated Showcase Frame with smartIDP.gif */}
+        <div className="mt-14 max-w-5xl mx-auto text-left rounded-3xl border border-slate-300/80 bg-white shadow-xl overflow-hidden">
           {/* Top Window Chrome */}
-          <div className="px-5 py-3 bg-[#F5F7F5] border-b border-slate-200 flex items-center justify-between text-xs text-slate-600">
+          <div className="px-5 py-3.5 bg-[#F5F7F5] border-b border-slate-200 flex items-center justify-between text-xs text-slate-600">
             <div className="flex items-center gap-2 font-mono text-[11px]">
               <span className="h-2.5 w-2.5 rounded-full bg-slate-300 inline-block" />
               <span className="h-2.5 w-2.5 rounded-full bg-slate-300 inline-block" />
               <span className="h-2.5 w-2.5 rounded-full bg-slate-300 inline-block" />
-              <span className="ml-3 text-slate-500 font-medium">edms.yourcompany.com / documents / SOP-QA-0142</span>
+              <span className="ml-3 text-slate-500 font-medium">app.smartidp.ai / edms / live-stream</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#E8F3EC] text-[#14532D] font-bold text-[10px]">
-                <ShieldCheck className="h-3 w-3" />
-                21 CFR Part 11 Validated
+              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F3EC] text-[#14532D] font-bold text-[10px]">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#14532D] animate-ping" />
+                AI Capture & Extraction Active
               </span>
             </div>
           </div>
 
-          {/* Inner Interface Simulation */}
-          <div className="p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 bg-white">
-            {/* Document Content View */}
-            <div className="lg:col-span-8 space-y-4">
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-3">
-                <div>
-                  <h3 className="text-lg font-bold text-[#14532D]">
-                    SOP-QA-0142 · Deviation Handling & Corrective Actions
-                  </h3>
-                  <div className="text-xs text-slate-500 mt-0.5">
-                    Standard Operating Procedure · Quality Assurance · Global Enterprise Release
-                  </div>
-                </div>
-                <span className="px-2.5 py-1 rounded-md bg-[#14532D] text-white text-xs font-bold">
-                  Effective v4.0
-                </span>
-              </div>
-
-              {/* Verified Electronic Signature Box (Brochure Page 9 & 16) */}
-              <div className="p-3.5 rounded-xl bg-[#E8F3EC]/80 border border-[#14532D]/20 text-xs text-slate-800 flex items-start gap-3">
-                <div className="p-1.5 rounded-lg bg-[#14532D] text-white shrink-0 mt-0.5">
-                  <Check className="h-4 w-4" />
-                </div>
-                <div>
-                  <div className="font-bold text-[#14532D]">
-                    Digitally Signed & Approved by Quality Assurance Head
-                  </div>
-                  <div className="text-[11px] text-slate-600 mt-0.5">
-                    Date & Time: <span className="font-mono font-medium">2026-03-14 09:42 UTC</span> · Meaning: <strong className="text-slate-900">Regulatory Approval</strong> · Cryptographic SHA-256 Binding
-                  </div>
-                </div>
-              </div>
-
-              {/* Document Text Snippet */}
-              <div className="p-4 rounded-xl bg-[#F5F7F5] border border-slate-200 text-xs text-slate-700 leading-relaxed font-sans space-y-2">
-                <div className="font-bold text-slate-900">1. Purpose & Scope</div>
-                <p>
-                  This standard operating procedure defines the systematic identification, risk assessment, root cause investigation, and escalation protocol for all non-conformances across GxP manufacturing facilities.
-                </p>
-                <div className="font-bold text-slate-900 pt-1">2. Responsibilities</div>
-                <p>
-                  Document owners, parallel reviewers, and qualified delegates must authenticate via two-component credentials prior to executing formal disposition or lifecycle transitions.
-                </p>
-              </div>
+          {/* Animated smartIDP.gif Showcase */}
+          <div className="relative aspect-video max-h-[500px] w-full bg-slate-950 flex items-center justify-center overflow-hidden">
+            <img 
+              src={smartIdpGif} 
+              alt="SmartiDP EDMS AI Ingestion & Processing" 
+              className="w-full h-full object-contain" 
+            />
+            <div className="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 flex items-center gap-2 bg-white/95 backdrop-blur-md px-4 py-2 rounded-xl border border-slate-200 text-xs shadow-lg">
+              <Cpu className="h-4 w-4 text-[#14532D] animate-spin" />
+              <span className="text-slate-800 font-semibold">AI Extraction & Classification:</span>
+              <span className="text-[#14532D] font-mono font-bold">340ms · 99.8% Accuracy</span>
             </div>
+          </div>
 
-            {/* Sidebar Metadata & Audit Trail */}
-            <div className="lg:col-span-4 space-y-4 border-t lg:border-t-0 lg:border-l lg:border-slate-100 lg:pl-6 pt-4 lg:pt-0">
-              <div>
-                <div className="text-xs font-bold uppercase tracking-wider text-[#14532D] mb-2 flex items-center justify-between">
-                  <span>Document Properties</span>
-                  <span className="text-[10px] text-slate-400 font-mono">ISO 9001:2015</span>
-                </div>
-                <div className="space-y-1.5 text-xs">
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Document Type:</span>
-                    <span className="font-medium text-slate-800">Controlled SOP</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Owner:</span>
-                    <span className="font-medium text-slate-800">Quality Assurance</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Site Scope:</span>
-                    <span className="font-medium text-slate-800">All Manufacturing Sites</span>
-                  </div>
-                  <div className="flex justify-between py-1 border-b border-slate-100">
-                    <span className="text-slate-500">Next Review:</span>
-                    <span className="font-medium text-emerald-800">2028-03-14</span>
-                  </div>
-                </div>
-              </div>
-
-              <div>
-                <div className="text-xs font-bold uppercase tracking-wider text-[#14532D] mb-2">
-                  Tamper-Evident Audit Trail
-                </div>
-                <div className="space-y-2 text-[11px] font-mono">
-                  <div className="p-2 rounded bg-[#E8F3EC] text-slate-800 flex items-center justify-between">
-                    <span>09:42 · Approved (e-signature)</span>
-                    <Check className="h-3 w-3 text-[#14532D]" />
-                  </div>
-                  <div className="p-2 rounded bg-slate-50 text-slate-600 flex items-center justify-between">
-                    <span>09:15 · Review completed (3/3)</span>
-                    <Check className="h-3 w-3 text-slate-400" />
-                  </div>
-                  <div className="p-2 rounded bg-slate-50 text-slate-600 flex items-center justify-between">
-                    <span>08:02 · Redline comment resolved</span>
-                    <Check className="h-3 w-3 text-slate-400" />
-                  </div>
-                </div>
-              </div>
+          {/* Bottom Feature Badges */}
+          <div className="p-4 bg-[#F5F7F5] border-t border-slate-200 grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs text-slate-700">
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-[#14532D]" />
+              <span>Omnichannel Ingestion & OCR</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-[#14532D]" />
+              <span>Multi-Modal AI Classification</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <CheckCircle2 className="h-4 w-4 text-[#14532D]" />
+              <span>Validation Station with Part 11 Audit</span>
             </div>
           </div>
         </div>
