@@ -1,5 +1,5 @@
 import React from 'react'
-import smartIdpGif from '../assets/smartIDP.gif'
+import whiteBgAnimation from '../assets/SmartIDP_WhiteBG_Animation.mp4'
 import { Sparkles, ArrowRight, Play, CheckCircle2, ShieldCheck, Cpu, FileText, Check, Lock, Users, Clock } from 'lucide-react'
 
 export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
@@ -106,12 +106,15 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
                 </div>
               </div>
 
-              {/* Animated smartIDP.gif Showcase */}
-              <div className="relative aspect-[4/3] sm:aspect-video w-full bg-slate-950 flex items-center justify-center overflow-hidden">
-                <img 
-                  src={smartIdpGif} 
-                  alt="SmartiDP EDMS AI Ingestion & Processing" 
-                  className="w-full h-full object-contain" 
+              {/* Animated WhiteBG Video Showcase */}
+              <div className="relative aspect-[4/3] sm:aspect-video w-full bg-white flex items-center justify-center overflow-hidden">
+                <video 
+                  src={whiteBgAnimation} 
+                  autoPlay 
+                  loop 
+                  muted 
+                  playsInline
+                  className="w-full h-full object-contain bg-white" 
                 />
                 <div className="absolute bottom-3 left-3 right-3 flex items-center gap-2 bg-white/95 backdrop-blur-md px-3.5 py-1.5 rounded-xl border border-slate-200 text-xs shadow-md">
                   <Cpu className="h-3.5 w-3.5 text-[#14532D] animate-spin" />
