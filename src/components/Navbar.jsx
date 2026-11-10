@@ -19,8 +19,8 @@ export default function Navbar({ onOpenDemoModal }) {
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-xl bg-white/95 border-b border-slate-200/80 shadow-xs">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        <Link to="/" className="flex items-center group py-2 shrink-0">
+      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16 h-20 flex items-center justify-between">
+        <Link to="/" className="flex items-center group py-2">
           <img 
             src={brandLogo} 
             alt="SmartiDP EDMS — Kenz Innovations" 
@@ -29,14 +29,14 @@ export default function Navbar({ onOpenDemoModal }) {
         </Link>
 
         {/* Desktop Navigation */}
-        <nav className="hidden xl:flex items-center gap-1 sm:gap-2 text-xs font-semibold text-slate-700">
+        <nav className="hidden xl:flex items-center gap-1.5 sm:gap-2.5 text-sm font-semibold text-slate-700">
           {NAV_LINKS.map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               end={link.path === '/'}
               className={({ isActive }) =>
-                `px-3 py-2 rounded-xl transition-all ${
+                `px-3.5 py-2 rounded-xl transition-all whitespace-nowrap ${
                   isActive
                     ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
                     : 'text-slate-700 hover:text-[#14532D] hover:bg-[#F5F7F5]'
@@ -49,14 +49,14 @@ export default function Navbar({ onOpenDemoModal }) {
         </nav>
 
         {/* Medium-screen Navigation fallback */}
-        <nav className="hidden lg:flex xl:hidden items-center gap-1 text-xs font-semibold text-slate-700">
+        <nav className="hidden lg:flex xl:hidden items-center gap-1 text-[13px] font-semibold text-slate-700">
           {NAV_LINKS.slice(0, 6).map((link) => (
             <NavLink
               key={link.path}
               to={link.path}
               end={link.path === '/'}
               className={({ isActive }) =>
-                `px-2.5 py-1.5 rounded-lg transition-all ${
+                `px-2.5 py-1.5 rounded-lg transition-all whitespace-nowrap ${
                   isActive
                     ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
                     : 'text-slate-700 hover:text-[#14532D] hover:bg-[#F5F7F5]'
@@ -69,7 +69,7 @@ export default function Navbar({ onOpenDemoModal }) {
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              `px-2.5 py-1.5 rounded-lg transition-all ${
+              `px-2.5 py-1.5 rounded-lg transition-all whitespace-nowrap ${
                 isActive
                   ? 'text-[#14532D] font-bold bg-[#E8F3EC]'
                   : 'text-slate-700 hover:text-[#14532D] hover:bg-[#F5F7F5]'
@@ -86,16 +86,16 @@ export default function Navbar({ onOpenDemoModal }) {
             href="https://www.smartidp.ai"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs font-semibold px-3.5 py-2 text-slate-700 hover:text-[#14532D] hover:bg-[#E8F3EC] rounded-xl transition-all"
+            className="text-sm font-semibold px-4 py-2 text-slate-700 hover:text-[#14532D] hover:bg-[#E8F3EC] rounded-xl transition-all whitespace-nowrap"
           >
             Client Portal
           </a>
           <button 
             onClick={onOpenDemoModal}
-            className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold text-xs shadow-md shadow-emerald-950/10 hover:shadow-lg transition-all cursor-pointer"
+            className="group relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold text-sm shadow-md shadow-emerald-950/10 hover:shadow-lg transition-all cursor-pointer whitespace-nowrap"
           >
             <span>Request a Demo</span>
-            <ArrowRight className="h-3.5 w-3.5 group-hover:translate-x-0.5 transition-transform" />
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-0.5 transition-transform" />
           </button>
         </div>
 
