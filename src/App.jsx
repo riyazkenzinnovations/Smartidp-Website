@@ -1,4 +1,5 @@
 import React, { useState, useMemo } from 'react'
+import initialLogo from './assets/initial.png'
 import {
   FileText,
   ScanText,
@@ -199,8 +200,8 @@ export default function App() {
       <header className="sticky top-0 z-50 backdrop-blur-xl bg-slate-950/80 border-b border-slate-800/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="h-10 w-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/25 border border-indigo-400/30">
-              <ScanText className="h-5 w-5 text-white" />
+            <div className="h-10 w-10 rounded-xl bg-slate-900 border border-slate-700/80 p-1 flex items-center justify-center shadow-lg shadow-indigo-500/20 overflow-hidden">
+              <img src={initialLogo} alt="SmartIDP Logo" className="h-full w-full object-contain" />
             </div>
             <div>
               <div className="text-xl font-bold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white via-slate-100 to-indigo-200">
@@ -1270,8 +1271,8 @@ export default function App() {
       <footer className="relative z-10 bg-slate-950 border-t border-slate-800/80 py-12 text-slate-400 text-xs">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white">
-              <ScanText className="h-4 w-4" />
+            <div className="h-8 w-8 rounded-lg bg-slate-900 border border-slate-700/80 p-0.5 flex items-center justify-center overflow-hidden">
+              <img src={initialLogo} alt="SmartIDP Logo" className="h-full w-full object-contain" />
             </div>
             <span className="font-bold text-white text-sm">SmartIDP Platform</span>
             <span className="text-slate-400">© 2026 SmartIDP Inc. All rights reserved.</span>
