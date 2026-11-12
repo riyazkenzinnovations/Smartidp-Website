@@ -14,6 +14,7 @@ import HowItWorksPage from './pages/HowItWorksPage'
 import BenefitsPage from './pages/BenefitsPage'
 import CompliancePage from './pages/CompliancePage'
 import ContactPage from './pages/ContactPage'
+import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
   const [demoModalOpen, setDemoModalOpen] = useState(false)
@@ -68,7 +69,7 @@ export default function App() {
             />
             <Route 
               path="*" 
-              element={<Navigate to="/" replace />} 
+              element={<NotFoundPage />} 
             />
           </Routes>
         </main>
