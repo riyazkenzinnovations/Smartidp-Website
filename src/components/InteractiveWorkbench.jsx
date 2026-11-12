@@ -1,1069 +1,708 @@
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import {
-  FileText,
-  ScanText,
-  ShieldCheck,
-  CheckCircle2,
-  Clock,
-  Eye,
-  Check,
-  RefreshCw,
-  Lock,
-  FileSignature,
-  History,
-  Sparkles,
-  ArrowRight,
-  ExternalLink,
-  GitBranch,
-  FileCheck2,
-  BadgeCheck,
-  Printer,
-  Copy,
-  Cpu,
-  Fingerprint,
-  Calendar,
-  Building2,
-  AlertCircle
+  ArrowRight, BadgeCheck, Check, Copy, ExternalLink, FileSignature, FileText,
+  Fingerprint, GitBranch, History, Lock, RefreshCw, ScanText, ShieldCheck, Sparkles
 } from 'lucide-react'
+import { SAMPLE_DOCS } from './data/smartidpSamples'
 
-const SAMPLE_DOCS = [
-  {
-    id: 'sop',
-    code: 'SOP-QA-0142',
-    revision: 'Rev 4.0',
-    title: 'Deviation Handling & CAPA Protocol',
-    category: 'Life Sciences / GxP',
-    compliance: '21 CFR Part 11 · GAMP 5 · EU Annex 11',
-    status: 'Effective',
-    statusColor: 'emerald',
-    orgName: 'KENZ BIOPHARMA LABS · QUALITY SYSTEM',
-    docType: 'Standard Operating Procedure (SOP)',
-    classification: 'Restricted GxP Controlled',
-    effectiveDate: '2026-03-14',
-    reviewCycle: '24 Months (Due 2028-03-14)',
-    signedBy: 'Dr. Evelyn Vance, Ph.D.',
-    signerRole: 'VP of Quality Assurance & Regulatory Affairs',
-    authMethod: 'Two-Component (SAML 2.0 SSO + FIDO2 WebAuthn)',
-    signedTime: '2026-03-14 09:42:15 UTC',
-    meaning: 'Regulatory Approval & Commercial Release',
-    sha256: '88fa2b109e44bc7190d7a2210c4391e6b8a1c90df0428d01f92e3a15b7c024d9',
-    certId: 'KENZ-CERT-2026-GxP-8891',
-    fields: [
-      { label: 'Document Type', value: 'Standard Operating Procedure (SOP)', conf: 100, verified: true },
-      { label: 'Classification', value: 'Internal Restricted (GxP)', conf: 100, verified: true },
-      { label: 'Document Owner', value: 'Quality Assurance Dept.', conf: 99.8, verified: true },
-      { label: 'Effective Date', value: '2026-03-14', conf: 100, verified: true },
-      { label: 'Periodic Review Cycle', value: '24 Months (March 2028)', conf: 99.7, verified: true },
-      { label: 'Assigned Training', value: 'Mandatory Read-and-Acknowledge (142 Users)', conf: 99.5, verified: true }
-    ],
-    docClauses: [
-      {
-        num: '1.0',
-        title: 'PURPOSE & REGULATORY SCOPE',
-        text: 'This Standard Operating Procedure governs the systematic identification, triage, root-cause investigation, and CAPA escalation of deviations arising during commercial pharmaceutical packaging, sterile fill-finish, and cold-chain distribution.',
-        ocrMatch: null
-      },
-      {
-        num: '2.0',
-        title: 'INCIDENT CLASSIFICATION & TRIAGE',
-        text: 'All non-conformances must be classified within 2 hours of detection into Minor (no product impact), Major (process parameter deviation within validation limits), or Critical (sterility breach or potency excursion requiring QA quarantine).',
-        ocrMatch: 'Classification: Internal Restricted (GxP)'
-      },
-      {
-        num: '3.0',
-        title: 'MANDATORY PERIODIC REVIEW & GOVERNANCE',
-        text: 'Per 21 CFR Part 11 and EU GMP Annex 11, this procedure remains effective for a strict 24-month horizon. Automated re-qualification workflows trigger at Day 660 with mandatory electronic read-and-acknowledge assigned to 142 certified operators.',
-        ocrMatch: 'Periodic Review: 24 Months · Mandatory Read-and-Acknowledge'
-      }
-    ],
-    versions: [
-      { ver: 'v4.0', status: 'Effective', date: '2026-03-14', user: 'Dr. Evelyn Vance (QA Head)', notes: 'Updated 24h CAPA trigger per FDA warning letter guidance.' },
-      { ver: 'v3.1', status: 'Superseded', date: '2024-03-10', user: 'Marcus Chen (QA Lead)', notes: 'Minor terminology harmonization with ISO 9001:2015.' },
-      { ver: 'v3.0', status: 'Archived Baseline', date: '2022-03-01', user: 'Marcus Chen (QA Lead)', notes: 'Initial migration into SmartiDP cloud repository.' }
-    ],
-    diffs: [
-      {
-        section: 'Section 2.3 · Investigation Escalation Timelines',
-        oldText: 'Investigations shall initiate within 48 business hours of initial triage notification.',
-        newText: 'Investigations shall initiate within 24 calendar hours per FDA warning letter guidance 2026.'
-      },
-      {
-        section: 'Section 4.1 · Batch Disposition Electronic Sign-Off',
-        oldText: 'Manual wet signatures permitted on Annex-C when network outages exceed 6 hours.',
-        newText: 'All batch disposition decisions strictly require two-component 21 CFR Part 11 digital signatures; manual waivers prohibited.'
-      }
-    ],
-    auditLogs: [
-      { time: '09:42:15.819 UTC', event: 'E-SIGNATURE APPLIED', user: 'Dr. Evelyn Vance (QA Head)', terminal: '10.240.14.92 · Secure Workstation', hash: 'sha256:88fa2b10...', prevHash: 'sha256:44b19e...' },
-      { time: '09:15:02.104 UTC', event: 'PARALLEL WORKFLOW APPROVED', user: 'System (BPMN 2.0 Engine)', terminal: 'SmartIDP Workflow Cluster', hash: 'sha256:44b19e02...', prevHash: 'sha256:190d7a...' },
-      { time: '08:02:40.450 UTC', event: 'REDLINE DELTA RESOLVED', user: 'James Doe (Lead Author)', terminal: '10.240.14.88 · Authoring Station', hash: 'sha256:190d7a22...', prevHash: 'sha256:32c841...' },
-      { time: 'Yesterday 16:30 UTC', event: 'MULTIMODAL OCR INGEST', user: 'SmartIDP Neural Ingest Core', terminal: 'OCR Worker Instance #04', hash: 'sha256:32c841e0...', prevHash: 'GENESIS-BLOCK' }
-    ]
-  },
-  {
-    id: 'invoice',
-    code: 'INV-55190',
-    revision: 'PO-88213',
-    title: 'Accounts Payable Commercial Invoice',
-    category: 'Finance / AP Automation',
-    compliance: 'ISO 9001 · 3-Way PO Reconciliation · GAAP',
-    status: 'Ready for Payment',
-    statusColor: 'blue',
-    orgName: 'KENZ ENTERPRISE SYSTEMS · FINANCE OPERATIONS',
-    docType: 'Commercial Tax Invoice',
-    classification: 'Confidential Financial Record',
-    effectiveDate: '2026-03-14',
-    reviewCycle: '7 Years Retention Schedule',
-    signedBy: 'Alistair Cooper, CPA',
-    signerRole: 'Director of Corporate Financial Controllership',
-    authMethod: 'Two-Component (Microsoft Entra ID + TOTP)',
-    signedTime: '2026-03-14 11:20:04 UTC',
-    meaning: 'ERP NetSuite Disbursement Authorization',
-    sha256: '77b1029fe8011cb20194a552199bce8812a048dc0910e42718fb89190cde0142',
-    certId: 'KENZ-FIN-2026-AP-5519',
-    fields: [
-      { label: 'Supplier Entity', value: 'BioMatrix Laboratory Supplies Ltd', conf: 99.4, verified: true },
-      { label: 'Invoice Number', value: 'INV-55190 (Tax ID: US-991402)', conf: 100, verified: true },
-      { label: 'Purchase Order Link', value: 'PO-88213 (Line Item 100% Match)', conf: 99.8, verified: true },
-      { label: 'Net Subtotal', value: '$11,500.00 USD', conf: 100, verified: true },
-      { label: 'Tax Amount (8.5%)', value: '$977.50 USD', conf: 99.2, verified: true },
-      { label: 'Total Payable Amount', value: '$12,477.50 USD (Net 30)', conf: 100, verified: true }
-    ],
-    docClauses: [
-      {
-        num: 'ITEM 1',
-        title: 'STERILE CONSUMABLES & LABWARE',
-        text: 'Qty: 500 Units · Part #BM-901-T · Gamma-irradiated 50mL Centrifuge Tubes · Unit Price: $12.00 USD · Line Total: $6,000.00 USD. Verified against Receiving Slip GRN-2026-4410.',
-        ocrMatch: 'Supplier: BioMatrix Supplies · Line Total: $6,000.00'
-      },
-      {
-        num: 'ITEM 2',
-        title: 'CALIBRATED MICROPIPETTE ARRAYS',
-        text: 'Qty: 10 Units · Part #BM-PIPE-8 · 8-Channel Electronic Pipettor with NIST Calibration Certificate · Unit Price: $550.00 USD · Line Total: $5,500.00 USD.',
-        ocrMatch: 'Purchase Order Link: PO-88213 · Line Total: $5,500.00'
-      },
-      {
-        num: 'SUMMARY',
-        title: 'TAX & PAYMENT RECONCILIATION',
-        text: 'Subtotal: $11,500.00 USD · Applicable Sales Tax (8.5%): $977.50 USD · Grand Total: $12,477.50 USD · Payment Terms: Net 30 Days · Automated 3-way match matched PO, Invoice, and Goods Receipt.',
-        ocrMatch: 'Total Payable Amount: $12,477.50 USD'
-      }
-    ],
-    versions: [
-      { ver: 'v1.1', status: 'Payment Authorized', date: '2026-03-14', user: 'Alistair Cooper (Finance)', notes: 'Approved 3-way ERP match with PO-88213.' },
-      { ver: 'v1.0', status: 'Initial Ingestion', date: '2026-03-14', user: 'SmartIDP Ingestion AI', notes: 'Automated email inbox capture from billing@biomatrix.com.' }
-    ],
-    diffs: [
-      {
-        section: 'Line 2 Discrepancy Reconciliation',
-        oldText: 'Tax rate parsed as 8.0% standard ($920.00 USD) - flagged for review.',
-        newText: 'County surcharge applied (+0.5%) updated to exact 8.5% ($977.50 USD) matched against vendor master profile.'
-      }
-    ],
-    auditLogs: [
-      { time: '11:20:04.102 UTC', event: 'ERP PAYMENT RELEASED', user: 'Alistair Cooper (Finance)', terminal: 'NetSuite ERP Connector Gateway', hash: 'sha256:77b1029f...', prevHash: 'sha256:99f301...' },
-      { time: '10:45:11.882 UTC', event: '3-WAY PO MATCH CONFIRMED', user: 'SmartIDP Match Engine', terminal: 'Automated Validation Station', hash: 'sha256:99f30140...', prevHash: 'sha256:55e819...' },
-      { time: '10:42:00.320 UTC', event: 'OMNICHANNEL INGEST (EMAIL)', user: 'AP Inbound Ingestion Hub', terminal: 'Office 365 Exchange Listener', hash: 'sha256:55e81911...', prevHash: 'GENESIS-BLOCK' }
-    ]
-  },
-  {
-    id: 'dhf',
-    code: 'DHF-MD-0914',
-    revision: 'Rev 2.0',
-    title: 'Design History File · CardioSmart Gen-3',
-    category: 'Medical Devices / ISO 13485',
-    compliance: 'ISO 13485:2016 · EU MDR 2017/745 · FDA QMSR 820',
-    status: 'Locked for CE Submission',
-    statusColor: 'purple',
-    orgName: 'KENZ MEDTECH SYSTEMS · REGULATORY DOSSIER',
-    docType: 'Medical Device Technical Dossier',
-    classification: 'Class IIb Active Medical Device File',
-    effectiveDate: '2026-03-14',
-    reviewCycle: 'Permanent Device Lifecycle Record',
-    signedBy: 'Madeline Vance, RAC',
-    signerRole: 'Chief Regulatory Affairs & Quality Compliance Officer',
-    authMethod: 'Two-Component (Okta Verify Push + Biometrics)',
-    signedTime: '2026-03-14 14:15:30 UTC',
-    meaning: 'Technical Documentation & CE Mark Sign-Off',
-    sha256: '129ef402bb8a091e4a3199bc45120aef91209841bb02998a4421b0923e110492',
-    certId: 'KENZ-MDR-2026-CE-0914',
-    fields: [
-      { label: 'Device Platform', value: 'CardioSmart Infusion System Gen-3', conf: 100, verified: true },
-      { label: 'Risk Standard Compliance', value: 'ISO 14971:2019 Risk Management Aligned', conf: 99.8, verified: true },
-      { label: 'Regulatory Classification', value: 'Class IIb Active Infusion Device', conf: 100, verified: true },
-      { label: 'Traceability Matrix', value: '100% Verification Coverage (48/48 Req)', conf: 99.9, verified: true },
-      { label: 'Engineering Change Ref', value: 'ECO-2026-0412 (Firmware Safety Kernel v2.4)', conf: 99.6, verified: true },
-      { label: 'Notified Body Dossier', value: 'Technical File Section 4.2 Locked', conf: 100, verified: true }
-    ],
-    docClauses: [
-      {
-        num: 'SECTION 1',
-        title: 'DEVICE DESCRIPTION & INTENDED CLINICAL USE',
-        text: 'The CardioSmart Infusion System Gen-3 delivers controlled intravenous administration of critical cardiovascular therapies in ICU and emergency transport environments with dual redundant pressure sensors.',
-        ocrMatch: 'Device: CardioSmart Infusion System Gen-3'
-      },
-      {
-        num: 'SECTION 2',
-        title: 'RISK MANAGEMENT & ALARM TRACEABILITY',
-        text: 'In accordance with ISO 14971:2019 and IEC 60601-1-8, all single-fault occlusion scenarios trigger audible/visual alerts within 1.2 seconds, fail-safe clamping, and automated telemetry dispatch to nursing stations.',
-        ocrMatch: 'Risk Standard: ISO 14971:2019 Aligned'
-      },
-      {
-        num: 'SECTION 3',
-        title: 'VERIFICATION MATRIX & REGULATORY LOCK',
-        text: '48 of 48 design input requirements have verified protocols (Protocol DVP-880 through DVP-928) signed and locked under ECO-2026-0412. Uncontrolled modifications are cryptographically blocked.',
-        ocrMatch: 'Traceability: 100% Verification Coverage (48/48 Req)'
-      }
-    ],
-    versions: [
-      { ver: 'v2.0', status: 'Locked (CE Ready)', date: '2026-03-14', user: 'Madeline Vance (Reg Affairs)', notes: 'Final submission freeze for TÜV SÜD Notified Body audit.' },
-      { ver: 'v1.2', status: 'Superseded Draft', date: '2025-11-20', user: 'Thomas Becker (Lead Eng)', notes: 'Integrated human factors usability testing results per IEC 62366-1.' },
-      { ver: 'v1.0', status: 'Archived Baseline', date: '2025-06-15', user: 'Thomas Becker (Lead Eng)', notes: 'Initial architecture definition baseline.' }
-    ],
-    diffs: [
-      {
-        section: 'Section 4.2 · Cybersecurity Kernel Update',
-        oldText: 'Bluetooth Low Energy pairing allowed default PIN fallback during commissioning.',
-        newText: 'Mandatory elliptic-curve cryptographic pairing (ECDSA P-256) enforced per FDA Postmarket Cybersecurity Guidance 2026.'
-      }
-    ],
-    auditLogs: [
-      { time: '14:15:30.902 UTC', event: 'DHF LOCKED FOR SUBMISSION', user: 'Madeline Vance (Reg Affairs)', terminal: '10.240.18.12 · Regulatory Station', hash: 'sha256:129ef402...', prevHash: 'sha256:443ac1...' },
-      { time: '12:00:10.455 UTC', event: 'ISO 14971 RISK MATRIX SEALED', user: 'Dr. Rebecca Ramos (Safety Lead)', terminal: 'Risk Management Node #02', hash: 'sha256:443ac190...', prevHash: 'sha256:908fa1...' },
-      { time: 'Yesterday 18:22 UTC', event: 'DESIGN VERIFICATION LINKED', user: 'Thomas Becker (Lead Eng)', terminal: '10.240.18.05 · Engineering Workstation', hash: 'sha256:908fa112...', prevHash: 'GENESIS-BLOCK' }
-    ]
-  }
+const TABS = [
+  { id: 'preview', label: 'Document & Extraction', icon: FileText },
+  { id: 'signature', label: '21 CFR Part 11 Signature', icon: FileSignature },
+  { id: 'audit', label: 'Audit Trail', icon: History, count: d => d.auditLogs.length },
+  { id: 'diff', label: 'Version & Diff', icon: GitBranch, count: d => d.versions.length },
 ]
 
+const STATUS_STYLES = {
+  teal: 'bg-teal-50 text-teal-800 ring-teal-200',
+  emerald: 'bg-teal-50 text-teal-800 ring-teal-200',
+  blue: 'bg-[#F0FDF4] text-[#14532D] ring-[#14532D]/20',
+  purple: 'bg-violet-50 text-violet-800 ring-violet-200',
+}
+
+const VERIFY_STAGES = [
+  'Reading controlled payload',
+  'Computing SHA-256 digest',
+  'Comparing to ledger anchor',
+  'Digest matches ledger anchor',
+]
+
+const KEYFRAMES = `
+@keyframes wbFade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+.wb-fade { animation: wbFade .35s ease-out both; }
+@media (prefers-reduced-motion: reduce) { .wb-fade { animation: none; } }
+`
+
+// Heuristic: link an extracted field to the clause it was read from.
+function clauseIndexForField(field, clauses) {
+  const words = field.value.split(/[\s()·:,]+/).filter(w => w.length > 4)
+  return clauses.findIndex(c => c.ocrMatch && words.some(w => c.ocrMatch.includes(w)))
+}
+
+// Word-level LCS diff. Returns [{ k: 'same' | 'del' | 'add', t }].
+function wordDiff(oldText, newText) {
+  const a = oldText.split(' ')
+  const b = newText.split(' ')
+  const dp = Array.from({ length: a.length + 1 }, () => Array(b.length + 1).fill(0))
+  for (let i = a.length - 1; i >= 0; i--)
+    for (let j = b.length - 1; j >= 0; j--)
+      dp[i][j] = a[i] === b[j] ? dp[i + 1][j + 1] + 1 : Math.max(dp[i + 1][j], dp[i][j + 1])
+
+  const out = []
+  let i = 0, j = 0
+  while (i < a.length || j < b.length) {
+    if (i < a.length && j < b.length && a[i] === b[j]) { out.push({ k: 'same', t: a[i] }); i++; j++ }
+    else if (j >= b.length || (i < a.length && dp[i + 1][j] >= dp[i][j + 1])) { out.push({ k: 'del', t: a[i] }); i++ }
+    else { out.push({ k: 'add', t: b[j] }); j++ }
+  }
+  return out
+}
+
 export default function InteractiveWorkbench({ onOpenDemoModal }) {
-  const [selectedDoc, setSelectedDoc] = useState(SAMPLE_DOCS[0])
-  const [activeTab, setActiveTab] = useState('preview') // 'preview' | 'signature' | 'audit' | 'diff'
-  const [showBoundingBoxes, setShowBoundingBoxes] = useState(true)
-  const [isVerifying, setIsVerifying] = useState(false)
-  const [verifySuccess, setVerifySuccess] = useState(false)
-  const [copiedHash, setCopiedHash] = useState(false)
-  const [isSimulatingSwitch, setIsSimulatingSwitch] = useState(false)
+  const [docIndex, setDocIndex] = useState(0)
+  const doc = SAMPLE_DOCS[docIndex]
+  const [tab, setTab] = useState('preview')
+  const [activeField, setActiveField] = useState(null)
+  const [highlights, setHighlights] = useState(true)
+  const [verify, setVerify] = useState({ status: 'idle', stage: 0 })
+  const [copied, setCopied] = useState(null)
+  const [barsReady, setBarsReady] = useState(false)
+  const [switching, setSwitching] = useState(false)
+  const tabRefs = useRef([])
 
-  const handleSelectDoc = (doc) => {
-    if (doc.id === selectedDoc.id) return
-    setIsSimulatingSwitch(true)
-    setSelectedDoc(doc)
-    setVerifySuccess(false)
-    setTimeout(() => {
-      setIsSimulatingSwitch(false)
-    }, 450)
+  const clauseLinks = useMemo(
+    () => doc.fields.map(f => clauseIndexForField(f, doc.docClauses)),
+    [doc]
+  )
+
+  const meanConf = useMemo(
+    () => (doc.fields.reduce((s, f) => s + f.conf, 0) / doc.fields.length).toFixed(1),
+    [doc]
+  )
+
+  // Reset per-document state and animate confidence bars in.
+  useEffect(() => {
+    setBarsReady(false)
+    setVerify({ status: 'idle', stage: 0 })
+    setActiveField(null)
+    setSwitching(true)
+    const t1 = setTimeout(() => setBarsReady(true), 80)
+    const t2 = setTimeout(() => setSwitching(false), 450)
+    return () => { clearTimeout(t1); clearTimeout(t2) }
+  }, [docIndex])
+
+  // Staged hash verification.
+  useEffect(() => {
+    if (verify.status !== 'running') return
+    if (verify.stage >= VERIFY_STAGES.length - 1) {
+      setVerify(v => ({ ...v, status: 'done' }))
+      return
+    }
+    const t = setTimeout(() => setVerify(v => ({ ...v, stage: v.stage + 1 })), 550)
+    return () => clearTimeout(t)
+  }, [verify])
+
+  const copy = (key) => {
+    navigator.clipboard?.writeText(doc.sha256).catch(() => {})
+    setCopied(key)
+    setTimeout(() => setCopied(c => (c === key ? null : c)), 1800)
   }
 
-  const handleVerifyHash = () => {
-    setIsVerifying(true)
-    setTimeout(() => {
-      setIsVerifying(false)
-      setVerifySuccess(true)
-    }, 700)
-  }
-
-  const handleCopyHash = () => {
-    navigator.clipboard?.writeText(selectedDoc.sha256)
-    setCopiedHash(true)
-    setTimeout(() => setCopiedHash(false), 2000)
+  const onTabKey = (e, idx) => {
+    const step = { ArrowRight: 1, ArrowDown: 1, ArrowLeft: -1, ArrowUp: -1 }[e.key]
+    if (!step) return
+    e.preventDefault()
+    const next = (idx + step + TABS.length) % TABS.length
+    setTab(TABS[next].id)
+    tabRefs.current[next]?.focus()
   }
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F5F7F5] border-y border-slate-200 relative overflow-hidden">
-      {/* Subtle background ambient grid pattern */}
-      <div className="absolute inset-0 bg-[radial-gradient(#14532D_1px,transparent_1px)] [background-size:24px_24px] opacity-[0.03] pointer-events-none" />
+    <section className="relative overflow-hidden border-b border-slate-200 bg-white py-20 lg:py-28">
+      <style>{KEYFRAMES}</style>
 
-      <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-4 shadow-2xs">
-            <Sparkles className="h-3.5 w-3.5 text-[#14532D]" />
-            <span>INTERACTIVE PLATFORM SIMULATION</span>
+      {/* Quiet engineering-paper grid */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 opacity-[0.035] [background-image:linear-gradient(#0f172a_1px,transparent_1px),linear-gradient(90deg,#0f172a_1px,transparent_1px)] [background-size:32px_32px]"
+      />
+
+      <div className="relative mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
+
+        {/* Header: left-aligned editorial */}
+        <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-8">
+            <p className="font-mono text-sm font-bold uppercase tracking-[0.2em] text-[#14532D]">
+              Interactive platform simulation
+            </p>
+            <h2 className="mt-3 text-3xl font-semibold leading-tight tracking-tight text-slate-900 sm:text-5xl">
+              Governed document management, end to end.
+            </h2>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+              See how SmartiDP EDMS ingests, extracts, verifies and signs controlled records across life sciences, finance and engineering.
+            </p>
           </div>
-          
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight leading-tight">
-            Experience Governed Document Management
-          </h2>
-          
-          <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed font-normal">
-            Simulate how SmartiDP EDMS ingests, extracts, verifies, and cryptographically signs controlled enterprise records across regulated life sciences, finance, and engineering.
-          </p>
-
-          {/* Quick Capability Tags */}
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs font-medium text-slate-600">
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <ShieldCheck className="h-3.5 w-3.5 text-[#14532D]" />
-              21 CFR Part 11 Validated
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <Lock className="h-3.5 w-3.5 text-[#14532D]" />
-              Tamper-Evident SHA-256 Hashing
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <ScanText className="h-3.5 w-3.5 text-[#14532D]" />
-              Sub-350ms Multimodal OCR
-            </span>
-            <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs">
-              <GitBranch className="h-3.5 w-3.5 text-[#14532D]" />
-              Automated Revision Diffing
-            </span>
+          <div className="lg:col-span-4 lg:justify-self-end">
+            <div className="inline-flex items-center gap-3 rounded-lg border border-slate-200 bg-slate-50 px-4 py-2.5 font-mono text-xs sm:text-sm text-slate-700">
+              <span className="relative flex h-2.5 w-2.5">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-teal-500 opacity-60 motion-safe:animate-ping" />
+                <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-teal-600" />
+              </span>
+              {SAMPLE_DOCS.length} sample records · ledger intact
+            </div>
           </div>
         </div>
 
-        {/* 3 Executive Document Switcher Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 mb-8 max-w-6xl mx-auto">
-          {SAMPLE_DOCS.map((doc) => {
-            const isSelected = selectedDoc.id === doc.id
+        {/* Document selector: ledger rows */}
+        <div role="radiogroup" aria-label="Sample records" className="mt-12 grid grid-cols-1 gap-3 md:grid-cols-3">
+          {SAMPLE_DOCS.map((d, i) => {
+            const selected = i === docIndex
             return (
               <button
-                key={doc.id}
-                onClick={() => handleSelectDoc(doc)}
-                className={`text-left p-5 rounded-2xl transition-all cursor-pointer border relative overflow-hidden group ${
-                  isSelected
-                    ? 'bg-white border-[#14532D] shadow-xl shadow-[#14532D]/10 ring-2 ring-[#14532D]/20 -translate-y-1'
-                    : 'bg-white/80 hover:bg-white border-slate-200 hover:border-slate-300 shadow-xs hover:shadow-md'
+                key={d.id}
+                role="radio"
+                aria-checked={selected}
+                onClick={() => setDocIndex(i)}
+                className={`group relative rounded-xl border p-4.5 text-left transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#14532D] cursor-pointer ${
+                  selected
+                    ? 'border-slate-900 bg-white shadow-lg shadow-slate-900/5'
+                    : 'border-slate-200 bg-white hover:border-slate-400'
                 }`}
               >
-                {/* Active Indicator Bar on Top */}
-                <div 
-                  className={`absolute top-0 left-0 right-0 h-1 transition-all ${
-                    isSelected ? 'bg-[#14532D]' : 'bg-transparent group-hover:bg-slate-200'
-                  }`} 
+                <span
+                  className={`absolute inset-x-0 top-0 h-[3px] rounded-t-xl transition-colors ${
+                    selected ? 'bg-[#14532D]' : 'bg-transparent group-hover:bg-slate-200'
+                  }`}
                 />
-
-                <div className="flex items-start justify-between gap-3 mb-2.5">
-                  <span className={`px-2.5 py-1 rounded-md text-[11px] font-bold font-mono ${
-                    isSelected 
-                      ? 'bg-[#14532D] text-white' 
-                      : 'bg-slate-100 text-slate-700'
-                  }`}>
-                    {doc.code}
-                  </span>
-                  
-                  <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full flex items-center gap-1 ${
-                    doc.statusColor === 'emerald'
-                      ? 'bg-[#E8F3EC] text-[#14532D]'
-                      : doc.statusColor === 'blue'
-                      ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'bg-purple-50 text-purple-700 border border-purple-200'
-                  }`}>
-                    <span className="h-1.5 w-1.5 rounded-full bg-current animate-pulse" />
-                    {doc.status}
+                <div className="flex items-center justify-between gap-3">
+                  <span className="font-mono text-sm font-bold text-slate-800">{d.code}</span>
+                  <span className={`rounded-full px-2.5 py-1 text-xs font-semibold ring-1 ring-inset ${STATUS_STYLES[d.statusColor] || STATUS_STYLES.blue}`}>
+                    {d.status}
                   </span>
                 </div>
-
-                <div className="font-bold text-sm text-slate-900 group-hover:text-[#14532D] transition-colors leading-snug">
-                  {doc.title}
-                </div>
-
-                <div className="text-xs text-slate-500 mt-1 font-medium">
-                  {doc.category}
-                </div>
-
-                <div className="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px]">
-                  <span className="text-slate-400 font-mono truncate max-w-[180px]">
-                    {doc.compliance}
-                  </span>
-                  {isSelected ? (
-                    <span className="text-[#14532D] font-bold flex items-center gap-1 shrink-0">
-                      <Check className="h-3.5 w-3.5" /> Active
-                    </span>
-                  ) : (
-                    <span className="text-slate-400 group-hover:text-slate-600 transition-colors shrink-0">
-                      Simulate →
-                    </span>
-                  )}
-                </div>
+                <div className="mt-2 text-base font-semibold leading-snug text-slate-900">{d.title}</div>
+                <div className="mt-1 text-xs sm:text-sm text-slate-600">{d.category}</div>
               </button>
             )
           })}
         </div>
 
-        {/* The Governed Workbench Console Window */}
-        <div className="max-w-6xl mx-auto rounded-3xl border border-slate-300 bg-white shadow-2xl shadow-slate-900/10 overflow-hidden">
-          
-          {/* Top Application Bar */}
-          <div className="px-5 sm:px-6 py-4 bg-slate-900 text-white flex flex-wrap items-center justify-between gap-4">
-            
-            {/* Window Dots & Breadcrumb */}
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-1.5">
-                <span className="h-3 w-3 rounded-full bg-rose-500/90 inline-block" />
-                <span className="h-3 w-3 rounded-full bg-amber-400/90 inline-block" />
-                <span className="h-3 w-3 rounded-full bg-emerald-500/90 inline-block" />
-              </div>
-              <div className="h-4 w-px bg-slate-700 mx-1 hidden sm:block" />
-              <div className="flex items-center gap-2 text-xs font-mono text-slate-300">
-                <Lock className="h-3.5 w-3.5 text-emerald-400 shrink-0" />
-                <span className="text-slate-400 hidden md:inline">vault://smartidp.corp/</span>
-                <span className="text-white font-bold">{selectedDoc.code}</span>
-                <span className="text-xs px-2 py-0.5 rounded bg-emerald-950 text-emerald-300 border border-emerald-500/40">
-                  {selectedDoc.revision}
-                </span>
-              </div>
+        {/* Console */}
+        <div className="mt-8 overflow-hidden rounded-2xl border border-slate-300 bg-white shadow-2xl shadow-slate-900/10">
+
+          {/* Record titlebar */}
+          <div className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 bg-slate-50 px-5 py-3.5">
+            <div className="flex items-center gap-3 font-mono text-xs sm:text-sm text-slate-700">
+              <span className="font-bold text-slate-900">{doc.code}</span>
+              <span className="text-slate-300">|</span>
+              <span className="font-semibold text-[#14532D]">{doc.revision}</span>
+              <span className="hidden text-slate-300 sm:inline">|</span>
+              <span className="hidden sm:inline">{doc.effectiveDate}</span>
             </div>
-
-            {/* Direct Link to Real Live Portal */}
-            <div className="flex items-center gap-3">
-              <a
-                href="https://edms.smartidp.ai/login"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-800/80 hover:bg-emerald-700 text-white text-xs font-semibold transition-all border border-emerald-600/50 cursor-pointer shadow-xs"
-              >
-                <span>Open in Live Portal</span>
-                <ExternalLink className="h-3.5 w-3.5 text-emerald-200" />
-              </a>
-            </div>
-          </div>
-
-          {/* Secondary Workbench Navigation Tabs */}
-          <div className="px-5 sm:px-6 py-3 bg-[#F5F7F5] border-b border-slate-200 flex flex-wrap items-center justify-between gap-3 text-xs">
-            
-            {/* View Switcher Pills */}
-            <div className="flex flex-wrap items-center gap-1.5 p-1 rounded-xl bg-white border border-slate-200 shadow-2xs">
-              <button
-                onClick={() => setActiveTab('preview')}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer ${
-                  activeTab === 'preview'
-                    ? 'bg-[#14532D] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <FileText className="h-3.5 w-3.5" />
-                <span>Document & AI Extraction</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('signature')}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer ${
-                  activeTab === 'signature'
-                    ? 'bg-[#14532D] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <FileSignature className="h-3.5 w-3.5" />
-                <span>21 CFR Part 11 Signature</span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('audit')}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer ${
-                  activeTab === 'audit'
-                    ? 'bg-[#14532D] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <History className="h-3.5 w-3.5" />
-                <span>Immutable Audit Trail</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                  activeTab === 'audit' ? 'bg-emerald-900 text-white' : 'bg-slate-100 text-slate-500'
-                }`}>
-                  {selectedDoc.auditLogs.length}
-                </span>
-              </button>
-
-              <button
-                onClick={() => setActiveTab('diff')}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-lg font-semibold transition-all cursor-pointer ${
-                  activeTab === 'diff'
-                    ? 'bg-[#14532D] text-white shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-50'
-                }`}
-              >
-                <GitBranch className="h-3.5 w-3.5" />
-                <span>Version History & Diff</span>
-                <span className={`text-[10px] px-1.5 py-0.2 rounded font-mono ${
-                  activeTab === 'diff' ? 'bg-emerald-900 text-white' : 'bg-slate-100 text-slate-500'
-                }`}>
-                  {selectedDoc.versions.length}
-                </span>
-              </button>
-            </div>
-
-            {/* Quick Hash Display with Copy Button */}
-            <div className="flex items-center gap-2 text-[11px] font-mono text-slate-500">
-              <span className="hidden md:inline">SHA-256:</span>
-              <span className="bg-white px-2.5 py-1 rounded-md border border-slate-200 text-slate-700 font-bold">
-                {selectedDoc.sha256.slice(0, 14)}...
+            <div className="flex items-center gap-2 font-mono text-xs sm:text-sm text-slate-700">
+              <span className="hidden md:inline font-semibold">SHA-256</span>
+              <span className="rounded border border-slate-200 bg-white px-2.5 py-1 font-bold text-slate-800">
+                {doc.sha256.slice(0, 14)}…
               </span>
               <button
-                onClick={handleCopyHash}
-                title="Copy Full SHA-256 Digest"
-                className="p-1 rounded-md bg-white border border-slate-200 text-slate-600 hover:text-[#14532D] hover:border-[#14532D] transition-colors cursor-pointer"
+                onClick={() => copy('header')}
+                aria-label="Copy full SHA-256 digest"
+                className="rounded border border-slate-200 bg-white p-1.5 text-slate-600 transition-colors hover:border-[#14532D] hover:text-[#14532D] cursor-pointer"
               >
-                {copiedHash ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
+                {copied === 'header' ? <Check className="h-4 w-4 text-teal-600" /> : <Copy className="h-4 w-4" />}
               </button>
             </div>
           </div>
 
-          {/* Loading Simulation Bar */}
-          {isSimulatingSwitch && (
-            <div className="bg-[#E8F3EC] border-b border-[#14532D]/20 px-6 py-2.5 text-xs text-[#14532D] font-bold flex items-center justify-center gap-2 animate-pulse">
-              <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-              <span>Ingesting controlled record {selectedDoc.code} & validating cryptographic ledger hash...</span>
+          {/* Tab bar: sticky, scrollable on mobile */}
+          <div className="sticky top-0 z-20 border-b border-slate-200 bg-white/95 backdrop-blur">
+            <div role="tablist" aria-label="Workbench views" className="flex gap-2 overflow-x-auto p-2.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+              {TABS.map((t, idx) => {
+                const Icon = t.icon
+                const selected = tab === t.id
+                return (
+                  <button
+                    key={t.id}
+                    ref={el => (tabRefs.current[idx] = el)}
+                    id={`tab-${t.id}`}
+                    role="tab"
+                    aria-selected={selected}
+                    aria-controls={`panel-${t.id}`}
+                    tabIndex={selected ? 0 : -1}
+                    onClick={() => setTab(t.id)}
+                    onKeyDown={e => onTabKey(e, idx)}
+                    className={`flex shrink-0 items-center gap-2 rounded-lg px-4.5 py-3 text-sm sm:text-base font-semibold transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#14532D] cursor-pointer ${
+                      selected ? 'bg-slate-900 text-white' : 'text-slate-700 hover:bg-slate-100 hover:text-slate-900'
+                    }`}
+                  >
+                    <Icon className="h-4.5 w-4.5" />
+                    <span className="whitespace-nowrap">{t.label}</span>
+                    {t.count && (
+                      <span className={`rounded px-2 py-0.5 font-mono text-xs sm:text-sm font-bold ${selected ? 'bg-white/20 text-white' : 'bg-slate-200 text-slate-700'}`}>
+                        {t.count(doc)}
+                      </span>
+                    )}
+                  </button>
+                )
+              })}
+            </div>
+          </div>
+
+          {switching && (
+            <div role="status" className="flex items-center justify-center gap-2 border-b border-emerald-200 bg-[#F0FDF4] px-6 py-2 font-mono text-xs font-semibold text-[#14532D]">
+              <RefreshCw className="h-3.5 w-3.5 motion-safe:animate-spin" />
+              Ingesting {doc.code} and validating ledger hash…
             </div>
           )}
 
-          {/* Workbench Body */}
-          <div className="p-6 sm:p-8 bg-white min-h-[520px]">
-            
-            {/* VIEW 1: Document & AI Extraction (Split 2-Column Enterprise Workbench) */}
-            {activeTab === 'preview' && (
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                
-                {/* Left Column: Authentic Simulated Controlled Document Canvas */}
-                <div className="lg:col-span-6 bg-[#F5F7F5]/80 rounded-2xl border border-slate-200 p-5 relative overflow-hidden">
-                  
-                  {/* Top Canvas Toolbar */}
-                  <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-200 text-xs">
-                    <div className="flex items-center gap-2 font-semibold text-slate-700">
-                      <FileText className="h-4 w-4 text-[#14532D]" />
-                      <span>Controlled Document Canvas</span>
-                    </div>
-
-                    <button
-                      onClick={() => setShowBoundingBoxes(!showBoundingBoxes)}
-                      className={`px-2.5 py-1 rounded-md text-[11px] font-semibold border transition-all cursor-pointer flex items-center gap-1.5 ${
-                        showBoundingBoxes
-                          ? 'bg-[#E8F3EC] text-[#14532D] border-[#14532D]/30'
-                          : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-50'
-                      }`}
-                    >
-                      <ScanText className="h-3 w-3" />
-                      <span>{showBoundingBoxes ? 'AI Highlights: ON' : 'AI Highlights: OFF'}</span>
-                    </button>
-                  </div>
-
-                  {/* The Document Paper Sheet */}
-                  <div className="bg-white rounded-xl border border-slate-300 p-5 shadow-sm relative overflow-hidden text-xs">
-                    
-                    {/* Semi-Transparent Controlled Document Diagonal Watermark */}
-                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.06] rotate-[-25deg]">
-                      <span className="text-4xl sm:text-5xl font-extrabold font-mono uppercase tracking-widest text-[#14532D] text-center leading-none">
-                        KENZ INNOVATIONS<br />CONTROLLED RECORD<br />COPY #042
-                      </span>
-                    </div>
-
-                    {/* Official Document Header */}
-                    <div className="pb-3 border-b-2 border-slate-900 flex items-start justify-between gap-3">
-                      <div>
-                        <div className="text-[10px] font-bold text-slate-500 uppercase tracking-widest font-mono">
-                          {selectedDoc.orgName}
-                        </div>
-                        <div className="text-sm font-extrabold text-slate-900 mt-0.5">
-                          {selectedDoc.title}
-                        </div>
-                      </div>
-                      <div className="text-right shrink-0 font-mono text-[10px]">
-                        <div className="font-bold text-slate-900">{selectedDoc.code}</div>
-                        <div className="text-[#14532D] font-semibold">{selectedDoc.revision}</div>
-                        <div className="text-slate-500">{selectedDoc.effectiveDate}</div>
-                      </div>
-                    </div>
-
-                    {/* Document Body Clauses */}
-                    <div className="py-4 space-y-4">
-                      {selectedDoc.docClauses.map((clause, cIdx) => (
-                        <div key={cIdx} className="space-y-1 relative">
-                          <div className="font-bold text-slate-800 text-[11px] uppercase tracking-wide">
-                            {clause.num} {clause.title}
-                          </div>
-                          
-                          <div className={`p-2 rounded-lg transition-all ${
-                            showBoundingBoxes && clause.ocrMatch 
-                              ? 'bg-[#E8F3EC]/70 border border-[#14532D]/30 shadow-2xs' 
-                              : 'text-slate-600'
-                          }`}>
-                            <p className="text-[11px] leading-relaxed text-slate-700">
-                              {clause.text}
-                            </p>
-                            
-                            {showBoundingBoxes && clause.ocrMatch && (
-                              <div className="mt-1.5 flex items-center gap-1.5 text-[10px] font-mono text-[#14532D] font-bold">
-                                <ScanText className="h-3 w-3 shrink-0" />
-                                <span>[Extracted: {clause.ocrMatch}]</span>
-                              </div>
-                            )}
-                          </div>
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Official 21 CFR Part 11 Digital Signature Seal Block */}
-                    <div className="mt-3 p-3 rounded-xl bg-gradient-to-r from-[#E8F3EC] to-emerald-50/60 border border-[#14532D]/30 text-xs">
-                      <div className="flex items-center justify-between mb-1.5">
-                        <div className="flex items-center gap-1.5 font-bold text-[#14532D] text-[11px]">
-                          <BadgeCheck className="h-4 w-4 text-[#14532D]" />
-                          <span>VALIDATED ELECTRONIC SIGNATURE (21 CFR PART 11)</span>
-                        </div>
-                        <span className="text-[10px] font-mono font-bold text-emerald-800 bg-white px-1.5 py-0.5 rounded border border-[#14532D]/20">
-                          SEALED
-                        </span>
-                      </div>
-
-                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-4 gap-y-1 text-[11px] text-slate-700">
-                        <div>
-                          Signer: <strong className="text-slate-900">{selectedDoc.signedBy}</strong>
-                        </div>
-                        <div>
-                          Intent: <strong className="text-[#14532D]">{selectedDoc.meaning}</strong>
-                        </div>
-                        <div className="font-mono text-[10px] text-slate-500">
-                          Time: {selectedDoc.signedTime}
-                        </div>
-                        <div className="font-mono text-[10px] text-slate-500 truncate">
-                          Digest: {selectedDoc.sha256.slice(0, 18)}...
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Footnote on canvas */}
-                  <div className="mt-3 flex items-center justify-between text-[11px] text-slate-500 font-mono">
-                    <span>STATUS: RESTRICTED ARCHIVE</span>
-                    <span>KENZ WATERMARK SERIAL #042</span>
-                  </div>
+          <div className="min-h-[560px] p-5 sm:p-8">
+            {tab === 'preview' && (
+              <div id="panel-preview" role="tabpanel" aria-labelledby="tab-preview" key={`p-${doc.id}`} className="wb-fade grid gap-8 lg:grid-cols-12">
+                <div className="lg:col-span-7">
+                  <DocumentCanvas
+                    doc={doc}
+                    activeField={activeField}
+                    highlights={highlights}
+                    setHighlights={setHighlights}
+                    clauseLinks={clauseLinks}
+                  />
                 </div>
-
-                {/* Right Column: AI Extraction & Governance Inspector */}
-                <div className="lg:col-span-6 space-y-6">
-                  
-                  {/* AI Multimodal Ingestion Metrics Card */}
-                  <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#14532D] to-emerald-900 text-white shadow-lg">
-                    <div className="flex items-center justify-between mb-3 text-xs">
-                      <div className="flex items-center gap-2">
-                        <Sparkles className="h-4 w-4 text-emerald-300" />
-                        <span className="font-bold tracking-wide">SMARTIDP MULTIMODAL OCR ENGINE</span>
-                      </div>
-                      <span className="text-[10px] bg-emerald-800/80 px-2 py-0.5 rounded-full font-mono text-emerald-200">
-                        Zero Human Triage
-                      </span>
-                    </div>
-
-                    <div className="grid grid-cols-3 gap-3 text-center border-t border-emerald-800/60 pt-3">
-                      <div>
-                        <div className="text-lg sm:text-xl font-extrabold font-mono text-white">340ms</div>
-                        <div className="text-[10px] text-emerald-200 font-medium">Ingestion Speed</div>
-                      </div>
-                      <div>
-                        <div className="text-lg sm:text-xl font-extrabold font-mono text-emerald-300">99.8%</div>
-                        <div className="text-[10px] text-emerald-200 font-medium">Mean Confidence</div>
-                      </div>
-                      <div>
-                        <div className="text-lg sm:text-xl font-extrabold font-mono text-white">100% STP</div>
-                        <div className="text-[10px] text-emerald-200 font-medium">Straight-Through</div>
-                      </div>
-                    </div>
+                <div className="space-y-6 lg:col-span-5">
+                  <div className="grid grid-cols-3 divide-x divide-slate-700 overflow-hidden rounded-xl bg-slate-900 text-white">
+                    <Readout value="340ms" label="Ingestion" />
+                    <Readout value={`${meanConf}%`} label="Mean confidence" accent />
+                    <Readout value="100%" label="Straight-through" />
                   </div>
 
-                  {/* Extracted Key-Value Metadata Grid */}
                   <div>
-                    <div className="flex items-center justify-between mb-3">
-                      <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                        <ScanText className="h-3.5 w-3.5 text-[#14532D]" />
-                        <span>Extracted Metadata & Classification</span>
+                    <div className="mb-3.5 flex items-center justify-between">
+                      <h4 className="flex items-center gap-2 text-sm sm:text-base font-bold uppercase tracking-wider text-slate-900">
+                        <ScanText className="h-4 w-4 text-[#14532D]" /> Extracted fields
                       </h4>
-                      <span className="text-[11px] font-mono text-emerald-700 font-semibold">
-                        {selectedDoc.fields.length} Fields Verified
-                      </span>
+                      <span className="font-mono text-xs sm:text-sm font-bold text-teal-700">{doc.fields.length} verified</span>
                     </div>
-
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                      {selectedDoc.fields.map((field, fIdx) => (
-                        <div key={fIdx} className="p-3 rounded-xl bg-[#F5F7F5] border border-slate-200 hover:border-slate-300 transition-colors">
-                          <div className="flex items-center justify-between text-xs text-slate-500 mb-1">
-                            <span className="font-medium text-[11px]">{field.label}</span>
-                            <span className="font-mono text-[10px] font-bold text-[#14532D] bg-[#E8F3EC] px-1.5 py-0.2 rounded">
-                              {field.conf}% conf
-                            </span>
-                          </div>
-                          
-                          <div className="text-xs font-bold text-slate-900 truncate" title={field.value}>
-                            {field.value}
-                          </div>
-
-                          {/* Confidence Progress Meter */}
-                          <div className="mt-2 w-full bg-slate-200 h-1 rounded-full overflow-hidden">
-                            <div 
-                              className="bg-[#14532D] h-full rounded-full transition-all duration-500" 
-                              style={{ width: `${field.conf}%` }}
-                            />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    <ul className="divide-y divide-slate-200 rounded-xl border border-slate-200">
+                      {doc.fields.map((f, i) => {
+                        const linked = clauseLinks[i] >= 0
+                        const isActive = activeField === i
+                        return (
+                          <li key={f.label}>
+                            <button
+                              onMouseEnter={() => setActiveField(i)}
+                              onMouseLeave={() => setActiveField(null)}
+                              onFocus={() => setActiveField(i)}
+                              onBlur={() => setActiveField(null)}
+                              className={`w-full px-4 py-3.5 text-left transition-colors focus:outline-none cursor-pointer ${isActive ? 'bg-[#F0FDF4]' : 'hover:bg-slate-50'}`}
+                            >
+                              <div className="flex items-center justify-between gap-3 text-xs sm:text-sm">
+                                <span className="font-medium text-slate-600">{f.label}</span>
+                                <span className="font-mono font-bold text-[#14532D] text-xs sm:text-sm">{f.conf}%</span>
+                              </div>
+                              <div className="mt-1.5 truncate text-sm sm:text-base font-bold text-slate-900" title={f.value}>{f.value}</div>
+                              <div className="mt-2.5 flex items-center gap-3">
+                                <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-slate-200">
+                                  <div
+                                    className="h-full rounded-full bg-[#14532D] transition-[width] duration-700 ease-out motion-reduce:transition-none"
+                                    style={{ width: barsReady ? `${f.conf}%` : '0%' }}
+                                  />
+                                </div>
+                                {linked && <span className="font-mono text-xs font-semibold text-slate-500">→ §{clauseLinks[i] + 1}</span>}
+                              </div>
+                            </button>
+                          </li>
+                        )
+                      })}
+                    </ul>
                   </div>
 
-                  {/* Governance & Compliance Enforcement Summary */}
-                  <div className="p-4 rounded-2xl bg-[#F5F7F5] border border-slate-200 space-y-3">
-                    <div className="text-xs font-bold uppercase tracking-wider text-[#14532D] flex items-center gap-1.5">
-                      <ShieldCheck className="h-4 w-4 text-[#14532D]" />
-                      <span>Automated Governance Rules Enforced</span>
+                  <div className="rounded-xl border border-slate-200 bg-slate-50 p-5">
+                    <div className="mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-wider text-[#14532D]">
+                      <ShieldCheck className="h-4.5 w-4.5" /> Governance controls
                     </div>
-
-                    <div className="space-y-2 text-xs text-slate-700">
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-[#14532D] shrink-0 mt-0.5" />
-                        <span><strong>Single Effective Copy Policy:</strong> Obsolete versions withdrawn from enterprise searches.</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-[#14532D] shrink-0 mt-0.5" />
-                        <span><strong>Watermarked Controlled Printing:</strong> Dynamic serialization copy-number mapped to user session.</span>
-                      </div>
-                      <div className="flex items-start gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-[#14532D] shrink-0 mt-0.5" />
-                        <span><strong>Zero Data Retention (ZDR):</strong> Customer training data strictly excluded from third-party foundation models.</span>
-                      </div>
-                    </div>
+                    <ul className="space-y-2.5 text-sm sm:text-base text-slate-700 leading-relaxed">
+                      <li><strong className="text-slate-900">Single effective copy:</strong> obsolete versions are withdrawn from enterprise search.</li>
+                      <li><strong className="text-slate-900">Controlled printing:</strong> watermark carries a copy number mapped to the user session.</li>
+                      <li><strong className="text-slate-900">Training data:</strong> customer data is excluded from third-party foundation models.</li>
+                    </ul>
                   </div>
 
-                  {/* Interactive Action Buttons */}
-                  <div className="flex flex-col sm:flex-row items-center gap-3 pt-2">
-                    <button
-                      onClick={handleVerifyHash}
-                      disabled={isVerifying}
-                      className="w-full sm:w-1/2 py-3 rounded-xl bg-[#E8F3EC] hover:bg-[#d5ebd9] text-[#14532D] text-xs font-bold border border-[#14532D]/30 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
-                    >
-                      {isVerifying ? (
-                        <>
-                          <RefreshCw className="h-3.5 w-3.5 animate-spin" />
-                          <span>Checking SHA-256...</span>
-                        </>
-                      ) : verifySuccess ? (
-                        <>
-                          <Check className="h-3.5 w-3.5 text-emerald-700" />
-                          <span>Digest Validated 100%</span>
-                        </>
-                      ) : (
-                        <>
-                          <Fingerprint className="h-3.5 w-3.5" />
-                          <span>Verify SHA-256 Digest</span>
-                        </>
-                      )}
-                    </button>
-
-                    <a
-                      href="https://edms.smartidp.ai/login"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full sm:w-1/2 py-3 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white text-xs font-bold transition-all flex items-center justify-center gap-2 cursor-pointer shadow-md shadow-[#14532D]/15"
-                    >
-                      <span>Inspect in Live Demonstration</span>
-                      <ArrowRight className="h-3.5 w-3.5" />
-                    </a>
-                  </div>
-
-                  {/* Hash verified notification banner */}
-                  {verifySuccess && (
-                    <div className="p-3 rounded-xl bg-emerald-50 border border-emerald-300 text-xs text-emerald-900 flex items-center gap-2 animate-fadeIn">
-                      <BadgeCheck className="h-4 w-4 text-emerald-700 shrink-0" />
-                      <div>
-                        <strong>Cryptographic Verification Passed:</strong> Document SHA-256 matches the original ingest ledger hash. Zero tamper detected.
-                      </div>
-                    </div>
-                  )}
-
+                  <VerifyPanel verify={verify} setVerify={setVerify} />
                 </div>
               </div>
             )}
 
-            {/* VIEW 2: 21 CFR Part 11 Signature Manifest */}
-            {activeTab === 'signature' && (
-              <div className="space-y-6 max-w-4xl mx-auto py-2">
-                
-                {/* Official Compliance Certificate Banner */}
-                <div className="p-6 rounded-2xl bg-gradient-to-r from-emerald-950 via-[#14532D] to-slate-900 text-white shadow-xl">
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <div className="space-y-1">
-                      <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-900/80 text-emerald-300 text-xs font-semibold border border-emerald-700">
-                        <BadgeCheck className="h-3.5 w-3.5" />
-                        <span>VALIDATED LEGAL ELECTRONIC SIGNATURE</span>
+            {tab === 'signature' && (
+              <div id="panel-signature" role="tabpanel" aria-labelledby="tab-signature" key={`s-${doc.id}`} className="wb-fade mx-auto max-w-4xl space-y-6">
+                <div className="rounded-2xl bg-slate-900 p-6 sm:p-8 text-white">
+                  <div className="flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
+                    <div>
+                      <div className="inline-flex items-center gap-1.5 rounded-full border border-teal-500/40 px-3.5 py-1 text-xs sm:text-sm font-semibold text-teal-300">
+                        <BadgeCheck className="h-4 w-4" /> Electronic signature record
                       </div>
-                      <h3 className="text-xl sm:text-2xl font-bold">
-                        FDA 21 CFR Part 11 & EU Annex 11 Manifest
-                      </h3>
-                      <p className="text-xs text-emerald-200">
-                        Cryptographically bound to document payload · Two-Component Authentication Challenge Verified
-                      </p>
+                      <h3 className="mt-3 text-2xl font-bold sm:text-3xl">Signature manifest</h3>
+                      <p className="mt-1 text-xs sm:text-sm text-slate-300">Bound to the document payload · two-component authentication</p>
                     </div>
-
-                    <div className="text-right sm:text-right shrink-0">
-                      <span className="text-xs font-mono px-3 py-1.5 rounded-lg bg-emerald-900/60 border border-emerald-500/30 text-emerald-200 block">
-                        CERT: {selectedDoc.certId}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Signer Identity & Legal Intent Manifest */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  
-                  <div className="p-5 rounded-2xl bg-[#F5F7F5] border border-slate-200 space-y-3">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Signatory Identity Credentials
-                    </div>
-                    <div className="space-y-2 text-xs">
-                      <div>
-                        <span className="text-slate-500 block text-[11px]">Full Legal Signer Name:</span>
-                        <strong className="text-slate-900 text-sm">{selectedDoc.signedBy}</strong>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 block text-[11px]">Organizational Title:</span>
-                        <span className="text-slate-800 font-medium">{selectedDoc.signerRole}</span>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 block text-[11px]">Authentication Protocol:</span>
-                        <span className="font-mono text-emerald-800 font-semibold">{selectedDoc.authMethod}</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="p-5 rounded-2xl bg-[#F5F7F5] border border-slate-200 space-y-3">
-                    <div className="text-xs font-bold uppercase tracking-wider text-slate-500">
-                      Manifest Intent & Time Synchronization
-                    </div>
-                    <div className="space-y-2 text-xs">
-                      <div>
-                        <span className="text-slate-500 block text-[11px]">Regulatory Manifest Meaning:</span>
-                        <strong className="text-[#14532D] text-sm">{selectedDoc.meaning}</strong>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 block text-[11px]">NIST Atomic Time Stamp:</span>
-                        <span className="font-mono text-slate-900 font-bold">{selectedDoc.signedTime}</span>
-                      </div>
-                      <div>
-                        <span className="text-slate-500 block text-[11px]">Legal Enforceability:</span>
-                        <span className="text-slate-700 font-medium">Full equivalence to handwritten wet ink per 21 CFR §11.100</span>
-                      </div>
-                    </div>
-                  </div>
-
-                </div>
-
-                {/* Cryptographic SHA-256 Digest Block */}
-                <div className="p-5 rounded-2xl bg-slate-900 text-white space-y-3">
-                  <div className="flex items-center justify-between text-xs text-slate-400">
-                    <span className="font-bold text-emerald-400 font-mono flex items-center gap-1.5">
-                      <Lock className="h-3.5 w-3.5" />
-                      <span>SHA-256 TAMPER-EVIDENT DOCUMENT HASH</span>
+                    <span className="self-start rounded-lg border border-slate-700 bg-slate-800 px-3.5 py-1.5 font-mono text-xs sm:text-sm font-bold text-teal-200 sm:self-auto">
+                      CERT {doc.certId}
                     </span>
-                    <button
-                      onClick={handleCopyHash}
-                      className="text-xs text-emerald-300 hover:text-white flex items-center gap-1 cursor-pointer font-mono"
-                    >
-                      {copiedHash ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
-                      <span>{copiedHash ? 'Copied' : 'Copy Hash'}</span>
+                  </div>
+                </div>
+
+                <div className="grid gap-4 md:grid-cols-2">
+                  <ManifestCard title="Signatory">
+                    <Row k="Name" v={doc.signedBy} strong />
+                    <Row k="Title" v={doc.signerRole} />
+                    <Row k="Authentication" v={doc.authMethod} mono />
+                  </ManifestCard>
+                  <ManifestCard title="Intent & time">
+                    <Row k="Meaning" v={doc.meaning} strong accent />
+                    <Row k="Timestamp (UTC)" v={doc.signedTime} mono />
+                    <Row k="Regulatory basis" v="Designed to support 21 CFR §11.100 requirements" />
+                  </ManifestCard>
+                </div>
+
+                <div className="rounded-2xl bg-slate-900 p-6 sm:p-7 text-white">
+                  <div className="mb-3.5 flex items-center justify-between">
+                    <span className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold text-teal-300">
+                      <Lock className="h-4 w-4" /> SHA-256 DOCUMENT DIGEST
+                    </span>
+                    <button onClick={() => copy('sig')} className="flex items-center gap-1.5 font-mono text-xs sm:text-sm font-semibold text-teal-300 hover:text-white cursor-pointer">
+                      {copied === 'sig' ? <Check className="h-4 w-4 text-teal-400" /> : <Copy className="h-4 w-4" />}
+                      {copied === 'sig' ? 'Copied' : 'Copy'}
                     </button>
                   </div>
-
-                  <div className="p-3 rounded-xl bg-slate-950 font-mono text-xs text-emerald-300 break-all border border-slate-800 leading-relaxed">
-                    {selectedDoc.sha256}
+                  <div className="break-all rounded-lg border border-slate-800 bg-slate-950 p-4 font-mono text-xs sm:text-sm leading-relaxed text-teal-200">
+                    {doc.sha256}
                   </div>
-
-                  <div className="flex flex-wrap items-center justify-between text-[11px] text-slate-400 pt-1">
-                    <span>Algorithm: RSA-4096 / SHA-256 with PKCS#7</span>
-                    <span>WORM Storage Verification: PASS</span>
+                  <div className="mt-3.5 flex flex-wrap justify-between gap-2 font-mono text-xs sm:text-sm text-slate-300">
+                    <span>Algorithm: SHA-256 · PKCS#7</span>
+                    <span>WORM storage check: pass</span>
                   </div>
                 </div>
 
-                {/* Interactive Action */}
                 <div className="text-center pt-2">
                   <button
                     onClick={onOpenDemoModal}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white text-xs font-bold transition-all shadow-md cursor-pointer"
+                    className="inline-flex items-center gap-2 rounded-full bg-[#14532D] hover:bg-[#166534] px-8 py-3.5 text-sm sm:text-base font-bold text-white shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all cursor-pointer group"
                   >
-                    <span>Request Technical Validation & 21 CFR Part 11 Accelerator Pack</span>
-                    <ArrowRight className="h-4 w-4" />
+                    <span>Request technical validation pack</span>
+                    <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
-
               </div>
             )}
 
-            {/* VIEW 3: Immutable Audit Trail */}
-            {activeTab === 'audit' && (
-              <div className="space-y-5 max-w-4xl mx-auto py-2">
-                
-                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-slate-200 text-xs">
+            {tab === 'audit' && (
+              <div id="panel-audit" role="tabpanel" aria-labelledby="tab-audit" key={`a-${doc.id}`} className="wb-fade mx-auto max-w-4xl">
+                <div className="mb-6 flex flex-wrap items-end justify-between gap-3 border-b border-slate-200 pb-4">
                   <div>
-                    <h3 className="font-bold text-slate-900 text-sm">
-                      Append-Only Cryptographic Audit Ledger
-                    </h3>
-                    <p className="text-slate-500 text-xs">
-                      Time-ordered, tamper-evident log records compliant with 21 CFR §11.10(e) & EU Annex 11 §9.
-                    </p>
+                    <h3 className="text-lg font-bold text-slate-900">Append-only hash chain</h3>
+                    <p className="text-xs sm:text-sm text-slate-600 mt-1">Each entry records the hash of the entry before it.</p>
                   </div>
-                  <span className="text-xs font-mono bg-[#E8F3EC] text-[#14532D] px-2.5 py-1 rounded-md font-bold border border-[#14532D]/20">
-                    UTC Coordinated Standard
-                  </span>
+                  <span className="font-mono text-xs sm:text-sm font-semibold text-slate-500">UTC · newest first</span>
                 </div>
 
-                {/* Audit Event Timeline */}
-                <div className="space-y-3">
-                  {selectedDoc.auditLogs.map((log, lIdx) => (
-                    <div 
-                      key={lIdx} 
-                      className="p-4 rounded-2xl bg-[#F5F7F5] border border-slate-200 hover:border-slate-300 transition-all flex flex-col md:flex-row items-start md:items-center justify-between gap-3 text-xs"
-                    >
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-2">
-                          <span className="px-2 py-0.5 rounded text-[10px] font-bold font-mono bg-white border border-slate-200 text-slate-700">
-                            {log.event}
-                          </span>
-                          <span className="font-bold text-slate-900">{log.user}</span>
+                <ol className="relative">
+                  {doc.auditLogs.map((log, i) => {
+                    const last = i === doc.auditLogs.length - 1
+                    return (
+                      <li key={i} className="relative pb-6 pl-10 last:pb-0">
+                        {!last && <span aria-hidden className="absolute left-[11px] top-6 bottom-0 w-px bg-slate-300" />}
+                        <span aria-hidden className="absolute left-0 top-1.5 flex h-6 w-6 items-center justify-center rounded-full border border-teal-500 bg-white">
+                          <span className="h-2 w-2 rounded-full bg-teal-600" />
+                        </span>
+                        <div className="rounded-xl border border-slate-200 bg-white p-5 shadow-2xs">
+                          <div className="flex flex-col gap-2 sm:flex-row sm:items-start sm:justify-between">
+                            <div>
+                              <span className="inline-block rounded bg-slate-100 px-2.5 py-1 font-mono text-xs sm:text-sm font-bold text-slate-800">{log.event}</span>
+                              <div className="mt-2 text-base font-bold text-slate-900">{log.user}</div>
+                              <div className="mt-1 font-mono text-xs sm:text-sm text-slate-500">{log.terminal}</div>
+                            </div>
+                            <div className="font-mono text-xs sm:text-sm sm:text-right">
+                              <div className="font-bold text-[#14532D] text-sm sm:text-base">{log.time}</div>
+                            </div>
+                          </div>
+                          <div className="mt-3.5 grid gap-1 border-t border-slate-100 pt-3 font-mono text-xs sm:text-sm text-slate-600 sm:grid-cols-2">
+                            <span>hash: <span className="text-slate-900 font-semibold">{log.hash}</span></span>
+                            <span>prev: {log.prevHash}</span>
+                          </div>
                         </div>
-                        <div className="text-slate-500 text-[11px] flex items-center gap-2 font-mono">
-                          <span>Terminal: {log.terminal}</span>
-                        </div>
-                      </div>
-
-                      <div className="text-left md:text-right font-mono text-[11px] shrink-0">
-                        <div className="font-bold text-[#14532D]">{log.time}</div>
-                        <div className="text-slate-400 text-[10px] mt-0.5 flex items-center md:justify-end gap-1">
-                          <span>{log.hash}</span>
-                          <BadgeCheck className="h-3 w-3 text-emerald-600" />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Integrity Guarantee Box */}
-                <div className="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-600 flex items-center gap-3">
-                  <Lock className="h-5 w-5 text-[#14532D] shrink-0" />
-                  <p>
-                    <strong>WORM Integrity Architecture:</strong> Every user action generates a cryptographic Merkle tree entry. Audit trail logs cannot be edited, reordered, or deleted by any administrative account.
-                  </p>
-                </div>
-
+                      </li>
+                    )
+                  })}
+                </ol>
               </div>
             )}
 
-            {/* VIEW 4: Version Control & Redline Diff */}
-            {activeTab === 'diff' && (
-              <div className="space-y-6 max-w-4xl mx-auto py-2">
-                
-                <div className="flex flex-wrap items-center justify-between pb-3 border-b border-slate-200 text-xs">
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-sm">
-                      Revision Control & Automated Redline Difference Engine
-                    </h3>
-                    <p className="text-slate-500 text-xs">
-                      Enforcing strict major/minor revision gates with side-by-side delta visualization.
-                    </p>
-                  </div>
-                  <span className="text-xs font-mono bg-white border border-slate-200 text-slate-700 px-2.5 py-1 rounded-md font-bold">
-                    Comparing {selectedDoc.versions[0]?.ver} vs {selectedDoc.versions[1]?.ver}
-                  </span>
+            {tab === 'diff' && (
+              <div id="panel-diff" role="tabpanel" aria-labelledby="tab-diff" key={`d-${doc.id}`} className="wb-fade mx-auto max-w-4xl space-y-8">
+                <div>
+                  <h3 className="text-lg font-bold text-slate-900">Revision history</h3>
+                  <p className="text-xs sm:text-sm text-slate-600 mt-1">Major and minor revisions pass through approval gates.</p>
                 </div>
 
-                {/* Version History Matrix Table */}
-                <div className="rounded-2xl border border-slate-200 overflow-hidden shadow-2xs">
-                  <table className="w-full text-left text-xs font-sans">
-                    <thead className="bg-[#F5F7F5] text-slate-600 border-b border-slate-200">
+                {/* Table on sm+, cards on mobile */}
+                <div className="hidden overflow-hidden rounded-xl border border-slate-200 sm:block">
+                  <table className="w-full text-left text-sm sm:text-base">
+                    <thead className="bg-slate-50 text-xs sm:text-sm font-bold text-slate-700">
                       <tr>
-                        <th className="py-3 px-4 font-semibold">Version</th>
-                        <th className="py-3 px-4 font-semibold">Lifecycle Status</th>
-                        <th className="py-3 px-4 font-semibold">Effective Date</th>
-                        <th className="py-3 px-4 font-semibold">Author / Approver</th>
-                        <th className="py-3 px-4 font-semibold hidden sm:table-cell">Change Summary</th>
+                        <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Version</th>
+                        <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Status</th>
+                        <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Date</th>
+                        <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Author / approver</th>
+                        <th className="px-5 py-3.5 font-bold uppercase tracking-wider">Change summary</th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-100 text-slate-800">
-                      {selectedDoc.versions.map((ver, vIdx) => (
-                        <tr key={vIdx} className="hover:bg-slate-50">
-                          <td className="py-3 px-4 font-bold font-mono text-[#14532D]">{ver.ver}</td>
-                          <td className="py-3 px-4">
-                            <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full ${
-                              ver.status.includes('Effective') || ver.status.includes('Authorized') || ver.status.includes('Locked')
-                                ? 'bg-[#E8F3EC] text-[#14532D]'
-                                : 'bg-slate-100 text-slate-500'
-                            }`}>
-                              {ver.status}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 font-mono text-slate-600">{ver.date}</td>
-                          <td className="py-3 px-4 font-medium text-slate-700">{ver.user}</td>
-                          <td className="py-3 px-4 text-slate-500 text-[11px] hidden sm:table-cell">{ver.notes}</td>
+                    <tbody className="divide-y divide-slate-100">
+                      {doc.versions.map((v, i) => (
+                        <tr key={i} className="align-top hover:bg-slate-50/60 transition-colors">
+                          <td className="px-5 py-3.5 font-mono font-bold text-[#14532D]">{v.ver}</td>
+                          <td className="px-5 py-3.5"><VersionBadge status={v.status} /></td>
+                          <td className="px-5 py-3.5 font-mono text-xs sm:text-sm text-slate-600">{v.date}</td>
+                          <td className="px-5 py-3.5 text-slate-800 font-medium">{v.user}</td>
+                          <td className="px-5 py-3.5 text-slate-600">{v.notes}</td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
-
-                {/* Redline Text Diff Comparison */}
-                <div className="space-y-3 pt-2">
-                  <h4 className="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
-                    <GitBranch className="h-3.5 w-3.5 text-[#14532D]" />
-                    <span>Visual Redline Delta Highlights</span>
-                  </h4>
-
-                  <div className="space-y-3">
-                    {selectedDoc.diffs.map((diff, dIdx) => (
-                      <div key={dIdx} className="p-4 rounded-2xl bg-[#F5F7F5] border border-slate-200 space-y-2 text-xs">
-                        <div className="font-bold text-slate-900 text-xs">
-                          {diff.section}
-                        </div>
-
-                        {/* Deleted Text */}
-                        <div className="p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-900">
-                          <div className="text-[10px] uppercase font-bold text-rose-600 font-mono mb-1">
-                            [-] Superseded Wording ({selectedDoc.versions[1]?.ver || 'Prior Rev'})
-                          </div>
-                          <p className="line-through opacity-80 leading-relaxed font-mono text-[11px]">
-                            {diff.oldText}
-                          </p>
-                        </div>
-
-                        {/* Added/Effective Text */}
-                        <div className="p-3 rounded-xl bg-[#E8F3EC] border border-[#14532D]/30 text-emerald-950">
-                          <div className="text-[10px] uppercase font-bold text-[#14532D] font-mono mb-1">
-                            [+] Effective Adopted Text ({selectedDoc.versions[0]?.ver || 'Current Rev'})
-                          </div>
-                          <p className="font-semibold leading-relaxed font-mono text-[11px]">
-                            {diff.newText}
-                          </p>
-                        </div>
+                <ul className="space-y-3 sm:hidden">
+                  {doc.versions.map((v, i) => (
+                    <li key={i} className="rounded-xl border border-slate-200 p-4.5">
+                      <div className="flex items-center justify-between">
+                        <span className="font-mono font-bold text-[#14532D] text-base">{v.ver}</span>
+                        <VersionBadge status={v.status} />
                       </div>
-                    ))}
-                  </div>
-                </div>
+                      <div className="mt-2 font-mono text-xs text-slate-500">{v.date}</div>
+                      <div className="mt-1 text-base font-semibold text-slate-900">{v.user}</div>
+                      <p className="mt-2 text-sm text-slate-600 leading-relaxed">{v.notes}</p>
+                    </li>
+                  ))}
+                </ul>
 
+                <div className="space-y-4">
+                  <h4 className="text-sm font-bold uppercase tracking-wider text-slate-900">Word-level redline</h4>
+                  {doc.diffs.map((d, i) => (
+                    <div key={i} className="overflow-hidden rounded-xl border border-slate-200">
+                      <div className="border-b border-slate-200 bg-slate-50 px-5 py-3 text-sm sm:text-base font-bold text-slate-900">{d.section}</div>
+                      <p className="p-5 text-base sm:text-lg leading-relaxed text-slate-800">
+                        {wordDiff(d.oldText, d.newText).map((seg, j) => (
+                          <span
+                            key={j}
+                            className={
+                              seg.k === 'del'
+                                ? 'rounded-sm bg-rose-100 text-rose-800 line-through decoration-rose-400 px-1 py-0.5'
+                                : seg.k === 'add'
+                                ? 'rounded-sm bg-teal-100 text-teal-900 font-medium px-1 py-0.5'
+                                : ''
+                            }
+                          >
+                            {seg.t}{' '}
+                          </span>
+                        ))}
+                      </p>
+                      <div className="flex gap-4 border-t border-slate-100 px-5 py-2.5 font-mono text-xs sm:text-sm text-slate-600 font-semibold">
+                        <span className="text-rose-700">− superseded</span>
+                        <span className="text-teal-800">+ effective</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
               </div>
             )}
-
           </div>
 
-          {/* Bottom Console Ribbon */}
-          <div className="px-6 py-4 bg-[#F5F7F5] border-t border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
-            <div className="text-slate-600 text-center sm:text-left">
-              Want to test SmartiDP EDMS with your organization's custom document templates or schemas?
-            </div>
-
-            <div className="flex items-center gap-3 shrink-0">
+          {/* Footer CTAs: one primary, one secondary */}
+          <div className="flex flex-col items-center justify-between gap-4 border-t border-slate-200 bg-slate-50 px-6 py-5 sm:flex-row">
+            <p className="text-center text-sm sm:text-base font-medium text-slate-700 sm:text-left">
+              Want to test SmartiDP EDMS with your own templates and schemas?
+            </p>
+            <div className="flex shrink-0 items-center gap-3">
               <button
                 onClick={onOpenDemoModal}
-                className="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-slate-800 font-semibold border border-slate-300 transition-all cursor-pointer shadow-2xs"
+                className="rounded-full bg-[#14532D] hover:bg-[#166534] px-7 py-3 text-sm sm:text-base font-bold text-white shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all cursor-pointer flex items-center gap-2 group"
               >
-                Request Custom Trial
+                <span>Request a Demo</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
               <a
                 href="https://edms.smartidp.ai/login"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="px-4 py-2 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-semibold transition-all cursor-pointer shadow-xs inline-flex items-center gap-1.5"
+                className="inline-flex items-center gap-1.5 rounded-full border border-slate-300 bg-white px-6 py-3 text-sm sm:text-base font-semibold text-slate-800 hover:bg-slate-100 hover:text-[#14532D] transition-all"
               >
-                <span>Launch Client Portal</span>
-                <ExternalLink className="h-3.5 w-3.5 text-white/80" />
+                Open sandbox <ExternalLink className="h-4 w-4" />
               </a>
             </div>
           </div>
-
         </div>
-
       </div>
     </section>
+  )
+}
+
+function Readout({ value, label, accent }) {
+  return (
+    <div className="px-3 py-4 text-center">
+      <div className={`font-mono text-2xl font-bold tabular-nums sm:text-3xl ${accent ? 'text-teal-300' : 'text-white'}`}>{value}</div>
+      <div className="mt-1 text-xs uppercase tracking-wider text-slate-400 font-semibold">{label}</div>
+    </div>
+  )
+}
+
+function ManifestCard({ title, children }) {
+  return (
+    <div className="space-y-3.5 rounded-2xl border border-slate-200 bg-slate-50 p-5 sm:p-6">
+      <div className="text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-600">{title}</div>
+      <div className="space-y-3.5">{children}</div>
+    </div>
+  )
+}
+
+function Row({ k, v, strong, mono, accent }) {
+  return (
+    <div>
+      <div className="mb-1 text-xs sm:text-sm text-slate-500 font-medium">{k}</div>
+      <div className={`${strong ? 'font-bold' : 'font-medium'} ${mono ? 'font-mono text-xs sm:text-sm' : 'text-sm sm:text-base'} ${accent ? 'text-[#14532D]' : 'text-slate-900'}`}>{v}</div>
+    </div>
+  )
+}
+
+function VersionBadge({ status }) {
+  const good = /Effective|Authorized|Locked/.test(status)
+  return (
+    <span className={`inline-block whitespace-nowrap rounded-full px-2.5 py-1 text-xs sm:text-sm font-semibold ${good ? 'bg-teal-50 text-teal-800 ring-1 ring-inset ring-teal-200' : 'bg-slate-100 text-slate-600'}`}>
+      {status}
+    </span>
+  )
+}
+
+function VerifyPanel({ verify, setVerify }) {
+  const running = verify.status === 'running'
+  const done = verify.status === 'done'
+  return (
+    <div className="rounded-xl border border-slate-200 p-4 sm:p-5">
+      <button
+        onClick={() => setVerify({ status: 'running', stage: 0 })}
+        disabled={running}
+        className="flex w-full items-center justify-center gap-2 rounded-xl border border-slate-300 bg-white py-3 text-sm sm:text-base font-bold text-slate-800 transition-colors hover:bg-slate-50 hover:border-[#14532D] disabled:opacity-60 cursor-pointer"
+      >
+        {running ? <RefreshCw className="h-4 w-4 motion-safe:animate-spin" /> : done ? <Check className="h-4 w-4 text-teal-700" /> : <Fingerprint className="h-4 w-4 text-[#14532D]" />}
+        {running ? 'Verifying…' : done ? 'Hash verification passed' : 'Verify SHA-256 digest'}
+      </button>
+
+      {verify.status !== 'idle' && (
+        <ol className="mt-4 space-y-2.5 font-mono text-xs sm:text-sm" aria-live="polite">
+          {VERIFY_STAGES.map((s, i) => {
+            const complete = done || i < verify.stage
+            const current = running && i === verify.stage
+            return (
+              <li key={s} className={`flex items-center gap-2.5 ${complete || current ? 'text-slate-900 font-medium' : 'text-slate-400'}`}>
+                <span className={`flex h-4.5 w-4.5 items-center justify-center rounded-full ${complete ? 'bg-teal-600 text-white' : current ? 'border-2 border-[#14532D]' : 'border border-slate-300'}`}>
+                  {complete && <Check className="h-3 w-3" />}
+                </span>
+                {s}
+              </li>
+            )
+          })}
+          {done && (
+            <li className="pt-2">
+              <button onClick={() => setVerify({ status: 'idle', stage: 0 })} className="text-xs sm:text-sm text-slate-500 font-semibold underline underline-offset-2 hover:text-slate-900 cursor-pointer">
+                Reset verification
+              </button>
+            </li>
+          )}
+        </ol>
+      )}
+    </div>
+  )
+}
+
+function DocumentCanvas({ doc, activeField, highlights, setHighlights, clauseLinks }) {
+  const linkedClauses = new Set(activeField !== null ? [clauseLinks[activeField]] : [])
+
+  return (
+    <div className="flex h-full flex-col">
+      <div className="mb-4 flex items-center justify-between border-b border-slate-200 pb-3">
+        <div className="flex items-center gap-2 text-sm sm:text-base font-bold text-slate-800">
+          <FileText className="h-4.5 w-4.5 text-[#14532D]" /> Controlled document
+        </div>
+        <button
+          onClick={() => setHighlights(h => !h)}
+          aria-pressed={highlights}
+          className={`flex items-center gap-1.5 rounded-lg border px-3.5 py-1.5 text-xs sm:text-sm font-semibold transition-colors cursor-pointer ${
+            highlights ? 'border-[#14532D]/40 bg-[#F0FDF4] text-[#14532D]' : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
+          }`}
+        >
+          <ScanText className="h-3.5 w-3.5" /> Extraction highlights {highlights ? 'on' : 'off'}
+        </button>
+      </div>
+
+      <div className="relative max-h-[640px] overflow-y-auto rounded-xl bg-white p-6 shadow-sm ring-1 ring-slate-200 sm:p-8">
+        {/* Watermark */}
+        <div aria-hidden className="pointer-events-none absolute inset-0 flex items-center justify-center select-none">
+          <span className="rotate-[-25deg] text-center font-mono text-2xl font-semibold uppercase leading-relaxed tracking-[0.25em] text-slate-900/[0.05] sm:text-3xl">
+            SmartiDP EDMS<br />Controlled Record<br />Copy #042
+          </span>
+        </div>
+
+        <div className="relative">
+          <header className="flex items-start justify-between gap-4 border-b-2 border-slate-900 pb-4">
+            <div>
+              <div className="font-mono text-xs font-bold uppercase tracking-[0.18em] text-slate-600">{doc.orgName}</div>
+              <h3 className="mt-1 text-xl font-bold leading-snug text-slate-900 sm:text-2xl">{doc.title}</h3>
+            </div>
+            <div className="shrink-0 text-right font-mono text-xs sm:text-sm">
+              <div className="font-bold text-slate-900">{doc.code}</div>
+              <div className="font-semibold text-[#14532D]">{doc.revision}</div>
+              <div className="text-slate-600">{doc.effectiveDate}</div>
+            </div>
+          </header>
+
+          <div className="space-y-6 py-6">
+            {doc.docClauses.map((c, i) => {
+              const hot = linkedClauses.has(i)
+              const marked = highlights && c.ocrMatch
+              return (
+                <section key={i} className="space-y-2">
+                  <h4 className="font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-slate-900">
+                    {c.num} · {c.title}
+                  </h4>
+                  <p
+                    className={`rounded-lg px-4 py-3 text-sm sm:text-base leading-relaxed transition-all duration-300 ${
+                      hot
+                        ? 'bg-[#F0FDF4] text-slate-900 ring-2 ring-[#14532D]'
+                        : marked
+                        ? 'border-l-3 border-[#14532D]/70 bg-[#F0FDF4]/50 text-slate-800'
+                        : 'text-slate-700'
+                    }`}
+                  >
+                    {c.text}
+                  </p>
+                  {marked && (
+                    <div className="flex items-center gap-1.5 px-4 font-mono text-xs sm:text-sm font-semibold text-[#14532D]">
+                      <ScanText className="h-3.5 w-3.5 shrink-0" />
+                      <span>Extracted: {c.ocrMatch}</span>
+                    </div>
+                  )}
+                </section>
+              )
+            })}
+          </div>
+
+          {/* Seal block */}
+          <div className="mt-5 flex items-center gap-4 rounded-xl border border-slate-300 p-4 sm:p-5">
+            <div aria-hidden className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full border-2 border-dashed border-teal-700 text-teal-700">
+              <BadgeCheck className="h-8 w-8" />
+            </div>
+            <div className="min-w-0 flex-1 space-y-1.5 text-xs sm:text-sm text-slate-700">
+              <div className="font-mono text-xs font-bold uppercase tracking-wider text-teal-800">Electronic signature · sealed</div>
+              <div><span className="text-slate-500 font-medium">Signer:</span> <strong className="text-slate-900 font-bold">{doc.signedBy}</strong></div>
+              <div><span className="text-slate-500 font-medium">Intent:</span> <strong className="text-[#14532D] font-bold">{doc.meaning}</strong></div>
+              <div className="truncate font-mono text-xs text-slate-500">{doc.signedTime} · {doc.sha256.slice(0, 18)}…</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

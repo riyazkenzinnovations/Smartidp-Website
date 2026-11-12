@@ -1,185 +1,259 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import PageCtaBanner from '../components/PageCtaBanner'
 import {
-  Building2,
-  Stethoscope,
   FlaskConical,
-  ShieldCheck,
+  Stethoscope,
+  HeartPulse,
   Landmark,
+  Shield,
+  Factory,
   Scale,
-  Truck,
-  Briefcase,
   Receipt,
   Users,
-  FileCode2,
-  FileText,
+  Building2,
   CheckCircle2,
   ArrowRight,
-  Sparkles
+  ShieldCheck,
+  Sparkles,
+  Layers,
+  FileCheck2,
+  Cpu,
+  Archive,
+  Headphones
 } from 'lucide-react'
 
 const REGULATED_INDUSTRIES = [
   {
     id: 'pharma',
-    name: 'Pharmaceuticals & Biotech',
+    name: 'Pharmaceuticals & Biotechnology',
     icon: FlaskConical,
-    regulations: '21 CFR Part 11 · EU Annex 11 · GAMP 5 · ICH Q10 · ALCOA+',
+    regulations: '21 CFR Part 11 · EU GMP Annex 11 · GAMP 5',
+    highlight: 'Turnkey Validation Accelerator with pre-packaged IQ/OQ/PQ execution evidence.',
     useCases: [
-      'Standard Operating Procedures (SOPs) & Change Control',
-      'Electronic Batch Records (EBR) & Deviation Logging',
-      'Equipment Validation Protocols (IQ / OQ / PQ)',
-      'Regulatory Submissions (eCTD) & CMC Dossiers',
-      'Personnel GxP Training Records & Role Curricula'
-    ],
-    highlight: 'Pre-validated URS templates, risk assessment, and IQ/OQ/PQ execution evidence included.'
+      'Standard Operating Procedure (SOP) Change Control Lifecycles',
+      'Electronic Batch Records (EBR) & Line Clearance Attestations',
+      'Deviation, OOS Investigation & CAPA Incident Escalation',
+      'Mandatory Read-and-Acknowledge Attestation Tracking'
+    ]
   },
   {
     id: 'meddev',
-    name: 'Medical Devices',
+    name: 'Medical Devices & Diagnostics',
     icon: Stethoscope,
-    regulations: 'ISO 13485 · FDA QMSR · EU MDR / IVDR · ISO 14971',
+    regulations: 'FDA QMSR · ISO 13485:2016 · EU MDR 2017/745',
+    highlight: 'Complete Design History File (DHF) and Device Master Record (DMR) traceability.',
     useCases: [
-      'Design History Files (DHF) & Device Master Records (DMR)',
-      'Technical Documentation & CE Mark Submission Packages',
-      'ISO 14971 Risk Management Files & FMEA Matrix',
-      'Corrective & Preventive Action (CAPA) Workflows',
-      'Supplier Quality Agreements & Audit Certificates'
-    ],
-    highlight: 'Traceability matrix linking design inputs, outputs, verification tests, and change orders.'
+      'Design History Files (DHF) & Verification Protocol Sign-Off',
+      'Device Master Records (DMR) & Manufacturing Work Instructions',
+      'ISO 14971 Risk Management Files & FMEA Matrix Traceability',
+      'Post-Market Surveillance, Complaint Handling & MDR/Vigilance'
+    ]
   },
   {
     id: 'healthcare',
-    name: 'Healthcare & Clinical',
-    icon: ShieldCheck,
-    regulations: 'HIPAA · GDPR · ISO 27001 · National Health-Data Acts',
+    name: 'Healthcare & Clinical Trials',
+    icon: HeartPulse,
+    regulations: 'ICH-GCP E6(R2) · HIPAA · FDA 21 CFR Part 312',
+    highlight: 'eTMF electronic Trial Master File with automated DIA Reference Model classification.',
     useCases: [
-      'Electronic Patient Records & Medical Charts',
-      'Informed Consent Forms & Treatment Authorizations',
-      'Clinical Governance Policies & Hospital Protocols',
-      'Accreditation Evidence Packages (JCI / National Bodies)',
-      'Physician Credentialing & License Expiry Tracking'
-    ],
-    highlight: 'Zero Data Retention (ZDR) mode and automated PII/PHI redaction safeguards sensitive health records.'
+      'Electronic Trial Master Files (eTMF) across Multi-Site Clinical Trials',
+      'Informed Consent Form (ICF) Version Tracking & Patient Verification',
+      'Investigator Site Files (ISF) & IRB/IEC Regulatory Correspondence',
+      'HIPAA / GDPR Compliant Protected Health Information (PHI) Redaction'
+    ]
   },
   {
     id: 'bfsi',
-    name: 'Banking, Financial Services & Insurance (BFSI)',
+    name: 'Banking, Financial Services & Insurance',
     icon: Landmark,
-    regulations: 'SOX · ISO 27001 · PCI-DSS · AML / KYC Regulations',
+    regulations: 'SEC Rule 17a-4 · FINRA · SOX §404 · ISO 9001',
+    highlight: 'WORM non-rewritable, non-erasable electronic storage compliance with instant legal hold.',
     useCases: [
-      'Customer Onboarding & KYC / AML Document Extraction',
-      'Commercial Lending & Mortgage Loan File Dossiers',
-      'Policy Lifecycle, Underwriting & Insurance Claims',
-      'Board Resolutions, Governance & Committee Minutes',
-      'Regulatory Inquiries, Audits & Defensible Submissions'
-    ],
-    highlight: 'Automated tabular extraction processes bank statements and tax schedules in seconds.'
+      'Know-Your-Customer (KYC) & Customer Due Diligence (CDD) Onboarding',
+      'Credit Underwriting & Mortgage Dossier Multi-Party Approvals',
+      'SEC 17a-4 Compliant Electronic Broker-Dealer Records Archival',
+      'Insurance First-Notice-of-Loss (FNOL) & Claims Processing'
+    ]
   },
   {
-    id: 'gov',
+    id: 'public',
     name: 'Government & Public Sector',
-    icon: Building2,
-    regulations: 'National Archives Acts · ISO 15489 · FOIA · Data Protection',
+    icon: Shield,
+    regulations: 'DOD 5015.02 · ISO 15489 · FedRAMP Aligned',
+    highlight: 'Rigorous records schedules, security classification tiers, and public transparency compliance.',
     useCases: [
-      'Citizen Records, Permits & Licensing Dossiers',
-      'Inter-Agency Correspondence & Ministerial Briefings',
-      'Public Procurement Tender Documents & Award Dossiers',
-      'Official Gazettes, Ordinances & Legislative Records',
-      'Permanent Archival Management & Access Classification'
-    ],
-    highlight: 'Role-based security trimming ensures sensitive government records remain classified.'
+      'Public Records Request (FOIA) Processing & Automated PII Redaction',
+      'Citizen Service Application Digitization & Omnichannel Intake',
+      'Legislative Council Policy Enactment & Controlled Promulgation',
+      'Defense & Homeland Security Controlled Unclassified Information (CUI)'
+    ]
   },
   {
     id: 'manufacturing',
-    name: 'Manufacturing & Energy',
-    icon: Truck,
-    regulations: 'ISO 9001 · ISO 14001 · ISO 45001 · OSHA Standards',
+    name: 'Manufacturing & Process Engineering',
+    icon: Factory,
+    regulations: 'ISO 9001:2015 · IATF 16949 · OSHA §1910',
+    highlight: 'Engineering Change Order (ECO) workflows with multi-site CAD and drawing redlining.',
     useCases: [
-      'Plant Operating Manuals & Work Instructions',
-      'Material Safety Data Sheets (MSDS / SDS)',
-      'Engineering Change Orders (ECO) & CAD Drawings',
-      'Equipment Maintenance Logs & Calibration Certificates',
-      'Environmental, Health & Safety (EHS) Incident Reports'
-    ],
-    highlight: 'Version-locked shop-floor distribution prevents operators from following obsolete specs.'
+      'Engineering Change Orders (ECO) & Shop Floor Drawing Revisions',
+      'Standard Operating Procedures & Safe Work Method Statements (SWMS)',
+      'Supplier Quality Audits & Certificate of Analysis (CoA) Ingestion',
+      'Equipment Preventive Maintenance & Calibration Certifications'
+    ]
   },
   {
     id: 'legal',
     name: 'Legal & Professional Services',
     icon: Scale,
-    regulations: 'Legal Professional Privilege · Bar Standards · SRA · GDPR',
+    regulations: 'ABA Model Rules · GDPR · ISO 27001 Security',
+    highlight: 'Strict ethical walls, automated matter categorization, and redline diff comparison.',
     useCases: [
-      'Matter Management & Client Case Files',
-      'Contract Drafting, Redlining & Clause Libraries',
-      'Litigation Hold Execution & e-Discovery Preservation',
-      'Compliance Due Diligence & M&A Data Rooms',
-      'Trust & Estate Documentation & Power of Attorney'
-    ],
-    highlight: 'Full-text semantic search indexes millions of discovery pages with OCR precision.'
+      'Matter File Organization & Electronic Discovery (eDiscovery) Readiness',
+      'Contract Lifecycle Management (CLM) from Redlining to e-Signature',
+      'Conflict-of-Interest Checks & Information Barrier Governance',
+      'Client Billing Record Retention & Certified Document Disposition'
+    ]
   },
   {
-    id: 'cros',
-    name: 'Clinical Research Organizations (CROs)',
-    icon: Briefcase,
-    regulations: 'ICH-GCP E6(R2) · FDA 21 CFR Part 312/812 · EU CTR 536/2014',
+    id: 'cro',
+    name: 'Laboratories & CROs',
+    icon: FlaskConical,
+    regulations: 'GLP · GCP · ISO/IEC 17025 · 21 CFR Part 11',
+    highlight: 'Study protocols, lab notebooks, certificates of analysis, method validation, and Trial Master Files.',
     useCases: [
-      'Trial Master Files (eTMF / DIA Reference Model)',
-      'Investigator Site Files (ISF) & Regulatory Binders',
-      'Clinical Study Protocols, Amendments & ICFs',
-      'Institutional Review Board (IRB) / Ethics Submissions',
-      'Blinded vs. Unblinded Access Segregation Controls'
-    ],
-    highlight: 'Multi-sponsor partition architecture keeps proprietary trial dossiers completely isolated.'
+      'Study Protocols & Method Validation Dossiers',
+      'Electronic Lab Notebooks (ELN) & Analytical Data',
+      'Certificates of Analysis (CoA) Ingestion & Extraction',
+      'Trial Master File (TMF) & GLP Archive Integrity'
+    ]
   }
 ]
 
 const DEPARTMENTAL_SOLUTIONS = [
   {
-    id: 'finance-ap',
-    title: 'Finance & Accounts Payable (AP)',
+    id: 'finance',
+    department: 'Finance',
+    title: 'Accounts payable',
     icon: Receipt,
-    benefit: 'Eliminate 85% of manual invoice data entry with automated 3-way PO matching',
+    benefit: 'Automated 3-Way ERP Matching',
+    desc: 'Capture invoices from any channel, extract data, match to POs in ERP and route for approval — reducing manual entry and late-payment risk.',
     points: [
-      'Automated multi-page invoice capture from email inboxes and supplier portals',
-      'Multi-modal extraction of invoice number, PO number, line items, and VAT breakdown',
-      'Automatic 3-way matching against ERP purchase orders and goods receipt notes',
-      'ERP bi-directional synchronization with SAP, Oracle NetSuite, and Microsoft Dynamics'
+      'Omnichannel capture from email inboxes, scanned paper and EDI streams',
+      'AI field and line-item extraction with confidence threshold gating',
+      'Automated reconciliation against Purchase Orders and Goods Receipts in ERP',
+      'Straight-through approval routing with configurable delegation'
     ]
   },
   {
-    id: 'clm',
-    title: 'Contract Lifecycle Management (CLM)',
-    icon: FileText,
-    benefit: 'Shorten contract review cycles from 18 days to 48 hours with version redlines',
+    id: 'legal',
+    department: 'Legal',
+    title: 'Contract lifecycle',
+    icon: Scale,
+    benefit: 'Centralized Obligation Tracking',
+    desc: 'Templates, negotiation, approval, e-signature, obligation tracking and renewal alerts in one governed repository.',
     points: [
-      'Standardized clause libraries and approved pre-vetted contract templates',
-      'Visual redline comparison highlighting altered liabilities, indemnities, or terms',
-      'Automated milestone alerts for renewal notice dates, rate expirations, and SLAs',
-      'Two-component legally binding electronic signatures compatible with eIDAS and ESIGN'
+      'Controlled contract template library with pre-approved fallback clauses',
+      'Collaborative in-browser redlining and tracked revision histories',
+      '21 CFR Part 11 and eIDAS compliant cryptographic digital signatures',
+      'Automated milestone, expiration, and renewal notification alerts'
     ]
   },
   {
     id: 'hr',
-    title: 'Human Resources Employee Records',
+    department: 'HR',
+    title: 'Digital employee files',
     icon: Users,
-    benefit: 'Centralize employee files while enforcing strict GDPR & privacy access controls',
+    benefit: 'Policy Read-and-Acknowledge',
+    desc: 'Onboarding packs, policies with read-and-acknowledge, confidential personnel files and retention by employment status.',
     points: [
-      'Complete digital employee file dossiers from recruitment through exit',
-      'Automated expiration tracking for professional licenses, visas, and training certifications',
-      'Granular field-level privacy permissions separating medical notes from payroll data',
-      'Policy-driven retention schedules that automatically flag records due for disposition'
+      'Confidential personnel dossiers protected by role-based access gates',
+      'Automated policy attestation campaigns upon new handbook releases',
+      'Pre-configured onboarding packet intake and verification workflows',
+      'Event-based retention schedules tied to employee separation dates'
     ]
   },
   {
     id: 'engineering',
-    title: 'Engineering & Technical Drawings',
-    icon: FileCode2,
-    benefit: 'Prevent costly manufacturing errors caused by using out-of-date drawings',
+    department: 'Engineering',
+    title: 'Drawings & specs',
+    icon: Cpu,
+    benefit: 'Asset-Linked Revision Control',
+    desc: 'Revision-controlled drawings, specifications and change orders linked to products and assets.',
     points: [
-      'Native metadata support for large-format drawings, schematics, and AutoCAD files',
-      'Strict Engineering Change Order (ECO) workflows with multi-discipline engineering sign-off',
-      'Automated PDF/A rendering of complex drawings for shop-floor tablets and workstations',
-      'Controlled distribution watermarking showing active release number and plant location'
+      'Major and minor revision management for technical CAD and PDF drawings',
+      'Engineering Change Order (ECO) review and sign-off workflows',
+      'Direct linkage between technical specifications and operational assets',
+      'Side-by-side visual and text diff comparison between revisions'
+    ]
+  },
+  {
+    id: 'procurement',
+    department: 'Procurement',
+    title: 'Supplier management',
+    icon: Building2,
+    benefit: 'Certificate Expiry Alerts',
+    desc: 'Supplier qualification documents, certificates with expiry alerts, agreements and audit reports.',
+    points: [
+      'Supplier qualification dossiers and vendor onboarding intake',
+      'Automated expiry alerts for ISO certificates and compliance attestations',
+      'Centralized repository for supplier quality agreements and audit reports',
+      'Performance rating history and historical compliance audit tracking'
+    ]
+  },
+  {
+    id: 'customer-service',
+    department: 'Customer service',
+    title: 'Correspondence',
+    icon: Headphones,
+    benefit: 'Automated CRM Routing',
+    desc: 'Inbound mail and email classified and routed to the right team, linked to customer records in CRM.',
+    points: [
+      'Automated scanning and classification of inbound mail and digital inquiries',
+      'Metadata indexing and direct association with CRM customer profiles',
+      'Rule-based routing to appropriate departmental resolution queues',
+      'Full lifecycle tracking ensuring responsive SLA adherence'
+    ]
+  },
+  {
+    id: 'corporate',
+    department: 'Corporate',
+    title: 'Policies & governance',
+    icon: ShieldCheck,
+    benefit: 'Controlled Attestation Campaigns',
+    desc: 'Board papers, policies and procedures with controlled publication and attestation campaigns.',
+    points: [
+      'Controlled publishing workflows with mandatory executive approvals',
+      'Enterprise-wide attestation campaigns with real-time completion tracking',
+      'Automatic withdrawal and superseding of obsolete corporate directives',
+      'Confidential board paper collation and secure distribution'
+    ]
+  },
+  {
+    id: 'it',
+    department: 'IT',
+    title: 'Knowledge & ISMS evidence',
+    icon: Layers,
+    benefit: 'ISO 27001 Evidence Readiness',
+    desc: 'Runbooks, architecture records and ISO 27001 evidence maintained with ownership and review cycles.',
+    points: [
+      'Technical runbooks and IT system architecture documentation governance',
+      'ISO 27001, SOC 2, and security control audit evidence collection',
+      'Scheduled periodic review cycles with designated document owners',
+      'Version-locked change documentation with complete historical trails'
+    ]
+  },
+  {
+    id: 'records-office',
+    department: 'Records office',
+    title: 'Digitisation',
+    icon: Archive,
+    benefit: 'Back-File Scanning & PDF/A',
+    desc: 'Back-file scanning projects converting paper archives into searchable, retention-managed digital records.',
+    points: [
+      'High-throughput bulk intake and automated indexing of legacy records',
+      'Full-text OCR conversion producing searchable, preserved PDF/A files',
+      'Application of ISO 15489 policy retention rules upon ingestion',
+      'Defensible disposition workflows with cryptographic destruction records'
     ]
   }
 ]
@@ -188,77 +262,73 @@ export default function SolutionsPage({ onOpenDemoModal }) {
   const [filterMode, setFilterMode] = useState('all')
 
   return (
-    <div className="py-12 bg-white">
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-slate-500 mb-8 font-medium">
-          <Link to="/" className="hover:text-[#14532D]">Home</Link>
-          <span>/</span>
-          <span className="text-[#14532D] font-semibold">Solutions & Industries</span>
-        </nav>
-
-        {/* Page Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-4">
-            <Building2 className="h-3.5 w-3.5" />
-            <span>ENTERPRISE SOLUTIONS</span>
+    <div className="bg-white">
+      {/* 1. Page Hero & Filter Section */}
+      <section className="py-14 lg:py-20 bg-[#F8FAFC] border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-4 shadow-2xs">
+              <Building2 className="h-3.5 w-3.5" />
+              <span>ENTERPRISE SOLUTIONS</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight leading-tight">
+              Tailored for Regulated Sectors & Mission-Critical Operations
+            </h1>
+            <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+              SmartiDP EDMS delivers pre-configured compliance packages, metadata taxonomies, and approval lifecycles built specifically for high-stakes industries.
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight leading-tight">
-            Tailored for Regulated Sectors & Mission-Critical Operations
-          </h1>
-          <p className="mt-4 text-slate-700 text-base sm:text-lg leading-relaxed">
-            SmartiDP EDMS delivers pre-configured compliance packages, metadata taxonomies, and approval lifecycles built specifically for high-stakes industries.
-          </p>
-        </div>
 
-        {/* Filter Navigation */}
-        <div className="flex items-center justify-center gap-3 mb-14">
-          <button
-            onClick={() => setFilterMode('all')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-              filterMode === 'all'
-                ? 'bg-[#14532D] text-white shadow-sm'
-                : 'bg-[#F5F7F5] text-slate-700 hover:bg-[#E8F3EC] border border-slate-200'
-            }`}
-          >
-            All Solutions (12 Modules)
-          </button>
-          <button
-            onClick={() => setFilterMode('regulated')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-              filterMode === 'regulated'
-                ? 'bg-[#14532D] text-white shadow-sm'
-                : 'bg-[#F5F7F5] text-slate-700 hover:bg-[#E8F3EC] border border-slate-200'
-            }`}
-          >
-            Regulated Life Sciences & GxP (8 Industries)
-          </button>
-          <button
-            onClick={() => setFilterMode('departmental')}
-            className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-              filterMode === 'departmental'
-                ? 'bg-[#14532D] text-white shadow-sm'
-                : 'bg-[#F5F7F5] text-slate-700 hover:bg-[#E8F3EC] border border-slate-200'
-            }`}
-          >
-            Cross-Industry Departments (4 Modules)
-          </button>
+          {/* Filter Navigation */}
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <button
+              onClick={() => setFilterMode('all')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                filterMode === 'all'
+                  ? 'bg-[#14532D] text-white shadow-sm'
+                  : 'bg-white text-slate-700 hover:bg-[#F0FDF4] border border-slate-200'
+              }`}
+            >
+              All Solutions (12 Modules)
+            </button>
+            <button
+              onClick={() => setFilterMode('regulated')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                filterMode === 'regulated'
+                  ? 'bg-[#14532D] text-white shadow-sm'
+                  : 'bg-white text-slate-700 hover:bg-[#F0FDF4] border border-slate-200'
+              }`}
+            >
+              Regulated Life Sciences & GxP (8 Industries)
+            </button>
+            <button
+              onClick={() => setFilterMode('departmental')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                filterMode === 'departmental'
+                  ? 'bg-[#14532D] text-white shadow-sm'
+                  : 'bg-white text-slate-700 hover:bg-[#F0FDF4] border border-slate-200'
+              }`}
+            >
+              Cross-Industry Departments (4 Modules)
+            </button>
+          </div>
         </div>
+      </section>
 
-        {/* Regulated Industries Section */}
-        {(filterMode === 'all' || filterMode === 'regulated') && (
-          <div className="mb-20">
-            <div className="text-left mb-8 pb-4 border-b border-slate-200 flex items-center justify-between">
+      {/* 2. Regulated Industries Section */}
+      {(filterMode === 'all' || filterMode === 'regulated') && (
+        <section className="py-20 lg:py-24 bg-[#F8FAFC] border-b border-slate-200/80">
+          <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+            <div className="text-left mb-10 pb-4 border-b border-slate-200 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-extrabold text-[#14532D]">
+                <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
                   Regulated Life Sciences & GxP Industries
                 </h2>
                 <p className="text-xs text-slate-600 mt-1">
                   Engineered with mandatory controls for FDA 21 CFR Part 11, EU Annex 11, ISO 13485, and HIPAA.
                 </p>
               </div>
-              <span className="text-xs font-bold font-mono text-[#14532D] bg-[#E8F3EC] px-3 py-1 rounded-full hidden sm:inline-block">
+              <span className="text-xs font-bold font-mono text-[#14532D] bg-[#F0FDF4] px-3 py-1 rounded-full border border-[#14532D]/15 hidden sm:inline-block">
                 8 Verticals
               </span>
             </div>
@@ -269,22 +339,22 @@ export default function SolutionsPage({ onOpenDemoModal }) {
                 return (
                   <div
                     key={ind.id}
-                    className="p-6 rounded-2xl glass-card-green flex flex-col justify-between hover:shadow-md transition-all"
+                    className="p-6 rounded-2xl glass-card-green flex flex-col justify-between group"
                   >
                     <div>
-                      <div className="h-11 w-11 rounded-xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/15 shadow-2xs mb-4">
+                      <div className="h-11 w-11 rounded-xl bg-[#F0FDF4] text-[#14532D] flex items-center justify-center border border-[#14532D]/20 shadow-2xs mb-4 group-hover:bg-[#14532D] group-hover:text-white transition-colors">
                         <Icon className="h-5 w-5" />
                       </div>
 
-                      <h3 className="text-base font-bold text-[#14532D] mb-1 leading-snug">
+                      <h3 className="text-base font-semibold text-slate-900 group-hover:text-[#14532D] transition-colors mb-1 leading-snug">
                         {ind.name}
                       </h3>
 
-                      <div className="text-[10px] font-mono font-bold text-slate-500 mb-3 bg-white/70 px-2 py-0.5 rounded border border-slate-200/50 inline-block">
+                      <div className="text-[10px] font-mono font-bold text-slate-500 mb-3 bg-slate-50 px-2 py-0.5 rounded border border-slate-200/50 inline-block">
                         {ind.regulations}
                       </div>
 
-                      <ul className="space-y-1.5 text-[11px] text-slate-700 border-t border-[#14532D]/10 pt-3 mb-4">
+                      <ul className="space-y-1.5 text-[11px] text-slate-700 border-t border-slate-100 pt-3 mb-4">
                         {ind.useCases.slice(0, 3).map((uc, i) => (
                           <li key={i} className="flex items-start gap-1.5">
                             <CheckCircle2 className="h-3.5 w-3.5 text-[#14532D] shrink-0 mt-0.5" />
@@ -294,7 +364,7 @@ export default function SolutionsPage({ onOpenDemoModal }) {
                       </ul>
                     </div>
 
-                    <div className="pt-3 border-t border-[#14532D]/10">
+                    <div className="pt-3 border-t border-slate-100">
                       <p className="text-[10px] text-slate-600 italic mb-3 leading-snug">
                         "{ind.highlight}"
                       </p>
@@ -311,22 +381,24 @@ export default function SolutionsPage({ onOpenDemoModal }) {
               })}
             </div>
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Cross-Industry Departmental Modules */}
-        {(filterMode === 'all' || filterMode === 'departmental') && (
-          <div className="mb-20">
-            <div className="text-left mb-8 pb-4 border-b border-slate-200 flex items-center justify-between">
+      {/* 3. Cross-Industry Departmental Modules Section */}
+      {(filterMode === 'all' || filterMode === 'departmental') && (
+        <section className="py-20 lg:py-24 bg-white border-b border-slate-200/80">
+          <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+            <div className="text-left mb-10 pb-4 border-b border-slate-200 flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-extrabold text-[#14532D]">
-                  Cross-Industry Departmental Modules
+                <h2 className="text-2xl sm:text-3xl font-semibold text-slate-900">
+                  Cross-Industry Use Cases
                 </h2>
                 <p className="text-xs text-slate-600 mt-1">
-                  Ready-to-deploy automated workflows that eliminate document bottlenecks in every business unit.
+                  Beyond regulated content, SmartiDP EDMS digitises and automates the document-heavy processes found in every organisation.
                 </p>
               </div>
-              <span className="text-xs font-bold font-mono text-[#14532D] bg-[#E8F3EC] px-3 py-1 rounded-full hidden sm:inline-block">
-                4 Modules
+              <span className="text-xs font-bold font-mono text-[#14532D] bg-[#F0FDF4] px-3 py-1 rounded-full border border-[#14532D]/15 hidden sm:inline-block">
+                9 Use Cases
               </span>
             </div>
 
@@ -336,16 +408,16 @@ export default function SolutionsPage({ onOpenDemoModal }) {
                 return (
                   <div
                     key={dept.id}
-                    className="p-8 rounded-3xl bg-[#F5F7F5] border border-slate-200 hover:border-[#14532D]/30 transition-all flex flex-col justify-between"
+                    className="p-8 rounded-3xl glass-card-green flex flex-col justify-between group"
                   >
                     <div>
                       <div className="flex items-center gap-3 mb-4">
-                        <div className="h-12 w-12 rounded-2xl bg-white text-[#14532D] flex items-center justify-center border border-slate-200 shadow-2xs">
+                        <div className="h-12 w-12 rounded-2xl bg-white text-[#14532D] flex items-center justify-center border border-slate-200 shadow-2xs group-hover:bg-[#14532D] group-hover:text-white transition-colors">
                           <Icon className="h-6 w-6" />
                         </div>
                         <div>
-                          <h3 className="text-xl font-bold text-[#14532D]">{dept.title}</h3>
-                          <span className="text-xs text-emerald-800 font-semibold">{dept.benefit}</span>
+                          <h3 className="text-xl font-semibold text-slate-900 group-hover:text-[#14532D] transition-colors">{dept.title}</h3>
+                          <span className="text-xs text-[#14532D] font-semibold">{dept.benefit}</span>
                         </div>
                       </div>
 
@@ -374,27 +446,19 @@ export default function SolutionsPage({ onOpenDemoModal }) {
               })}
             </div>
           </div>
-        )}
+        </section>
+      )}
 
-        {/* Bottom CTA Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#14532D] text-white text-center space-y-4">
-          <h2 className="text-2xl sm:text-4xl font-extrabold">
-            Need a Custom Regulatory Package or Workflow?
-          </h2>
-          <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
-            SmartiDP EDMS supports visual no-code configuration, custom metadata schemas, and multi-tier approval policies.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={onOpenDemoModal}
-              className="px-8 py-3.5 rounded-xl bg-white text-[#14532D] font-bold text-sm shadow-md hover:bg-[#E8F3EC] transition-all cursor-pointer"
-            >
-              Consult with a Solutions Engineer
-            </button>
-          </div>
-        </div>
-
-      </div>
+      {/* 4. Bottom Custom Workflow CTA Section (Standardized Green Pill Banner) */}
+      <PageCtaBanner
+        onOpenDemoModal={onOpenDemoModal}
+        badge="Tailored Enterprise Architecture"
+        title="Need a Custom Regulatory Package or Workflow?"
+        description="SmartiDP EDMS supports visual no-code configuration, custom metadata schemas, and multi-tier approval policies tailored to your compliance mandates."
+        primaryBtnText="Request a Demo"
+        secondaryBtnText="Contact Solutions Team"
+        secondaryLink="/contact"
+      />
     </div>
   )
 }

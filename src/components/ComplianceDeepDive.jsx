@@ -69,11 +69,11 @@ export default function ComplianceDeepDive({ onOpenDemoModal }) {
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <ShieldCheck className="h-3.5 w-3.5" />
             <span>Regulatory Deep-Dive</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             Key Regulatory Requirements, Built-In Controls
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -83,10 +83,10 @@ export default function ComplianceDeepDive({ onOpenDemoModal }) {
 
         {/* Regulatory Matrix Table */}
         <div className="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden mb-12">
-          <div className="p-6 bg-[#F5F7F5] border-b border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div className="p-6 bg-slate-50 border-b border-slate-200 flex flex-col sm:flex-row items-center justify-between gap-4">
             <div>
-              <h3 className="text-lg font-bold text-[#14532D]">Compliance Requirements to Technical Control Mapping</h3>
-              <p className="text-xs text-slate-600">Clause-by-clause implementation highlights from the SmartiDP EDMS Compliance Framework</p>
+              <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors">Compliance Requirements to Technical Control Mapping</h3>
+              <p className="text-base sm:text-lg text-slate-600 mt-2 leading-relaxed">Clause-by-clause implementation highlights from the SmartiDP EDMS Compliance Framework</p>
             </div>
 
             <div className="w-full sm:w-auto">
@@ -95,35 +95,35 @@ export default function ComplianceDeepDive({ onOpenDemoModal }) {
                 placeholder="Search regulations (e.g. Part 11, ISO, GDPR)..."
                 value={filterQuery}
                 onChange={(e) => setFilterQuery(e.target.value)}
-                className="w-full sm:w-72 px-3.5 py-2 rounded-xl bg-white border border-slate-300 text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#14532D]"
+                className="w-full sm:w-80 px-4 py-2.5 rounded-xl bg-white border border-slate-300 text-sm text-slate-800 placeholder-slate-400 focus:outline-none focus:border-[#14532D]"
               />
             </div>
           </div>
 
           <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs">
-              <thead className="bg-[#F5F7F5] text-slate-700 border-b border-slate-200 font-semibold">
+            <table className="w-full text-left text-sm sm:text-base">
+              <thead className="bg-[#F0FDF4] text-[#14532D] border-b border-[#14532D]/20 font-bold uppercase tracking-wider text-xs sm:text-sm">
                 <tr>
-                  <th className="py-3 px-6 w-1/4">Regulatory Requirement</th>
-                  <th className="py-3 px-6 w-1/4">Standards Reference</th>
-                  <th className="py-3 px-6 w-1/2">Platform Technical Control</th>
+                  <th className="py-4 px-6 w-1/4">Regulatory Requirement</th>
+                  <th className="py-4 px-6 w-1/4">Standards Reference</th>
+                  <th className="py-4 px-6 w-1/2">Platform Technical Control</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-800">
                 {filteredControls.map((item, idx) => (
-                  <tr key={idx} className="hover:bg-[#E8F3EC]/40 transition-colors">
-                    <td className="py-4 px-6 font-bold text-slate-900 align-top">
+                  <tr key={idx} className="hover:bg-[#F0FDF4]/50 transition-colors">
+                    <td className="py-5 px-6 font-bold text-slate-900 align-top text-sm sm:text-base">
                       <div className="flex items-center gap-2">
-                        <CheckCircle2 className="h-4 w-4 text-[#14532D] shrink-0" />
+                        <CheckCircle2 className="h-5 w-5 text-[#14532D] shrink-0" />
                         <span>{item.requirement}</span>
                       </div>
                     </td>
-                    <td className="py-4 px-6 align-top">
-                      <span className="font-mono text-[11px] font-semibold text-[#14532D] bg-[#E8F3EC] px-2 py-0.5 rounded border border-[#14532D]/15 inline-block">
+                    <td className="py-5 px-6 align-top">
+                      <span className="font-mono text-xs sm:text-sm font-semibold text-[#14532D] bg-[#F0FDF4] px-2.5 py-1 rounded border border-[#14532D]/15 inline-block">
                         {item.reference}
                       </span>
                     </td>
-                    <td className="py-4 px-6 leading-relaxed text-slate-700 align-top">
+                    <td className="py-5 px-6 leading-relaxed text-slate-700 align-top text-sm sm:text-base">
                       {item.control}
                     </td>
                   </tr>
@@ -134,9 +134,9 @@ export default function ComplianceDeepDive({ onOpenDemoModal }) {
         </div>
 
         {/* Shared Responsibility Disclaimer Box from Brochure Page 16 */}
-        <div className="p-6 rounded-2xl bg-[#E8F3EC]/70 border border-[#14532D]/20 flex flex-col sm:flex-row items-center justify-between gap-6 text-xs text-slate-700">
+        <div className="p-6 rounded-2xl glass-card-green flex flex-col sm:flex-row items-center justify-between gap-6 text-sm text-slate-700">
           <div className="space-y-1">
-            <div className="font-bold text-[#14532D] flex items-center gap-1.5">
+            <div className="font-bold text-[#14532D] flex items-center gap-1.5 text-base">
               <ShieldCheck className="h-4 w-4" />
               <span>Compliance Shared Responsibility Model:</span>
             </div>
@@ -146,9 +146,10 @@ export default function ComplianceDeepDive({ onOpenDemoModal }) {
           </div>
           <button
             onClick={onOpenDemoModal}
-            className="shrink-0 px-6 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-bold transition-all shadow-xs cursor-pointer"
+            className="shrink-0 px-6 py-2.5 rounded-full bg-[#14532D] hover:bg-[#166534] text-white font-bold text-sm transition-all shadow-md shadow-emerald-950/20 hover:shadow-lg cursor-pointer inline-flex items-center gap-2 group"
           >
-            Request Full Compliance Pack
+            <span>Request Full Compliance Pack</span>
+            <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
           </button>
         </div>
       </div>

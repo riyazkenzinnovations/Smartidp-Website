@@ -115,11 +115,11 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <Layers className="h-3.5 w-3.5" />
             <span>Connected Ecosystem</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             Productivity Anywhere & Open Integration
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -127,7 +127,7 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
           </p>
 
           {/* Sub-nav toggle */}
-          <div className="mt-8 inline-flex items-center p-1.5 rounded-2xl bg-[#F5F7F5] border border-slate-200">
+          <div className="mt-8 inline-flex items-center p-1.5 rounded-2xl bg-slate-50 border border-slate-200">
             <button
               onClick={() => setActiveTab('productivity')}
               className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
@@ -163,22 +163,22 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
               return (
                 <div
                   key={idx}
-                  className="p-8 rounded-3xl glass-card-green flex flex-col justify-between"
+                  className="p-8 rounded-2xl glass-card-green flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="h-12 w-12 rounded-2xl bg-white border border-[#14532D]/15 text-[#14532D] flex items-center justify-center shadow-xs">
+                      <div className="h-12 w-12 rounded-2xl bg-white border border-[#14532D]/20 text-[#14532D] flex items-center justify-center shadow-xs">
                         <Icon className="h-6 w-6" />
                       </div>
-                      <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-white text-[#14532D] border border-[#14532D]/15">
+                      <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-white text-[#14532D] border border-[#14532D]/20">
                         {item.badge}
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-[#14532D] mb-3">{item.title}</h3>
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mb-3">{item.title}</h3>
                     <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-6">{item.desc}</p>
 
-                    <div className="space-y-2 border-t border-[#14532D]/10 pt-4">
+                    <div className="space-y-2 border-t border-emerald-900/10 pt-4">
                       {item.features.map((feat, fIdx) => (
                         <div key={fIdx} className="flex items-start gap-2 text-xs text-slate-700">
                           <CheckCircle2 className="h-4 w-4 text-[#14532D] shrink-0 mt-0.5" />
@@ -188,10 +188,10 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
                     </div>
                   </div>
 
-                  <div className="mt-8 pt-4 border-t border-[#14532D]/10">
+                  <div className="mt-8 pt-4 border-t border-emerald-900/10">
                     <button
                       onClick={onOpenDemoModal}
-                      className="text-xs font-bold text-[#14532D] hover:text-[#064E3B] flex items-center gap-1 cursor-pointer"
+                      className="text-xs font-bold text-[#14532D] hover:text-[#166534] flex items-center gap-1 cursor-pointer"
                     >
                       <span>Explore Client Add-in</span>
                       <ArrowRight className="h-3 w-3" />
@@ -209,10 +209,10 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
             {INTEGRATION_CATEGORIES.map((cat, idx) => (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-[#F5F7F5] border border-slate-200/90 hover:border-[#14532D]/30 transition-all flex flex-col justify-between shadow-2xs"
+                className="p-8 rounded-2xl glass-card-green flex flex-col justify-between group"
               >
                 <div>
-                  <h3 className="text-lg font-bold text-[#14532D] mb-2">{cat.category}</h3>
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mb-2">{cat.category}</h3>
                   <p className="text-xs text-slate-600 leading-relaxed mb-6">{cat.description}</p>
 
                   <div className="flex flex-wrap gap-2.5 mb-6">
@@ -247,10 +247,10 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
             {ARCHITECTURE_TIERS.map((tier, idx) => (
               <div
                 key={idx}
-                className="p-5 rounded-2xl glass-card-green flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-[#14532D]/15"
+                className="p-5 rounded-2xl glass-card-green flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-[#14532D]/20"
               >
                 <div className="flex items-center gap-4">
-                  <span className="h-8 w-8 rounded-xl bg-white text-[#14532D] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#14532D]/15">
+                  <span className="h-8 w-8 rounded-xl bg-white text-[#14532D] font-mono font-bold text-xs flex items-center justify-center shrink-0 border border-[#14532D]/20">
                     0{idx + 1}
                   </span>
                   <div>
@@ -258,13 +258,13 @@ export default function ProductivityIntegrations({ onOpenDemoModal }) {
                     <p className="text-xs text-slate-700 mt-0.5">{tier.desc}</p>
                   </div>
                 </div>
-                <span className="text-[10px] font-mono font-bold text-[#14532D] bg-white px-2.5 py-1 rounded-full border border-[#14532D]/15 shrink-0">
+                <span className="text-[10px] font-mono font-bold text-[#14532D] bg-white px-2.5 py-1 rounded-full border border-[#14532D]/20 shrink-0">
                   Containerised Microservice
                 </span>
               </div>
             ))}
 
-            <div className="mt-8 p-6 rounded-2xl bg-[#F5F7F5] border border-slate-200 text-center text-xs text-slate-600">
+            <div className="mt-8 p-6 rounded-2xl bg-slate-50 border border-slate-200 text-center text-xs text-slate-600">
               <strong className="text-slate-900">High-Availability Design:</strong> Multi-zone redundancy, geo-redundant backups, horizontal pod autoscaling on Kubernetes, and zero-downtime rolling upgrades.
             </div>
           </div>

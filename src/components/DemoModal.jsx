@@ -36,17 +36,17 @@ export default function DemoModal({ isOpen, onClose }) {
 
         {submitted ? (
           <div className="text-center py-8 space-y-4">
-            <div className="h-16 w-16 rounded-full bg-[#E8F3EC] text-[#14532D] flex items-center justify-center mx-auto border border-[#14532D]/20">
+            <div className="h-16 w-16 rounded-full bg-[#F0FDF4] text-[#14532D] flex items-center justify-center mx-auto border border-[#14532D]/20">
               <Check className="h-8 w-8" />
             </div>
-            <h3 className="text-2xl font-bold text-[#14532D]">Demo Request Confirmed</h3>
+            <h3 className="text-2xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors">Demo Request Confirmed</h3>
             <p className="text-xs sm:text-sm text-slate-600 max-w-xs mx-auto leading-relaxed">
               Our enterprise solutions team will reach out to <strong>{formData.email}</strong> within 2 business hours with demonstration credentials tailored to <strong>{formData.industry}</strong>.
             </p>
             <div className="pt-2">
               <button
                 onClick={handleClose}
-                className="px-6 py-2.5 rounded-xl bg-[#14532D] text-white text-xs font-bold hover:bg-[#064E3B] transition-colors cursor-pointer"
+                className="px-6 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#166534] text-white text-xs font-bold hover:opacity-95 transition-colors cursor-pointer"
               >
                 Close Window
               </button>
@@ -54,12 +54,12 @@ export default function DemoModal({ isOpen, onClose }) {
           </div>
         ) : (
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#E8F3EC] text-[#14532D] text-xs font-bold mb-3">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#F0FDF4] text-[#14532D] text-xs font-bold mb-3">
               <ShieldCheck className="h-3.5 w-3.5" />
               <span>SmartiDP EDMS · Kenz Innovations</span>
             </div>
 
-            <h3 className="text-2xl font-bold text-[#14532D]">
+            <h3 className="text-2xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors">
               Request a Personalised Demonstration
             </h3>
             <p className="text-xs text-slate-600 mt-1 mb-6">
@@ -75,7 +75,7 @@ export default function DemoModal({ isOpen, onClose }) {
                   placeholder="Dr. Robert Miller"
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5F7F5] border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
                 />
               </div>
 
@@ -87,7 +87,7 @@ export default function DemoModal({ isOpen, onClose }) {
                   placeholder="r.miller@enterprise.com"
                   value={formData.email}
                   onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5F7F5] border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
                 />
               </div>
 
@@ -99,7 +99,7 @@ export default function DemoModal({ isOpen, onClose }) {
                   placeholder="Acme Global Health Corp"
                   value={formData.company}
                   onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5F7F5] border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
                 />
               </div>
 
@@ -109,7 +109,7 @@ export default function DemoModal({ isOpen, onClose }) {
                   <select
                     value={formData.industry}
                     onChange={(e) => setFormData({ ...formData, industry: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5F7F5] border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
                   >
                     <option>Life Sciences / Pharma (GxP)</option>
                     <option>Medical Devices (ISO 13485)</option>
@@ -126,7 +126,7 @@ export default function DemoModal({ isOpen, onClose }) {
                   <select
                     value={formData.process}
                     onChange={(e) => setFormData({ ...formData, process: e.target.value })}
-                    className="w-full px-3.5 py-2.5 rounded-xl bg-[#F5F7F5] border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
+                    className="w-full px-3.5 py-2.5 rounded-xl bg-slate-50 border border-slate-300 text-xs text-slate-900 focus:outline-none focus:border-[#14532D] focus:bg-white"
                   >
                     <option>Controlled SOP Lifecycle & Signatures</option>
                     <option>AI-Powered Accounts Payable</option>
@@ -139,10 +139,10 @@ export default function DemoModal({ isOpen, onClose }) {
 
               <button
                 type="submit"
-                className="w-full mt-2 py-3.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+                className="w-full mt-2 py-3.5 rounded-full bg-[#14532D] hover:bg-[#166534] text-white font-bold text-sm shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer group"
               >
                 <span>Confirm Demonstration Booking</span>
-                <ArrowRight className="h-4 w-4" />
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </button>
 
               <div className="text-[10px] text-slate-500 text-center pt-1">

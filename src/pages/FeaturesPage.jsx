@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
 import InteractiveWorkbench from '../components/InteractiveWorkbench'
+import RequestDemoButton from '../components/RequestDemoButton'
+import PageCtaBanner from '../components/PageCtaBanner'
 import {
   ScanText,
   FileCheck2,
@@ -98,28 +99,28 @@ const CAPABILITY_DOMAINS = [
   },
   {
     id: 'search',
-    title: 'Enterprise Semantic Search',
-    badge: 'Neural Discovery',
+    title: 'Enterprise & Semantic Search',
+    badge: 'Sub-Second Discovery',
     icon: Search,
-    summary: 'Locate information in seconds across millions of pages. Natural language search queries both text and metadata with strict security trimming.',
+    summary: 'Instantaneous discovery across millions of documents. Search by metadata, full text, or natural-language semantic meaning with security trimming.',
     specs: [
-      { name: 'Full-Text Deep OCR', desc: 'Indexes scanned images, CAD metadata, PDF renditions, and Office files.' },
-      { name: 'Faceted Filters', desc: 'Filter by document type, author, approval date, plant site, and revision.' },
-      { name: 'Permission-Trimmed Results', desc: 'Users only see documents they are explicitly authorized to view.' },
-      { name: 'Saved Queries & Alerts', desc: 'Subscribe to search alerts when new relevant SOPs or contracts are published.' }
+      { name: 'Security-Trimmed Indexing', desc: 'Users only see search results for documents their permissions grant.' },
+      { name: 'Universal In-Browser Viewer', desc: 'High-speed streaming viewer for 100+ formats without local app install.' },
+      { name: 'Parametric & Faceted Filters', desc: 'Drill down by document type, author, site, effective date, and metadata tags.' },
+      { name: 'Natural Language Queries', desc: 'Semantic understanding matches intent, synonyms, and conceptual context.' }
     ]
   },
   {
     id: 'security',
     title: 'Zero-Trust Security & Audit Trail',
-    badge: 'Cryptographic Proof',
+    badge: 'ALCOA+ Forensic Integrity',
     icon: ShieldCheck,
-    summary: 'Enterprise-grade protection with append-only immutable audit logging, AES-256 encryption at rest, TLS 1.2+ in transit, and role-based access control.',
+    summary: 'Defense-in-depth protection. Append-only, tamper-evident audit trails guarantee complete forensic accountability for every view, edit, or approval.',
     specs: [
-      { name: 'Hash-Chained Audit Trail', desc: 'Every action logged with UTC timestamp, user ID, IP, and SHA-256 hash.' },
-      { name: 'SAML 2.0 / OIDC SSO', desc: 'Seamless integration with Microsoft Entra ID, Okta, Ping, and Active Directory.' },
-      { name: 'SCIM User Provisioning', desc: 'Automated user onboarding, role synchronization, and instant de-provisioning.' },
-      { name: 'Zero Data Retention (ZDR)', desc: 'Optional AI mode ensuring sensitive document data is never cached or stored.' }
+      { name: 'Append-Only Hash-Chained Logs', desc: 'Every user action cryptographically chained and timestamped in UTC.' },
+      { name: 'Enterprise SSO & SCIM', desc: 'SAML 2.0 / OIDC integrations with automated user provisioning and de-provisioning.' },
+      { name: 'Dual-Layer Encryption', desc: 'AES-256 at rest, TLS 1.3 in flight, with optional Customer-Managed Keys (BYOK).' },
+      { name: 'Fine-Grained Permissions (RBAC/ABAC)', desc: 'Control permissions down to document metadata fields and lifecycle states.' }
     ]
   }
 ]
@@ -130,111 +131,109 @@ export default function FeaturesPage({ onOpenDemoModal }) {
   const ActiveIcon = activeDomain.icon
 
   return (
-    <div className="py-12 bg-white">
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-slate-500 mb-8 font-medium">
-          <Link to="/" className="hover:text-[#14532D]">Home</Link>
-          <span>/</span>
-          <span className="text-[#14532D] font-semibold">Features & Capabilities</span>
-        </nav>
-
-        {/* Page Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-4">
-            <Layers className="h-3.5 w-3.5" />
-            <span>ENTERPRISE ARCHITECTURE</span>
-          </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight leading-tight">
-            Eight Integrated Capability Domains
-          </h1>
-          <p className="mt-4 text-slate-700 text-base sm:text-lg leading-relaxed">
-            SmartiDP EDMS brings together every foundational capability needed to capture, govern, automate, and protect enterprise records throughout their complete lifecycle.
-          </p>
-        </div>
-
-        {/* Interactive Capability Explorer */}
-        <div className="p-6 sm:p-10 rounded-3xl bg-[#F5F7F5] border border-slate-200 mb-20 shadow-xs">
-          <div className="text-center max-w-xl mx-auto mb-8">
-            <h2 className="text-2xl font-bold text-[#14532D]">
-              Interactive Capability Explorer
-            </h2>
-            <p className="text-xs text-slate-600 mt-1">
-              Select any domain below to inspect its architecture, compliance capabilities, and technical controls.
+    <div className="bg-white">
+      {/* 1. Page Hero Section */}
+      <section className="py-14 lg:py-20 bg-[#F8FAFC] border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-4 shadow-2xs">
+              <Layers className="h-3.5 w-3.5 text-[#14532D]" />
+              <span>ENTERPRISE ARCHITECTURE</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight leading-tight">
+              Eight Integrated Capability Domains
+            </h1>
+            <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed">
+              SmartiDP EDMS brings together every foundational capability needed to capture, govern, automate, and protect enterprise records throughout their complete lifecycle.
             </p>
           </div>
+        </div>
+      </section>
 
-          {/* Domain Tabs */}
-          <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
-            {CAPABILITY_DOMAINS.map((domain) => {
-              const Icon = domain.icon
-              const isSelected = domain.id === selectedDomainId
-              return (
-                <button
-                  key={domain.id}
-                  onClick={() => setSelectedDomainId(domain.id)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
-                    isSelected
-                      ? 'bg-[#14532D] text-white shadow-md'
-                      : 'bg-white text-slate-700 hover:bg-[#E8F3EC] hover:text-[#14532D] border border-slate-200'
-                  }`}
-                >
-                  <Icon className="h-4 w-4" />
-                  <span>{domain.title}</span>
-                </button>
-              )
-            })}
-          </div>
-
-          {/* Active Domain Detail Card */}
-          <div className="p-8 rounded-2xl bg-white border border-slate-200 shadow-sm">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-100">
-              <div className="flex items-center gap-4">
-                <div className="h-14 w-14 rounded-2xl bg-[#E8F3EC] text-[#14532D] flex items-center justify-center border border-[#14532D]/20">
-                  <ActiveIcon className="h-7 w-7" />
-                </div>
-                <div>
-                  <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-[#E8F3EC] text-[#14532D] border border-[#14532D]/15">
-                    {activeDomain.badge}
-                  </span>
-                  <h3 className="text-2xl font-extrabold text-[#14532D] mt-1">{activeDomain.title}</h3>
-                </div>
-              </div>
-              <button
-                onClick={onOpenDemoModal}
-                className="px-5 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white text-xs font-bold shadow-sm transition-all cursor-pointer self-start sm:self-auto"
-              >
-                Request Live Demonstration
-              </button>
+      {/* 2. Interactive Capability Explorer Section */}
+      <section className="py-20 lg:py-24 bg-[#F8FAFC] border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="p-6 sm:p-10 rounded-3xl bg-white border border-slate-200 shadow-sm">
+            <div className="text-center max-w-xl mx-auto mb-8">
+              <h2 className="text-2xl font-semibold text-slate-900">
+                Interactive Capability Explorer
+              </h2>
+              <p className="text-xs text-slate-600 mt-1">
+                Select any domain below to inspect its architecture, compliance capabilities, and technical controls.
+              </p>
             </div>
 
-            <p className="text-sm text-slate-700 my-6 leading-relaxed">
-              {activeDomain.summary}
-            </p>
+            {/* Domain Tabs */}
+            <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 mb-10">
+              {CAPABILITY_DOMAINS.map((domain) => {
+                const Icon = domain.icon
+                const isSelected = domain.id === selectedDomainId
+                return (
+                  <button
+                    key={domain.id}
+                    onClick={() => setSelectedDomainId(domain.id)}
+                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-semibold transition-all cursor-pointer ${
+                      isSelected
+                        ? 'bg-[#14532D] text-white shadow-sm'
+                        : 'bg-slate-50 text-slate-700 hover:bg-[#F0FDF4] hover:text-[#14532D] border border-slate-200'
+                    }`}
+                  >
+                    <Icon className="h-4 w-4" />
+                    <span>{domain.title}</span>
+                  </button>
+                )
+              })}
+            </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-              {activeDomain.specs.map((spec, idx) => (
-                <div key={idx} className="p-4 rounded-xl bg-[#F5F7F5] border border-slate-200/80">
-                  <div className="flex items-center gap-2 mb-1">
-                    <CheckCircle2 className="h-4 w-4 text-[#14532D]" />
-                    <h4 className="text-xs font-bold text-slate-900">{spec.name}</h4>
+            {/* Active Domain Detail Card */}
+            <div className="p-8 rounded-2xl bg-slate-50/70 border border-slate-200">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200">
+                <div className="flex items-center gap-4">
+                  <div className="h-14 w-14 rounded-2xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/20 shadow-2xs">
+                    <ActiveIcon className="h-7 w-7" />
                   </div>
-                  <p className="text-[11px] text-slate-600 pl-6 leading-relaxed">{spec.desc}</p>
+                  <div>
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-white text-[#14532D] border border-[#14532D]/20">
+                      {activeDomain.badge}
+                    </span>
+                    <h3 className="text-2xl font-semibold text-slate-900 mt-1">{activeDomain.title}</h3>
+                  </div>
                 </div>
-              ))}
+                <RequestDemoButton
+                  onClick={onOpenDemoModal}
+                  size="sm"
+                />
+              </div>
+
+              <p className="text-sm text-slate-700 my-6 leading-relaxed">
+                {activeDomain.summary}
+              </p>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                {activeDomain.specs.map((spec, idx) => (
+                  <div key={idx} className="p-4 rounded-xl bg-white border border-slate-200/90 shadow-2xs">
+                    <div className="flex items-center gap-2 mb-1">
+                      <CheckCircle2 className="h-4 w-4 text-[#14532D]" />
+                      <h4 className="text-xs font-bold text-slate-900">{spec.name}</h4>
+                    </div>
+                    <p className="text-[11px] text-slate-600 pl-6 leading-relaxed">{spec.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* 8 Capability Cards Grid */}
-        <div className="mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <h2 className="text-3xl font-extrabold text-[#14532D]">
+      {/* 3. Full Capability Specifications Grid Section */}
+      <section className="py-20 lg:py-24 bg-white border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <h2 className="text-3xl font-semibold text-slate-900">
               Full Capability Specifications
             </h2>
-            <p className="text-sm text-slate-600 mt-1">
-              Brochure documented technical features across all eight functional modules
+            <p className="text-sm text-slate-600 mt-2">
+              Documented technical features across all eight functional modules
             </p>
           </div>
 
@@ -244,23 +243,23 @@ export default function FeaturesPage({ onOpenDemoModal }) {
               return (
                 <div
                   key={domain.id}
-                  className="p-6 rounded-2xl glass-card-green flex flex-col justify-between"
+                  className="p-6 rounded-2xl glass-card-green flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="h-10 w-10 rounded-xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/15 shadow-2xs">
+                      <div className="h-10 w-10 rounded-xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/20 shadow-2xs group-hover:bg-[#14532D] group-hover:text-white transition-colors">
                         <Icon className="h-5 w-5" />
                       </div>
-                      <span className="text-[10px] font-bold text-[#14532D] bg-white px-2 py-0.5 rounded border border-[#14532D]/15">
+                      <span className="text-[10px] font-bold text-[#14532D] bg-white px-2 py-0.5 rounded border border-[#14532D]/20">
                         {domain.badge}
                       </span>
                     </div>
 
-                    <h3 className="text-base font-bold text-[#14532D] mb-2">{domain.title}</h3>
-                    <p className="text-xs text-slate-700 leading-relaxed mb-4">{domain.summary}</p>
+                    <h3 className="text-base font-semibold text-slate-900 group-hover:text-[#14532D] transition-colors mb-2">{domain.title}</h3>
+                    <p className="text-xs text-slate-600 leading-relaxed mb-4">{domain.summary}</p>
                   </div>
 
-                  <div className="pt-3 border-t border-[#14532D]/10">
+                  <div className="pt-3 border-t border-slate-200">
                     <button
                       onClick={() => setSelectedDomainId(domain.id)}
                       className="text-xs font-bold text-[#14532D] hover:underline flex items-center gap-1 cursor-pointer"
@@ -274,29 +273,21 @@ export default function FeaturesPage({ onOpenDemoModal }) {
             })}
           </div>
         </div>
+      </section>
 
-        {/* Platform Workbench Simulator */}
-        <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
+      {/* 4. Platform Workbench Simulator */}
+      <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
 
-        {/* Bottom CTA Banner */}
-        <div className="mt-20 p-8 sm:p-12 rounded-3xl bg-[#14532D] text-white text-center space-y-4">
-          <h2 className="text-2xl sm:text-4xl font-extrabold">
-            Ready to See SmartiDP EDMS in Action?
-          </h2>
-          <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
-            Our solution architects can demo any of these 8 capability domains using your organization's sample document types.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={onOpenDemoModal}
-              className="px-8 py-3.5 rounded-xl bg-white text-[#14532D] font-bold text-sm shadow-md hover:bg-[#E8F3EC] transition-all cursor-pointer"
-            >
-              Request a Technical Deep-Dive
-            </button>
-          </div>
-        </div>
-
-      </div>
+      {/* 5. Bottom CTA Banner Section (Standardized Green Pill Banner) */}
+      <PageCtaBanner
+        onOpenDemoModal={onOpenDemoModal}
+        badge="Enterprise Platform Demonstration"
+        title="Ready to See SmartiDP EDMS in Action?"
+        description="Our solution architects can demo any of these 8 capability domains using your organization's sample document types."
+        primaryBtnText="Request a Demo"
+        secondaryBtnText="Contact Solutions Team"
+        secondaryLink="/contact"
+      />
     </div>
   )
 }

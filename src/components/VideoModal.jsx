@@ -8,9 +8,9 @@ export default function VideoModal({ isOpen, onClose }) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md">
       <div className="relative w-full max-w-4xl rounded-3xl bg-white border border-slate-200 overflow-hidden shadow-2xl">
-        <div className="px-6 py-4 bg-[#F5F7F5] border-b border-slate-200 flex items-center justify-between">
+        <div className="px-6 py-4 bg-slate-50 border-b border-slate-200 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            <div className="h-7 w-7 rounded-lg bg-[#E8F3EC] text-[#14532D] flex items-center justify-center">
+            <div className="h-7 w-7 rounded-lg bg-[#F0FDF4] text-[#14532D] flex items-center justify-center">
               <Play className="h-3.5 w-3.5 fill-current ml-0.5" />
             </div>
             <div>

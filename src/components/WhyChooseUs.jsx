@@ -61,15 +61,15 @@ const IMPLEMENTATION_STEPS = [
 
 export default function WhyChooseUs({ onOpenDemoModal }) {
   return (
-    <section id="why-choose" className="py-24 bg-[#F5F7F5] border-b border-slate-200">
+    <section id="why-choose" className="py-24 bg-slate-50 border-b border-slate-200">
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <Award className="h-3.5 w-3.5" />
             <span>The Enterprise Advantage</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             Why Choose SmartiDP EDMS
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -84,13 +84,13 @@ export default function WhyChooseUs({ onOpenDemoModal }) {
             return (
               <div
                 key={idx}
-                className="p-8 rounded-3xl bg-white border border-slate-200 hover:border-[#14532D]/30 transition-all shadow-xs flex flex-col justify-between"
+                className="p-8 rounded-2xl glass-card-green flex flex-col justify-between group"
               >
                 <div>
-                  <div className="h-12 w-12 rounded-2xl bg-[#E8F3EC] text-[#14532D] flex items-center justify-center mb-6">
+                  <div className="h-12 w-12 rounded-2xl bg-[#F0FDF4] text-[#14532D] flex items-center justify-center mb-6">
                     <Icon className="h-6 w-6" />
                   </div>
-                  <h3 className="text-xl font-bold text-[#14532D] mb-3">{pt.title}</h3>
+                  <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mb-3">{pt.title}</h3>
                   <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">{pt.desc}</p>
                 </div>
 
@@ -109,7 +109,7 @@ export default function WhyChooseUs({ onOpenDemoModal }) {
             <span className="text-xs font-bold uppercase tracking-wider text-[#14532D]">
               Implementation & Customer Success
             </span>
-            <h3 className="text-2xl sm:text-3xl font-bold text-[#14532D] mt-1">
+            <h3 className="text-2xl sm:text-3xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mt-1">
               A Proven Path From Kick-Off to Lasting Value
             </h3>
             <p className="text-xs sm:text-sm text-slate-600 mt-2">
@@ -121,7 +121,7 @@ export default function WhyChooseUs({ onOpenDemoModal }) {
             {IMPLEMENTATION_STEPS.map((s, idx) => (
               <div
                 key={idx}
-                className="p-4 rounded-xl bg-[#F5F7F5] border border-slate-200/80 text-left flex flex-col justify-between"
+                className="p-4 rounded-xl bg-slate-50 border border-slate-200/80 text-left flex flex-col justify-between"
               >
                 <div>
                   <div className="text-[10px] font-mono font-bold text-[#14532D] mb-1">STAGE 0{s.step}</div>
@@ -134,20 +134,20 @@ export default function WhyChooseUs({ onOpenDemoModal }) {
 
           {/* Implementation Highlights Box */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4 pt-6 border-t border-slate-100 text-center text-xs">
-            <div className="p-3 rounded-xl bg-[#E8F3EC] text-slate-800">
-              <span className="font-extrabold text-[#14532D] text-base block font-mono">Weeks, Not Months</span>
+            <div className="p-3 rounded-xl bg-[#F0FDF4] text-slate-800">
+              <span className="font-semibold text-[#14532D] text-base block font-mono">Weeks, Not Months</span>
               To launch an initial process using solution templates
             </div>
-            <div className="p-3 rounded-xl bg-[#E8F3EC] text-slate-800">
-              <span className="font-extrabold text-[#14532D] text-base block font-mono">Agile Sprints</span>
+            <div className="p-3 rounded-xl bg-[#F0FDF4] text-slate-800">
+              <span className="font-semibold text-[#14532D] text-base block font-mono">Agile Sprints</span>
               Visible progress, demos, and user feedback every two weeks
             </div>
-            <div className="p-3 rounded-xl bg-[#E8F3EC] text-slate-800">
-              <span className="font-extrabold text-[#14532D] text-base block font-mono">GxP Validation Pack</span>
+            <div className="p-3 rounded-xl bg-[#F0FDF4] text-slate-800">
+              <span className="font-semibold text-[#14532D] text-base block font-mono">GxP Validation Pack</span>
               Pre-written URS, risk assessment, and test scripts
             </div>
-            <div className="p-3 rounded-xl bg-[#E8F3EC] text-slate-800">
-              <span className="font-extrabold text-[#14532D] text-base block font-mono">24/7 Platform Monitoring</span>
+            <div className="p-3 rounded-xl bg-[#F0FDF4] text-slate-800">
+              <span className="font-semibold text-[#14532D] text-base block font-mono">24/7 Platform Monitoring</span>
               Contractual availability commitments & support SLAs
             </div>
           </div>

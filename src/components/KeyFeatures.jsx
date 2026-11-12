@@ -133,11 +133,11 @@ export default function KeyFeatures({ onOpenDemoModal }) {
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <Cpu className="h-3.5 w-3.5" />
             <span>Platform Capabilities</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             Eight Integrated Capability Domains
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -156,15 +156,15 @@ export default function KeyFeatures({ onOpenDemoModal }) {
               >
                 <div>
                   <div className="flex items-center justify-between mb-4">
-                    <div className="h-11 w-11 rounded-xl bg-white border border-[#14532D]/15 text-[#14532D] flex items-center justify-center shadow-xs group-hover:bg-[#14532D] group-hover:text-white transition-colors">
+                    <div className="h-11 w-11 rounded-xl bg-white border border-[#14532D]/20 text-[#14532D] flex items-center justify-center shadow-xs group-hover:bg-[#14532D] group-hover:text-white transition-colors">
                       <Icon className="h-5 w-5" />
                     </div>
-                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-white text-[#14532D] border border-[#14532D]/15">
+                    <span className="text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-white text-[#14532D] border border-[#14532D]/20">
                       {domain.badge}
                     </span>
                   </div>
 
-                  <h3 className="text-base font-bold text-[#14532D] mb-2 leading-snug">
+                  <h3 className="text-base font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mb-2 leading-snug">
                     {domain.title}
                   </h3>
 
@@ -172,7 +172,7 @@ export default function KeyFeatures({ onOpenDemoModal }) {
                     {domain.summary}
                   </p>
 
-                  <ul className="space-y-1.5 text-[11px] text-slate-600 border-t border-[#14532D]/10 pt-3">
+                  <ul className="space-y-1.5 text-[11px] text-slate-600 border-t border-emerald-900/10 pt-3">
                     {domain.highlights.map((h, i) => (
                       <li key={i} className="flex items-start gap-1.5">
                         <CheckCircle2 className="h-3.5 w-3.5 text-[#14532D] shrink-0 mt-0.5" />
@@ -182,11 +182,11 @@ export default function KeyFeatures({ onOpenDemoModal }) {
                   </ul>
                 </div>
 
-                <div className="mt-5 pt-3 border-t border-[#14532D]/10 flex items-center justify-between">
+                <div className="mt-5 pt-3 border-t border-emerald-900/10 flex items-center justify-between">
                   <span className="text-[10px] text-slate-500 font-mono">Module Active</span>
                   <button
                     onClick={onOpenDemoModal}
-                    className="text-xs font-semibold text-[#14532D] hover:text-[#064E3B] flex items-center gap-1 cursor-pointer"
+                    className="text-xs font-semibold text-[#14532D] hover:text-[#166534] flex items-center gap-1 cursor-pointer"
                   >
                     <span>Learn More</span>
                     <ArrowRight className="h-3 w-3" />

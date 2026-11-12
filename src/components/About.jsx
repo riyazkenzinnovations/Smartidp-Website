@@ -1,148 +1,187 @@
 import React from 'react'
-import { CheckCircle2, ArrowRight, ShieldCheck, Database, Layers, Search, Clock, FileWarning, Sparkles } from 'lucide-react'
+import {
+  Search,
+  ShieldCheck,
+  Clock,
+  Lock,
+  Archive,
+  Layers,
+  CheckCircle2,
+  XCircle,
+  ArrowRight
+} from 'lucide-react'
+import { THE_CASE_FOR_CHANGE, BUSINESS_VALUE } from '../data/brochureData'
 
-const TRANSFORMATION_ITEMS = [
-  {
-    dimension: 'Document Access',
-    before: 'Fragmented across file drives, email inboxes, physical binders & legacy repositories.',
-    withSmartIDP: 'One unified, governed repository with instant, permission-trimmed semantic search.'
-  },
-  {
-    dimension: 'Data Entry & Ingestion',
-    before: 'Hours spent manually re-keying data from scans, PDFs, and paper forms with high error rates.',
-    withSmartIDP: 'AI-driven OCR, layout analysis, automated classification, and structured data extraction.'
-  },
-  {
-    dimension: 'Reviews & Approvals',
-    before: 'Unruly email threads, printed copies, wet-ink signatures, and delayed approval cycles.',
-    withSmartIDP: 'Parallel BPMN 2.0 electronic workflows with 21 CFR Part 11 & eIDAS digital signatures.'
-  },
-  {
-    dimension: 'Regulatory Compliance',
-    before: 'Scrambling for days to assemble paper evidence and history binders before inspections.',
-    withSmartIDP: 'Continuous immutable audit trails, revision tracking, and one-click inspection packages.'
-  },
-  {
-    dimension: 'Records Retention',
-    before: 'Content kept indefinitely or deleted ad-hoc, creating severe legal discovery exposure.',
-    withSmartIDP: 'Automated ISO 15489 policy-driven retention schedules, legal holds, and certified disposition.'
-  },
-  {
-    dimension: 'Operational Visibility',
-    before: 'Zero real-time visibility into bottlenecks, cycle times, or document distribution status.',
-    withSmartIDP: 'Executive dashboards, SLA tracking, and audit-ready analytics across all departments.'
-  }
+const PAIN_POINT_ICONS = [
+  Search,       // Time lost searching
+  ShieldCheck,  // Compliance exposure
+  Clock,        // Slow, manual processes
+  Lock,         // Security blind spots
+  Archive,      // Rising storage & legal risk
+  Layers        // Legacy system sprawl
 ]
 
 export default function About({ onOpenDemoModal }) {
+  const painPoints = THE_CASE_FOR_CHANGE?.painPoints || []
+  const transformationRows = THE_CASE_FOR_CHANGE?.transformation || []
+
   return (
-    <section id="about" className="py-24 bg-[#F5F7F5] border-b border-slate-200">
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
-            <ShieldCheck className="h-3.5 w-3.5" />
-            <span>The Case for Change</span>
-          </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
-            From Document Chaos to Intelligent Information Flow
-          </h2>
-          <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
-            Information is your enterprise's most valuable asset. SmartiDP EDMS by Kenz Innovations unifies the complete document lifecycle on one secure, intelligent, and compliance-first platform.
-          </p>
-        </div>
+    <section id="about" className="relative bg-[#F8FAFC] py-20 lg:py-28 border-b border-slate-200/80">
+      <div className="mx-auto w-full max-w-[1720px] px-4 sm:px-8 lg:px-12 xl:px-16">
 
-        {/* Core Narrative Card */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-white border border-slate-200 shadow-sm mb-16">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            <div className="lg:col-span-7 space-y-4 text-slate-700 leading-relaxed text-sm sm:text-base">
-              <h3 className="text-2xl font-bold text-[#14532D]">
-                Govern Every Document. Empower Every Stakeholder.
-              </h3>
-              <p>
-                Every strategic decision, regulatory submission, commercial contract, product release, and customer interaction depends directly on documents. Yet in most organisations, that content is scattered across disparate network drives, legacy silos, personal inboxes, and paper archives — multiplying risk and hiding business value.
-              </p>
-              <p>
-                <strong>SmartiDP EDMS</strong> brings eight integrated capability domains together on a single, shared enterprise foundation. AI-driven capture turns unstructured content into structured, searchable records. Configurable workflows automate reviews, approvals, and records governance. Security and compliance controls are built directly into every layer — so your organisation moves faster while remaining continuously audit-ready.
-              </p>
+        {/* 1. Header (Matching Client Image 1) */}
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 lg:mb-16 gap-6">
+          <div className="max-w-4xl xl:max-w-5xl">
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0284C7] mb-3">
+              <span className="w-5 h-0.5 bg-[#0284C7] inline-block" />
+              <span>The Case for Change</span>
             </div>
-
-            <div className="lg:col-span-5 grid grid-cols-2 gap-4">
-              <div className="p-5 rounded-2xl glass-card-green">
-                <div className="text-2xl font-extrabold text-[#14532D] font-mono">Unified</div>
-                <p className="text-xs text-slate-700 mt-1.5">
-                  One repository, one security model, one immutable audit trail across sites and borders.
-                </p>
-              </div>
-              <div className="p-5 rounded-2xl glass-card-green">
-                <div className="text-2xl font-extrabold text-[#14532D] font-mono">Intelligent</div>
-                <p className="text-xs text-slate-700 mt-1.5">
-                  Multi-modal AI extracts meaning, auto-indexes metadata, and enables natural language discovery.
-                </p>
-              </div>
-              <div className="p-5 rounded-2xl glass-card-green">
-                <div className="text-2xl font-extrabold text-[#14532D] font-mono">Configurable</div>
-                <p className="text-xs text-slate-700 mt-1.5">
-                  No-code workflows, custom taxonomies, and business rules without costly custom development.
-                </p>
-              </div>
-              <div className="p-5 rounded-2xl glass-card-green">
-                <div className="text-2xl font-extrabold text-[#14532D] font-mono">Compliant</div>
-                <p className="text-xs text-slate-700 mt-1.5">
-                  Pre-mapped controls for FDA 21 CFR Part 11, EU Annex 11, ISO 9001, ISO 13485 & HIPAA.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* The Transformation Comparison Table */}
-        <div className="space-y-6">
-          <div className="text-center max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-[#14532D]">
-              The Operational Transformation
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
-              Document management before vs. after implementing SmartiDP EDMS
+            <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0B192C] tracking-tight leading-tight">
+              From document chaos to <br className="hidden sm:inline" />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0284C7] via-[#0D9488] to-[#10B981]">
+                intelligent information flow
+              </span>
+            </h2>
+            <p className="mt-4 text-slate-600 text-base sm:text-lg leading-relaxed font-normal max-w-3xl">
+              {THE_CASE_FOR_CHANGE.intro}
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {TRANSFORMATION_ITEMS.map((item, index) => (
+          <button
+            type="button"
+            onClick={onOpenDemoModal}
+            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#0284C7] hover:bg-[#0369A1] text-white font-semibold text-xs sm:text-sm shadow-md shadow-sky-500/20 hover:shadow-lg transition-all self-start lg:self-auto shrink-0 cursor-pointer group"
+          >
+            <span>Request a Demo</span>
+            <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" aria-hidden="true" />
+          </button>
+        </div>
+
+        {/* 2. Six Pain Point Cards (3x2 Grid Matching Client Image 1) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 lg:mb-20">
+          {painPoints.map((point, idx) => {
+            const Icon = PAIN_POINT_ICONS[idx % PAIN_POINT_ICONS.length]
+            return (
               <div
-                key={index}
-                className="p-6 rounded-2xl bg-white border border-slate-200/90 hover:border-[#14532D]/30 transition-all shadow-2xs hover:shadow-sm flex flex-col justify-between"
+                key={idx}
+                className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-sm hover:shadow-md hover:border-[#0284C7]/40 transition-all flex flex-col justify-between group"
               >
                 <div>
-                  <div className="text-xs font-bold uppercase tracking-wider text-[#14532D] mb-3 pb-2 border-b border-slate-100 flex items-center justify-between">
-                    <span>{item.dimension}</span>
-                    <span className="text-[10px] text-slate-400 font-mono">0{index + 1}</span>
+                  <div className="h-11 w-11 rounded-xl bg-sky-50 text-[#0284C7] flex items-center justify-center mb-5 group-hover:scale-105 group-hover:bg-[#0284C7] group-hover:text-white transition-all shadow-2xs">
+                    <Icon className="h-5 w-5" />
                   </div>
+                  <h3 className="text-lg font-bold text-slate-900 group-hover:text-[#0284C7] transition-colors mb-2.5">
+                    {point.title}
+                  </h3>
+                  <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                    {point.desc}
+                  </p>
+                </div>
+              </div>
+            )
+          })}
+        </div>
 
-                  <div className="space-y-3 text-xs">
-                    <div className="p-3 rounded-xl bg-slate-50 border border-slate-200/60 text-slate-600">
-                      <div className="font-semibold text-slate-800 mb-1 flex items-center gap-1.5">
-                        <FileWarning className="h-3.5 w-3.5 text-amber-600" />
-                        <span>Before:</span>
-                      </div>
-                      {item.before}
-                    </div>
+        {/* 3. The Transformation Matrix (Table from Client Image 1) */}
+        <div className="mb-16">
+          <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0B192C] tracking-tight mb-6">
+            The transformation
+          </h3>
 
-                    <div className="p-3 rounded-xl bg-[#E8F3EC] border border-[#14532D]/15 text-slate-800">
-                      <div className="font-semibold text-[#14532D] mb-1 flex items-center gap-1.5">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-[#14532D]" />
-                        <span>With SmartiDP EDMS:</span>
+          {/* Desktop & Tablet Table (md+) */}
+          <div className="hidden md:block rounded-2xl border border-slate-200 overflow-hidden shadow-sm bg-white">
+            <table className="w-full text-left text-sm">
+              <thead className="bg-[#0B1A2F] text-white text-xs font-bold uppercase tracking-wider">
+                <tr>
+                  <th className="py-4 px-6 w-1/5">Dimension</th>
+                  <th className="py-4 px-6 w-2/5">Before</th>
+                  <th className="py-4 px-6 w-2/5">With SmartiDP EDMS</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-slate-200/80 bg-white">
+                {transformationRows.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                    <td className="py-4 px-6 font-bold text-slate-900 align-top">
+                      {row.dimension}
+                    </td>
+                    <td className="py-4 px-6 text-slate-600 align-top leading-relaxed">
+                      <div className="flex items-start gap-2">
+                        <XCircle className="h-4 w-4 text-rose-500 shrink-0 mt-0.5" />
+                        <span>{row.before}</span>
                       </div>
-                      {item.withSmartIDP}
-                    </div>
+                    </td>
+                    <td className="py-4 px-6 text-slate-900 font-semibold align-top leading-relaxed">
+                      <div className="flex items-start gap-2 text-emerald-950">
+                        <CheckCircle2 className="h-4 w-4 text-[#10B981] shrink-0 mt-0.5" />
+                        <span>{row.withSmartIDP}</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Stacked Cards (< md) */}
+          <div className="grid grid-cols-1 gap-4 md:hidden">
+            {transformationRows.map((row, idx) => (
+              <div key={idx} className="p-5 rounded-2xl bg-white border border-slate-200 shadow-sm space-y-3">
+                <div className="font-bold text-slate-900 text-base border-b border-slate-100 pb-2">
+                  {row.dimension}
+                </div>
+                <div className="space-y-1">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-rose-600 flex items-center gap-1.5">
+                    <XCircle className="h-3.5 w-3.5" />
+                    <span>Before</span>
                   </div>
+                  <p className="text-xs text-slate-600 leading-relaxed pl-5">
+                    {row.before}
+                  </p>
+                </div>
+                <div className="space-y-1 pt-1">
+                  <div className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 flex items-center gap-1.5">
+                    <CheckCircle2 className="h-3.5 w-3.5" />
+                    <span>With SmartiDP EDMS</span>
+                  </div>
+                  <p className="text-xs font-semibold text-slate-900 leading-relaxed pl-5">
+                    {row.withSmartIDP}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* 4. Quantified Business Outcomes (Brochure Page 5) */}
+        <div className="pt-10 border-t border-slate-200/80">
+          <div className="text-xs font-bold uppercase tracking-wider text-slate-500 mb-6">
+            Typical Improvement Areas Identified in Business-Case Workshops
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {(BUSINESS_VALUE?.outcomes || []).map((outcome, idx) => {
+              const metrics = outcome.metrics || (outcome.desc ? [outcome.desc] : [])
+              return (
+                <div key={idx} className="p-6 rounded-2xl bg-white border border-slate-200/90 shadow-2xs flex flex-col justify-between">
+                  <div>
+                    <div className="text-xl font-extrabold text-[#0284C7] tracking-tight mb-3">
+                      {outcome.title}
+                    </div>
+                    <div className="space-y-2">
+                      {metrics.map((m, mIdx) => (
+                        <div key={mIdx} className="text-xs sm:text-sm text-slate-700 flex items-start gap-2">
+                          <span className="h-1.5 w-1.5 rounded-full bg-[#0284C7] shrink-0 mt-1.5" />
+                          <span className="leading-relaxed">{m}</span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        </div>
+
       </div>
     </section>
   )
 }
-

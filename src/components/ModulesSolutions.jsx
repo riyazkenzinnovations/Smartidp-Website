@@ -13,7 +13,11 @@ import {
   FileCode2,
   CheckCircle2,
   ArrowRight,
-  Sparkles
+  Sparkles,
+  Headphones,
+  Archive,
+  Cpu,
+  Layers
 } from 'lucide-react'
 
 const REGULATED_INDUSTRIES = [
@@ -133,32 +137,67 @@ const REGULATED_INDUSTRIES = [
 
 const DEPARTMENTAL_SOLUTIONS = [
   {
-    dept: 'Finance & Accounting',
-    title: 'Accounts Payable & Invoice Automation',
+    dept: 'Finance',
+    title: 'Accounts payable',
     icon: Receipt,
-    desc: 'Capture invoices from email, scans, or supplier portals. Extract line items, perform 2-way and 3-way PO reconciliation against ERP, and route for automated approval.',
-    tags: ['PO Matching', 'ERP Sync', 'Zero Data Entry']
+    desc: 'Capture invoices from any channel, extract data, match to POs in ERP and route for approval — reducing manual entry and late-payment risk.',
+    tags: ['PO Matching', 'ERP Sync', 'Reduced Manual Entry']
   },
   {
-    dept: 'Legal & Procurement',
-    title: 'Contract Lifecycle Management (CLM)',
+    dept: 'Legal',
+    title: 'Contract lifecycle',
     icon: Scale,
-    desc: 'Centralize standard templates, track negotiation redlines, route for compliant electronic signature, monitor key milestones, and trigger proactive renewal alerts.',
-    tags: ['Milestone Alerts', 'E-Signature', 'Obligation Tracking']
+    desc: 'Templates, negotiation, approval, e-signature, obligation tracking and renewal alerts in one governed repository.',
+    tags: ['Templates', 'E-Signatures', 'Obligation Tracking']
   },
   {
-    dept: 'Human Resources',
-    title: 'Digital Employee Personnel Files',
+    dept: 'HR',
+    title: 'Digital employee files',
     icon: Users,
-    desc: 'Secure digital personnel dossiers from hire to retire. Automate onboarding checklists, policy read-and-acknowledge attestations, and employment status retention rules.',
+    desc: 'Onboarding packs, policies with read-and-acknowledge, confidential personnel files and retention by employment status.',
     tags: ['Read & Acknowledge', 'Onboarding Packs', 'Retention by Status']
   },
   {
-    dept: 'Engineering & R&D',
-    title: 'Drawings & Technical Specifications',
-    icon: FileCode2,
-    desc: 'Manage CAD files, product specifications, and Engineering Change Orders (ECO). Link revisions directly to bill of materials (BOM) and asset records.',
+    dept: 'Engineering',
+    title: 'Drawings & specs',
+    icon: Cpu,
+    desc: 'Revision-controlled drawings, specifications and change orders linked to products and assets.',
     tags: ['Revision Control', 'Change Orders (ECO)', 'Asset Linkage']
+  },
+  {
+    dept: 'Procurement',
+    title: 'Supplier management',
+    icon: Building2,
+    desc: 'Supplier qualification documents, certificates with expiry alerts, agreements and audit reports.',
+    tags: ['Supplier Qualification', 'Certificate Expiry Alerts', 'Audit Reports']
+  },
+  {
+    dept: 'Customer Service',
+    title: 'Correspondence',
+    icon: Headphones,
+    desc: 'Inbound mail and email classified and routed to the right team, linked to customer records in CRM.',
+    tags: ['Mailroom Ingestion', 'CRM Routing', 'Case Linking']
+  },
+  {
+    dept: 'Corporate',
+    title: 'Policies & governance',
+    icon: ShieldCheck,
+    desc: 'Board papers, policies and procedures with controlled publication and attestation campaigns.',
+    tags: ['Controlled Publication', 'Board Papers', 'Attestation Campaigns']
+  },
+  {
+    dept: 'IT',
+    title: 'Knowledge & ISMS evidence',
+    icon: Layers,
+    desc: 'Runbooks, architecture records and ISO 27001 evidence maintained with ownership and review cycles.',
+    tags: ['Runbooks', 'ISO 27001 Evidence', 'Review Cycles']
+  },
+  {
+    dept: 'Records Office',
+    title: 'Digitisation',
+    icon: Archive,
+    desc: 'Back-file scanning projects converting paper archives into searchable, retention-managed digital records.',
+    tags: ['Back-File Scanning', 'Searchable PDF/A', 'ISO 15489 Retention']
   }
 ]
 
@@ -167,15 +206,15 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
   const [selectedIndustry, setSelectedIndustry] = useState(REGULATED_INDUSTRIES[0])
 
   return (
-    <section id="solutions" className="py-24 bg-[#F5F7F5] border-b border-slate-200">
+    <section id="solutions" className="py-24 bg-slate-50 border-b border-slate-200">
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <Building2 className="h-3.5 w-3.5" />
             <span>Enterprise Solutions</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             Purpose-Built for Regulated & High-Stakes Operations
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -224,7 +263,7 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
                     onClick={() => setSelectedIndustry(ind)}
                     className={`w-full p-4 rounded-xl text-left transition-all flex items-center justify-between border cursor-pointer ${
                       isSelected
-                        ? 'bg-[#E8F3EC] border-[#14532D]/30 shadow-xs'
+                        ? 'bg-[#F0FDF4] border-[#14532D]/30 shadow-xs'
                         : 'bg-white hover:bg-slate-50 border-slate-200/80 text-slate-700'
                     }`}
                   >
@@ -252,14 +291,14 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
               <div className="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-slate-100">
                 <div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-[#14532D]">Solution Template Pack</span>
-                  <h3 className="text-2xl font-bold text-[#14532D] mt-0.5">{selectedIndustry.name}</h3>
+                  <h3 className="text-2xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mt-0.5">{selectedIndustry.name}</h3>
                 </div>
-                <div className="px-3 py-1 rounded-full bg-[#E8F3EC] text-[#14532D] text-xs font-bold border border-[#14532D]/15">
+                <div className="px-3 py-1 rounded-full bg-[#F0FDF4] text-[#14532D] text-xs font-bold border border-[#14532D]/20">
                   Turnkey GxP Pack
                 </div>
               </div>
 
-              <div className="mt-4 p-3 rounded-xl bg-[#F5F7F5] border border-slate-200/60 text-xs text-slate-700">
+              <div className="mt-4 p-3 rounded-xl bg-slate-50 border border-slate-200/60 text-xs text-slate-700">
                 <span className="font-semibold text-slate-900">Regulatory Frameworks Covered:</span>{' '}
                 <span className="font-mono text-[#14532D] font-bold">{selectedIndustry.regulations}</span>
               </div>
@@ -278,7 +317,7 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
                 </div>
               </div>
 
-              <div className="mt-6 p-4 rounded-xl bg-[#E8F3EC]/80 border border-[#14532D]/20 text-xs text-slate-700 leading-relaxed">
+              <div className="mt-6 p-4 rounded-xl bg-[#F0FDF4]/80 border border-[#14532D]/20 text-xs text-slate-700 leading-relaxed">
                 <div className="font-bold text-[#14532D] mb-0.5">Validation Accelerator Included:</div>
                 {selectedIndustry.highlight}
               </div>
@@ -289,7 +328,7 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
                 </div>
                 <button
                   onClick={onOpenDemoModal}
-                  className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
+                  className="w-full sm:w-auto px-6 py-2.5 rounded-full bg-[#14532D] hover:bg-[#166534] hover:opacity-95 text-white text-xs font-bold transition-all shadow-xs cursor-pointer"
                 >
                   Request Industry Solution Pack
                 </button>
@@ -306,11 +345,11 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
               return (
                 <div
                   key={dIdx}
-                  className="p-8 rounded-3xl bg-white border border-slate-200 hover:border-[#14532D]/30 transition-all shadow-2xs flex flex-col justify-between"
+                  className="p-8 rounded-2xl glass-card-green flex flex-col justify-between group"
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="h-11 w-11 rounded-xl bg-[#E8F3EC] text-[#14532D] flex items-center justify-center">
+                      <div className="h-11 w-11 rounded-xl bg-[#F0FDF4] text-[#14532D] flex items-center justify-center">
                         <Icon className="h-5 w-5" />
                       </div>
                       <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 bg-slate-100 px-3 py-1 rounded-full">
@@ -318,14 +357,14 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
                       </span>
                     </div>
 
-                    <h3 className="text-xl font-bold text-[#14532D] mb-2">{dept.title}</h3>
+                    <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mb-2">{dept.title}</h3>
                     <p className="text-xs sm:text-sm text-slate-700 leading-relaxed mb-6">{dept.desc}</p>
                   </div>
 
                   <div>
                     <div className="flex flex-wrap gap-2 mb-6">
                       {dept.tags.map((tag, tIdx) => (
-                        <span key={tIdx} className="text-[11px] px-2.5 py-1 rounded-lg bg-[#E8F3EC] text-[#14532D] font-semibold">
+                        <span key={tIdx} className="text-[11px] px-2.5 py-1 rounded-lg bg-[#F0FDF4] text-[#14532D] font-semibold">
                           {tag}
                         </span>
                       ))}
@@ -335,7 +374,7 @@ export default function ModulesSolutions({ onOpenDemoModal }) {
                       <span className="text-xs text-slate-400">Departmental Scale</span>
                       <button
                         onClick={onOpenDemoModal}
-                        className="text-xs font-bold text-[#14532D] hover:text-[#064E3B] flex items-center gap-1 cursor-pointer"
+                        className="text-xs font-bold text-[#14532D] hover:text-[#166534] flex items-center gap-1 cursor-pointer"
                       >
                         <span>Schedule Process Review</span>
                         <ArrowRight className="h-3 w-3" />

@@ -110,11 +110,11 @@ export default function HowItWorks({ onOpenDemoModal }) {
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <RefreshCw className="h-3.5 w-3.5" />
             <span>Workflow & Ingestion Architecture</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             How SmartiDP EDMS Works
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -122,7 +122,7 @@ export default function HowItWorks({ onOpenDemoModal }) {
           </p>
 
           {/* Workflow Toggle */}
-          <div className="mt-8 inline-flex items-center p-1.5 rounded-2xl bg-[#F5F7F5] border border-slate-200">
+          <div className="mt-8 inline-flex items-center p-1.5 rounded-2xl bg-slate-50 border border-slate-200">
             <button
               onClick={() => setActiveWorkflowTab('lifecycle')}
               className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all cursor-pointer ${
@@ -155,11 +155,11 @@ export default function HowItWorks({ onOpenDemoModal }) {
                 return (
                   <div
                     key={idx}
-                    className="p-5 rounded-2xl glass-card-green flex flex-col justify-between text-left relative group hover:border-[#14532D]/40"
+                    className="p-5 rounded-2xl glass-card-green flex flex-col justify-between text-left relative group hover:border-[#14532D]/30"
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-[10px] font-mono font-bold text-[#14532D] bg-white px-2 py-0.5 rounded border border-[#14532D]/15">
+                        <span className="text-[10px] font-mono font-bold text-[#14532D] bg-white px-2 py-0.5 rounded border border-[#14532D]/20">
                           STEP 0{step.step}
                         </span>
                         <div className="h-7 w-7 rounded-lg bg-white text-[#14532D] flex items-center justify-center">
@@ -175,7 +175,7 @@ export default function HowItWorks({ onOpenDemoModal }) {
             </div>
 
             {/* Lifecycle Governance Details Banner */}
-            <div className="mt-8 p-6 rounded-2xl bg-[#F5F7F5] border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700">
+            <div className="mt-8 p-6 rounded-2xl bg-slate-50 border border-slate-200 grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-slate-700">
               <div className="flex items-start gap-3">
                 <CheckCircle2 className="h-5 w-5 text-[#14532D] shrink-0 mt-0.5" />
                 <div>
@@ -214,7 +214,7 @@ export default function HowItWorks({ onOpenDemoModal }) {
                   >
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-[10px] font-mono font-bold text-[#14532D] bg-white px-2 py-0.5 rounded border border-[#14532D]/15">
+                        <span className="text-[10px] font-mono font-bold text-[#14532D] bg-white px-2 py-0.5 rounded border border-[#14532D]/20">
                           STAGE {stg.step}
                         </span>
                         <div className="h-7 w-7 rounded-lg bg-white text-[#14532D] flex items-center justify-center">
@@ -236,14 +236,14 @@ export default function HowItWorks({ onOpenDemoModal }) {
                   <span className="text-[10px] font-mono text-[#14532D] font-bold uppercase">Human-In-The-Loop Validation Station</span>
                   <h4 className="text-base font-bold text-[#14532D]">SmartIDP Intelligent Review Station Interface</h4>
                 </div>
-                <span className="px-2.5 py-1 rounded bg-[#E8F3EC] text-[#14532D] text-xs font-bold">
+                <span className="px-2.5 py-1 rounded bg-[#F0FDF4] text-[#14532D] text-xs font-bold">
                   Document Type: Supplier Invoice #55190
                 </span>
               </div>
 
               <div className="mt-4 overflow-x-auto">
                 <table className="w-full text-left text-xs font-mono">
-                  <thead className="bg-[#F5F7F5] text-slate-600 border-b border-slate-200">
+                  <thead className="bg-slate-50 text-slate-600 border-b border-slate-200">
                     <tr>
                       <th className="py-2.5 px-4 font-sans font-semibold">Extracted Field</th>
                       <th className="py-2.5 px-4 font-sans font-semibold">Extracted Value</th>
@@ -256,25 +256,25 @@ export default function HowItWorks({ onOpenDemoModal }) {
                       <td className="py-2.5 px-4 font-sans font-medium text-slate-600">Document Type</td>
                       <td className="py-2.5 px-4 font-bold text-slate-900">Supplier Invoice</td>
                       <td className="py-2.5 px-4 text-center font-bold text-[#14532D]">99%</td>
-                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#E8F3EC] text-[#14532D] px-2 py-0.5 rounded font-bold">Auto-Passed</span></td>
+                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#F0FDF4] text-[#14532D] px-2 py-0.5 rounded font-bold">Auto-Passed</span></td>
                     </tr>
                     <tr>
                       <td className="py-2.5 px-4 font-sans font-medium text-slate-600">Supplier Name</td>
                       <td className="py-2.5 px-4 font-bold text-slate-900">Example Supplies Ltd</td>
                       <td className="py-2.5 px-4 text-center font-bold text-[#14532D]">97%</td>
-                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#E8F3EC] text-[#14532D] px-2 py-0.5 rounded font-bold">ERP Matched</span></td>
+                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#F0FDF4] text-[#14532D] px-2 py-0.5 rounded font-bold">ERP Matched</span></td>
                     </tr>
                     <tr>
                       <td className="py-2.5 px-4 font-sans font-medium text-slate-600">Invoice Number</td>
                       <td className="py-2.5 px-4 font-bold text-slate-900">55190</td>
                       <td className="py-2.5 px-4 text-center font-bold text-[#14532D]">99%</td>
-                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#E8F3EC] text-[#14532D] px-2 py-0.5 rounded font-bold">Verified</span></td>
+                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#F0FDF4] text-[#14532D] px-2 py-0.5 rounded font-bold">Verified</span></td>
                     </tr>
                     <tr>
                       <td className="py-2.5 px-4 font-sans font-medium text-slate-600">Date</td>
                       <td className="py-2.5 px-4 font-bold text-slate-900">2026-03-14</td>
                       <td className="py-2.5 px-4 text-center font-bold text-[#14532D]">98%</td>
-                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#E8F3EC] text-[#14532D] px-2 py-0.5 rounded font-bold">Validated</span></td>
+                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#F0FDF4] text-[#14532D] px-2 py-0.5 rounded font-bold">Validated</span></td>
                     </tr>
                     <tr className="bg-amber-50/50">
                       <td className="py-2.5 px-4 font-sans font-medium text-slate-600">PO Number</td>
@@ -286,7 +286,7 @@ export default function HowItWorks({ onOpenDemoModal }) {
                       <td className="py-2.5 px-4 font-sans font-medium text-slate-600">Total Due</td>
                       <td className="py-2.5 px-4 font-bold text-[#14532D]">$12,480.00</td>
                       <td className="py-2.5 px-4 text-center font-bold text-[#14532D]">96%</td>
-                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#E8F3EC] text-[#14532D] px-2 py-0.5 rounded font-bold">Math Check OK</span></td>
+                      <td className="py-2.5 px-4 text-center"><span className="text-[10px] bg-[#F0FDF4] text-[#14532D] px-2 py-0.5 rounded font-bold">Math Check OK</span></td>
                     </tr>
                   </tbody>
                 </table>

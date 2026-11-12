@@ -22,7 +22,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="min-h-screen flex flex-col bg-white text-[#171717] font-sans selection:bg-[#14532D] selection:text-white">
+      <div className="min-h-screen flex flex-col bg-white text-slate-900 font-sans selection:bg-[#14532D] selection:text-white">
         {/* Persistent Top Navigation */}
         <Navbar onOpenDemoModal={() => setDemoModalOpen(true)} />
 

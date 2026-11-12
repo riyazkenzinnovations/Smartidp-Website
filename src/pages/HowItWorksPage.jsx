@@ -1,49 +1,53 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import CtaBanner from '../components/CtaBanner'
+import BrochureChapterBar from '../components/brochure/BrochureChapterBar'
+import WorkflowAutomationSection from '../components/brochure/WorkflowAutomationSection'
+import UserExperienceSection from '../components/brochure/UserExperienceSection'
+import ProductivityAnywhereSection from '../components/brochure/ProductivityAnywhereSection'
+import EnterpriseIntegrationSection from '../components/brochure/EnterpriseIntegrationSection'
+import PlatformArchitectureSection from '../components/brochure/PlatformArchitectureSection'
+import ScalabilityPerformanceSection from '../components/brochure/ScalabilityPerformanceSection'
+import ZeroTrustSecuritySection from '../components/brochure/ZeroTrustSecuritySection'
 import {
   UploadCloud,
-  ScanText,
-  Cpu,
   FileCheck2,
-  CheckCircle2,
-  Share2,
-  GitBranch,
   FileSignature,
-  BookOpen,
-  Calendar,
-  Archive,
-  Trash2,
-  ArrowRight,
+  Lock,
+  GitBranch,
   ShieldCheck,
-  RefreshCw,
-  Sparkles,
-  Laptop,
-  Smartphone,
-  Mail,
   Server,
   Cloud,
-  Lock,
-  Database
+  CheckCircle2,
+  Share2,
+  BookOpen,
+  Archive,
+  Trash2,
+  Check,
+  ArrowRight,
+  Cpu,
+  Sparkles,
+  Layers,
+  RotateCw
 } from 'lucide-react'
 
 const CAPTURE_STAGES = [
   {
     step: '01',
-    title: 'Ingest',
+    title: 'Multimodal Ingestion',
     icon: UploadCloud,
-    desc: 'Omnichannel capture from MFP network scanners, shared email inboxes, mobile devices, REST APIs, or watched network folders.'
+    desc: 'Ingest scanned paper, PDFs, TIFFs, emails, camera images, or direct EDI streams from scanners, hot folders, and SFTP.'
   },
   {
     step: '02',
-    title: 'Enhance & OCR',
-    icon: ScanText,
-    desc: 'Automatic de-skew, contrast normalization, de-noising, and multi-lingual OCR plus advanced handwriting (ICR) recognition.'
+    title: 'Image Enhancement',
+    icon: Cpu,
+    desc: 'Automated de-skew, orientation correction, adaptive binarisation, and border cleanup optimize visual clarity.'
   },
   {
     step: '03',
-    title: 'AI Classification',
-    icon: Cpu,
-    desc: 'Deep learning models identify document type (e.g. invoice, SOP, clinical form) and automatically split multi-document batches.'
+    title: 'Classification',
+    icon: Layers,
+    desc: 'Deep neural networks classify document type (SOP, invoice, clinical protocol, CoA) without manual separator sheets.'
   },
   {
     step: '04',
@@ -70,273 +74,350 @@ const LIFECYCLE_STEPS = [
     num: '01',
     title: 'Create & Capture',
     icon: UploadCloud,
-    summary: 'Omnichannel document capture or native authoring within Microsoft Office with template governance.'
+    badge: 'Creation',
+    summary: 'Omnichannel document capture or native authoring within Microsoft Office with template governance.',
+    details: [
+      'Controlled document templates',
+      'Auto-numbering & metadata taxonomy',
+      'Major & minor draft versioning'
+    ],
+    stat: 'Draft State'
   },
   {
     num: '02',
     title: 'Review & Collaborate',
     icon: GitBranch,
-    summary: 'Parallel reviews, inline commenting, check-in/out locks, and side-by-side redline diff comparison.'
+    badge: 'Collab',
+    summary: 'Parallel reviews, inline commenting, check-in/out locks, and side-by-side redline diff comparison.',
+    details: [
+      'Parallel review workflows',
+      'Mandatory check-in/out locks',
+      'Side-by-side redline text diff'
+    ],
+    stat: 'In Review'
   },
   {
     num: '03',
     title: 'Approve & Sign',
     icon: FileSignature,
-    summary: 'Two-component credential re-authentication, declared legal meaning, and cryptographic SHA-256 seal.'
+    badge: 'Sign-Off',
+    summary: 'Two-component credential re-authentication, declared legal meaning, and cryptographic SHA-256 seal.',
+    details: [
+      '21 CFR Part 11 e-signatures',
+      'Two-component credential challenge',
+      'SHA-256 tamper-evident seal'
+    ],
+    stat: 'Approved'
   },
   {
     num: '04',
     title: 'Publish & Index',
     icon: BookOpen,
-    summary: 'Automated PDF/A rendering, major version assignment (e.g. v2.0 Effective), and full-text search indexing.'
+    badge: 'Release',
+    summary: 'Effective document published to controlled distribution lists with automatic obsolescence of prior revisions.',
+    details: [
+      'Single effective copy live',
+      'Obsolete versions withdrawn',
+      'Searchable PDF/A rendition'
+    ],
+    stat: 'Effective'
   },
   {
     num: '05',
     title: 'Distribute & Acknowledge',
     icon: Share2,
-    summary: 'Dynamic user-stamped watermarking, controlled print serialization, and mandatory training read acknowledgments.'
+    badge: 'Training',
+    summary: 'Read-and-acknowledge training workflows with complete time-stamped employee comprehension tracking.',
+    details: [
+      'Training-on-release routing',
+      'Read-and-acknowledge audit log',
+      'Dynamic security watermarking'
+    ],
+    stat: 'Attestation'
   },
   {
     num: '06',
-    title: 'Retain & Protect',
-    icon: Calendar,
-    summary: 'ISO 15489 event/time schedules, litigation legal holds, and immutable append-only audit trail logging.'
+    title: 'Archive & Retain',
+    icon: Archive,
+    badge: 'Retention',
+    summary: 'Long-term immutable preservation with automated retention schedule clocks and legal holds.',
+    details: [
+      'Policy-driven retention clocks',
+      'Immediate litigation legal hold',
+      'Immutable append-only archive'
+    ],
+    stat: 'Archived'
   },
   {
     num: '07',
-    title: 'Archive or Dispose',
+    title: 'Certified Disposition',
     icon: Trash2,
-    summary: 'Long-term immutable archival or multi-authorization defensible destruction with tamper-proof certificate.'
+    badge: 'Disposal',
+    summary: 'Controlled permanent purge or permanent archive with dual-authorized cryptographic certificate of destruction.',
+    details: [
+      'Multi-level disposition approvals',
+      'Permanent certified destruction',
+      'Cryptographic disposition certificate'
+    ],
+    stat: 'Disposed'
   }
 ]
 
 export default function HowItWorksPage({ onOpenDemoModal }) {
-  const [activeLifecycleIndex, setActiveLifecycleIndex] = useState(0)
-
   return (
-    <div className="py-12 bg-white">
-      <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-        
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-xs text-slate-500 mb-8 font-medium">
-          <Link to="/" className="hover:text-[#14532D]">Home</Link>
-          <span>/</span>
-          <span className="text-[#14532D] font-semibold">How It Works & Architecture</span>
-        </nav>
-
-        {/* Page Hero */}
-        <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-4">
-            <Cpu className="h-3.5 w-3.5" />
-            <span>ARCHITECTURE & PIPELINES</span>
+    <div className="bg-white">
+      {/* 1. Page Hero Section */}
+      <section className="py-14 lg:py-20 bg-[#F8FAFC] border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="text-center max-w-3xl mx-auto">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-4 shadow-2xs">
+              <Cpu className="h-3.5 w-3.5 text-[#14532D]" />
+              <span>ARCHITECTURE & PIPELINES</span>
+            </div>
+            <h1 className="text-4xl sm:text-5xl font-semibold text-slate-900 tracking-tight leading-tight">
+              How SmartiDP EDMS Works: Ingestion to Archival
+            </h1>
+            <p className="mt-4 text-slate-700 text-base sm:text-lg leading-relaxed font-normal">
+              A comprehensive overview of our 6-stage AI capture pipeline, the 7-step governed record lifecycle, and our enterprise cloud/on-premise deployment architecture.
+            </p>
           </div>
-          <h1 className="text-4xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight leading-tight">
-            How SmartiDP EDMS Works: Ingestion to Archival
-          </h1>
-          <p className="mt-4 text-slate-700 text-base sm:text-lg leading-relaxed">
-            A comprehensive overview of our 6-stage AI capture pipeline, the 7-step governed record lifecycle, and our enterprise cloud/on-premise deployment architecture.
-          </p>
         </div>
+      </section>
 
-        {/* 1. The 7-Step Governed Record Lifecycle */}
-        <div className="mb-20 p-8 sm:p-12 rounded-3xl bg-[#F5F7F5] border border-slate-200">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold text-[#14532D] font-mono uppercase tracking-wider block mb-1">
-              Brochure Page 16 Core Engine
+      {/* Brochure Chapter Quick-Jump Bar */}
+      <BrochureChapterBar />
+
+      {/* 2. The 7-Step Governed Record Lifecycle */}
+      <section id="record-lifecycle" className="py-20 lg:py-24 bg-[#F8FAFC] border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-xs font-bold text-[#14532D] font-mono uppercase tracking-wider block mb-2">
+              End-to-End Governance Engine
             </span>
-            <h2 className="text-3xl font-extrabold text-[#14532D]">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-slate-900 tracking-tight">
               The 7-Step Governed Record Lifecycle
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            <p className="mt-3 text-slate-600 text-sm sm:text-base font-normal">
               From the instant a file enters your organization to its certified permanent disposition.
             </p>
           </div>
 
-          {/* Stepper Grid */}
+          {/* Stepper Grid with 3D Flip Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-7 gap-4">
             {LIFECYCLE_STEPS.map((s, idx) => {
               const Icon = s.icon
-              const isSelected = idx === activeLifecycleIndex
               return (
                 <div
                   key={idx}
-                  onClick={() => setActiveLifecycleIndex(idx)}
-                  className={`p-5 rounded-2xl transition-all cursor-pointer flex flex-col justify-between ${
-                    isSelected
-                      ? 'bg-[#14532D] text-white shadow-lg scale-102'
-                      : 'bg-white text-slate-800 border border-slate-200 hover:border-[#14532D]/40'
-                  }`}
+                  className="flip-card-container h-[260px] sm:h-[275px] w-full cursor-pointer group"
+                  tabIndex={0}
+                  role="region"
+                  aria-label={`${s.num} ${s.title}`}
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-4">
-                      <span className={`text-xs font-mono font-bold px-2 py-0.5 rounded ${
-                        isSelected ? 'bg-white/20 text-white' : 'bg-[#E8F3EC] text-[#14532D]'
-                      }`}>
-                        {s.num}
-                      </span>
-                      <Icon className={`h-4 w-4 ${isSelected ? 'text-white' : 'text-[#14532D]'}`} />
+                  <div className="flip-card-inner">
+                    {/* Front Side: Glassmorphic Faded Green Card */}
+                    <div className="flip-card-front p-4 sm:p-5 glass-card-green text-slate-800 flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow">
+                      <div>
+                        <div className="flex items-center justify-between mb-3">
+                          <div className="h-8 w-8 rounded-lg font-mono font-bold text-xs flex items-center justify-center border border-[#14532D]/20 shadow-2xs transition-all bg-[#F0FDF4] text-[#14532D] group-hover:bg-[#14532D] group-hover:text-white">
+                            {s.num}
+                          </div>
+                          <div className="flex items-center gap-1.5">
+                            <Icon className="h-4 w-4 text-[#14532D]" />
+                            <span className="text-[9px] font-semibold flex items-center gap-1 px-1.5 py-0.5 rounded-full border bg-[#F0FDF4]/90 text-[#14532D] border-[#14532D]/15">
+                              Flip <RotateCw className="h-2 w-2" />
+                            </span>
+                          </div>
+                        </div>
+                        <h3 className="text-xs sm:text-sm font-bold mb-1.5 leading-snug transition-colors text-slate-900 group-hover:text-[#14532D]">
+                          {s.title}
+                        </h3>
+                        <p className="text-[11px] leading-relaxed font-normal text-slate-600">
+                          {s.summary}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-[#14532D]/15 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                        <span>Stage {s.num}</span>
+                        <span className="font-bold text-[#14532D]">{s.stat}</span>
+                      </div>
                     </div>
-                    <h3 className={`text-sm font-bold mb-1.5 ${isSelected ? 'text-white' : 'text-[#14532D]'}`}>
-                      {s.title}
-                    </h3>
+
+                    {/* Back Side: Forest Green Detail Card */}
+                    <div className="flip-card-back p-4 sm:p-5 bg-gradient-to-br from-[#064E3B] via-[#14532D] to-[#0F766E] text-white flex flex-col justify-between shadow-xl border border-emerald-400/40">
+                      <div>
+                        <div className="flex items-center justify-between pb-2 border-b border-white/20 mb-2">
+                          <span className="font-mono text-xs font-bold text-emerald-200">STAGE {s.num}</span>
+                          <span className="text-[9px] uppercase font-bold text-emerald-100 tracking-wider bg-white/10 px-2 py-0.5 rounded-full">
+                            {s.badge}
+                          </span>
+                        </div>
+                        <h4 className="text-xs font-bold text-white mb-2 leading-tight">{s.title} Controls</h4>
+                        <ul className="space-y-1.5 text-[10px] sm:text-[11px] text-white/95 leading-tight">
+                          {s.details.map((d, dIdx) => (
+                            <li key={dIdx} className="flex items-start gap-1.5">
+                              <CheckCircle2 className="h-3 w-3 text-emerald-300 shrink-0 mt-0.5" />
+                              <span>{d}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      <div className="pt-2 border-t border-white/20 flex items-center justify-between text-[10px] text-emerald-200 font-mono">
+                        <span>{s.stat}</span>
+                        <span className="text-white/80 font-sans text-[9px]">ISO / GxP Governed</span>
+                      </div>
+                    </div>
                   </div>
-                  <p className={`text-[11px] leading-relaxed pt-2 border-t ${
-                    isSelected ? 'border-white/20 text-emerald-100' : 'border-slate-100 text-slate-600'
-                  }`}>
-                    {s.summary}
-                  </p>
                 </div>
               )
             })}
           </div>
         </div>
+      </section>
 
-        {/* 2. The 6-Stage AI Capture Pipeline */}
-        <div className="mb-20">
-          <div className="text-center max-w-2xl mx-auto mb-12">
-            <span className="text-xs font-bold text-[#14532D] font-mono uppercase tracking-wider block mb-1">
+      {/* 3. The 6-Stage AI Capture Pipeline */}
+      <section id="intelligent-capture" className="py-20 lg:py-24 bg-white border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="text-center max-w-2xl mx-auto mb-14">
+            <span className="text-xs font-bold text-[#14532D] font-mono uppercase tracking-wider block mb-2">
               Neural Document Intelligence
             </span>
-            <h2 className="text-3xl font-extrabold text-[#14532D]">
+            <h2 className="text-3xl sm:text-4xl font-semibold text-slate-900 tracking-tight">
               The 6-Stage AI Capture Pipeline
             </h2>
-            <p className="text-xs sm:text-sm text-slate-600 mt-1">
+            <p className="mt-3 text-slate-600 text-sm sm:text-base font-normal">
               Transforming unstructured multi-format scans and PDFs into verified, structured data.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
             {CAPTURE_STAGES.map((cs) => {
               const Icon = cs.icon
               return (
-                <div key={cs.step} className="p-6 rounded-2xl glass-card-green flex items-start gap-4">
-                  <div className="h-12 w-12 rounded-xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-[#14532D]/15 shadow-2xs font-mono font-bold text-sm">
+                <div key={cs.step} className="p-7 rounded-3xl bg-slate-50 border border-slate-200/90 shadow-2xs hover:shadow-md transition-shadow flex items-start gap-4">
+                  <div className="h-12 w-12 rounded-2xl bg-white text-[#14532D] flex items-center justify-center shrink-0 border border-slate-200 shadow-2xs font-mono font-bold text-sm">
                     {cs.step}
                   </div>
                   <div>
-                    <div className="flex items-center gap-2 mb-1">
+                    <div className="flex items-center gap-2 mb-1.5">
                       <Icon className="h-4 w-4 text-[#14532D]" />
-                      <h3 className="text-base font-bold text-[#14532D]">{cs.title}</h3>
+                      <h3 className="text-base font-bold text-slate-900">{cs.title}</h3>
                     </div>
-                    <p className="text-xs text-slate-700 leading-relaxed">{cs.desc}</p>
+                    <p className="text-xs text-slate-600 leading-relaxed font-normal">{cs.desc}</p>
                   </div>
                 </div>
               )
             })}
           </div>
         </div>
+      </section>
 
-        {/* 3. Validation Station (Human-in-the-Loop Mockup) */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#F5F7F5] border border-slate-200 mb-20">
-          <div className="max-w-3xl mx-auto text-center mb-8">
-            <h3 className="text-2xl font-bold text-[#14532D]">
+      {/* 4. Interactive AI Validation Station */}
+      <section className="py-20 lg:py-24 bg-white border-b border-slate-200/80">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="max-w-3xl mx-auto text-center mb-12">
+            <span className="text-xs font-bold text-[#14532D] font-mono uppercase tracking-wider block mb-2">
+              Human-in-the-Loop Quality Assurance
+            </span>
+            <h2 className="text-3xl sm:text-4xl font-semibold text-slate-900 tracking-tight">
               Interactive AI Validation Station
-            </h3>
-            <p className="text-xs text-slate-600 mt-1">
+            </h2>
+            <p className="mt-3 text-slate-600 text-sm sm:text-base font-normal">
               When field confidence falls below policy thresholds (e.g. 95%), documents are automatically routed to the validation station.
             </p>
           </div>
 
-          <div className="max-w-4xl mx-auto rounded-2xl bg-white border border-slate-300 shadow-md overflow-hidden">
-            <div className="px-5 py-3 bg-slate-100 border-b border-slate-200 flex items-center justify-between text-xs text-slate-700 font-mono">
-              <span>queue / validation-station / doc-09412</span>
-              <span className="text-[#14532D] font-bold">Confidence: 97.8% (Math OK)</span>
+          <div className="max-w-4xl mx-auto rounded-3xl bg-white border border-slate-300 shadow-xl overflow-hidden">
+            <div className="px-6 py-4 bg-slate-100 border-b border-slate-200 flex items-center justify-between text-xs text-slate-700 font-mono">
+              <span>Capture · Validation station / INVOICE #55190</span>
+              <span className="text-[#14532D] font-bold">Confidence: 96% (Low fields flagged)</span>
             </div>
-            <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-xs">
+            <div className="p-8 grid grid-cols-1 md:grid-cols-2 gap-8 text-xs">
               <div className="space-y-3">
-                <div className="font-bold text-slate-900 pb-1 border-b border-slate-100">
-                  Extracted Document Properties
+                <div className="font-bold text-slate-900 pb-2 border-b border-slate-100 text-sm">
+                  Extracted Fields & Confidence
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Document Type:</span>
-                  <span className="font-semibold text-slate-800">Commercial Invoice (AP)</span>
+                <div className="flex justify-between py-1.5 border-b border-slate-100">
+                  <span className="text-slate-500">Doc type:</span>
+                  <span className="font-semibold text-slate-800">Supplier invoice <span className="text-[#14532D] font-bold">(99%)</span></span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Vendor:</span>
-                  <span className="font-semibold text-slate-800">BioTech Global Supplies Ltd</span>
+                <div className="flex justify-between py-1.5 border-b border-slate-100">
+                  <span className="text-slate-500">Supplier:</span>
+                  <span className="font-semibold text-slate-800">Example Supplies Ltd <span className="text-[#14532D] font-bold">(97%)</span></span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">PO Number:</span>
-                  <span className="font-semibold text-slate-800 font-mono">PO-2026-9912 (Matched)</span>
+                <div className="flex justify-between py-1.5 border-b border-slate-100">
+                  <span className="text-slate-500">Date:</span>
+                  <span className="font-semibold text-slate-800 font-mono">2026-03-14 <span className="text-[#14532D] font-bold">(98%)</span></span>
                 </div>
-                <div className="flex justify-between py-1 border-b border-slate-100">
-                  <span className="text-slate-500">Gross Amount:</span>
-                  <span className="font-semibold text-emerald-800 font-mono">$48,250.00 USD</span>
+                <div className="flex justify-between py-1.5 border-b border-slate-100">
+                  <span className="text-slate-500">Invoice no.:</span>
+                  <span className="font-semibold text-slate-800 font-mono">55190 <span className="text-[#14532D] font-bold">(99%)</span></span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100 bg-amber-50/60 px-2 rounded">
+                  <span className="text-amber-800 font-medium">PO number:</span>
+                  <span className="font-semibold text-amber-900 font-mono">PO-88213 <span className="text-amber-700 font-bold">(82% - Review)</span></span>
+                </div>
+                <div className="flex justify-between py-1.5 border-b border-slate-100">
+                  <span className="text-slate-500">Total:</span>
+                  <span className="font-semibold text-[#14532D] font-mono">12,480.00 <span className="text-[#14532D] font-bold">(96%)</span></span>
                 </div>
               </div>
-              <div className="space-y-3">
-                <div className="font-bold text-slate-900 pb-1 border-b border-slate-100">
-                  Automated Rule Validations
+
+              <div className="space-y-4">
+                <div className="font-bold text-slate-900 pb-2 border-b border-slate-100 text-sm">
+                  Document Types Processed Out of the Box
                 </div>
-                <div className="p-2.5 rounded-lg bg-[#E8F3EC] text-[#14532D] flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>3-Way PO & Goods Receipt match verified in ERP</span>
+                <div className="grid grid-cols-2 gap-2 text-[11px] text-slate-700">
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Invoices & receipts</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Purchase orders</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Certificates of analysis</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Contracts & agreements</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Batch records</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Delivery notes</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Identity documents</div>
+                  <div className="p-2 rounded-lg bg-slate-50 border border-slate-100">• Searchable PDF/A output</div>
                 </div>
-                <div className="p-2.5 rounded-lg bg-[#E8F3EC] text-[#14532D] flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>Tax calculation and subtotal math sum verified</span>
-                </div>
-                <div className="p-2.5 rounded-lg bg-[#E8F3EC] text-[#14532D] flex items-center gap-2">
-                  <CheckCircle2 className="h-4 w-4 shrink-0" />
-                  <span>Duplicate invoice number hash check passed</span>
-                </div>
+                <p className="text-[11px] text-slate-500 italic pt-1">
+                  Illustrative interface. Low-confidence fields are highlighted for review.
+                </p>
               </div>
             </div>
           </div>
         </div>
+      </section>
 
-        {/* 4. Deployment Models & Ecosystem */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
-          <div className="p-6 rounded-2xl glass-card-green">
-            <div className="h-10 w-10 rounded-xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/15 shadow-2xs mb-4">
-              <Cloud className="h-5 w-5" />
-            </div>
-            <h3 className="text-base font-bold text-[#14532D] mb-1">Multi-Tenant Cloud SaaS</h3>
-            <p className="text-xs text-slate-700 leading-relaxed">
-              Fully managed on AWS / Azure with automatic updates, high availability, regional data residency, and 99.9% SLA.
-            </p>
-          </div>
+      {/* 5. Capability: Workflow & Process Automation (Brochure Page 08) */}
+      <WorkflowAutomationSection onOpenDemoModal={onOpenDemoModal} />
 
-          <div className="p-6 rounded-2xl glass-card-green">
-            <div className="h-10 w-10 rounded-xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/15 shadow-2xs mb-4">
-              <Lock className="h-5 w-5" />
-            </div>
-            <h3 className="text-base font-bold text-[#14532D] mb-1">Dedicated Private Cloud</h3>
-            <p className="text-xs text-slate-700 leading-relaxed">
-              Single-tenant isolated instance deployed into your dedicated VPC with customer-managed encryption keys (BYOK).
-            </p>
-          </div>
+      {/* 6. User Experience (Brochure Page 09) */}
+      <UserExperienceSection />
 
-          <div className="p-6 rounded-2xl glass-card-green">
-            <div className="h-10 w-10 rounded-xl bg-white text-[#14532D] flex items-center justify-center border border-[#14532D]/15 shadow-2xs mb-4">
-              <Server className="h-5 w-5" />
-            </div>
-            <h3 className="text-base font-bold text-[#14532D] mb-1">On-Premise / Air-Gapped</h3>
-            <p className="text-xs text-slate-700 leading-relaxed">
-              Containerised microservices on Kubernetes for defense, government, and strictly regulated on-site data centers.
-            </p>
-          </div>
-        </div>
+      {/* 7. Productivity Anywhere (Brochure Page 10) */}
+      <ProductivityAnywhereSection onOpenDemoModal={onOpenDemoModal} />
 
-        {/* Bottom CTA Banner */}
-        <div className="p-8 sm:p-12 rounded-3xl bg-[#14532D] text-white text-center space-y-4">
-          <h2 className="text-2xl sm:text-4xl font-extrabold">
-            Want to Review the Technical Architecture Spec?
-          </h2>
-          <p className="text-emerald-100 text-sm max-w-xl mx-auto leading-relaxed">
-            Our enterprise architects are available to review system security, API integrations, and deployment sizing for your environment.
-          </p>
-          <div className="pt-2">
-            <button
-              onClick={onOpenDemoModal}
-              className="px-8 py-3.5 rounded-xl bg-white text-[#14532D] font-bold text-sm shadow-md hover:bg-[#E8F3EC] transition-all cursor-pointer"
-            >
-              Book an Architecture Review
-            </button>
-          </div>
-        </div>
+      {/* 8. Enterprise Integration Ecosystem (Brochure Page 11) */}
+      <EnterpriseIntegrationSection onOpenDemoModal={onOpenDemoModal} />
 
-      </div>
+      {/* 9. Cloud-Native Platform Architecture (Brochure Page 12) */}
+      <PlatformArchitectureSection onOpenDemoModal={onOpenDemoModal} />
+
+      {/* 10. Scalability, Performance & Availability (Brochure Page 13) */}
+      <ScalabilityPerformanceSection />
+
+      {/* 11. Zero-Trust Security & Defence in Depth (Brochure Page 14) */}
+      <ZeroTrustSecuritySection onOpenDemoModal={onOpenDemoModal} />
+
+      {/* 6. Bottom Technical Architecture CTA */}
+      <CtaBanner
+        onOpenDemoModal={onOpenDemoModal}
+        badge="SmartiDP EDMS Technical Architecture"
+        title="Ready to Review the Enterprise Architecture Specification?"
+        description="Our enterprise architects are available to review system security, API integrations, and deployment sizing for your environment."
+        primaryBtnText="Book an Architecture Review →"
+        secondaryBtnText="Speak with Solutions Architect"
+        secondaryLink="/contact"
+      />
     </div>
   )
 }

@@ -15,39 +15,39 @@ import {
 
 const STAKEHOLDER_ROLES = [
   {
-    role: 'Chief Information Officer (CIO)',
-    priority: 'Modernisation, Cost Control & Sprawl Elimination',
-    impact: 'Retire legacy ECM tools, consolidate departmental silos into a single platform, and drastically cut licensing and infrastructure spend.'
+    role: 'Chief Information Officer',
+    priority: 'Modernisation, cost control, risk',
+    impact: 'Retire legacy ECM, consolidate repositories and reduce infrastructure and licence sprawl.'
   },
   {
-    role: 'Chief Technology Officer (CTO)',
-    priority: 'Scalable, Secure, Cloud-Native Architecture',
-    impact: 'Containerised microservices on Kubernetes, open REST APIs, webhooks, and your choice of SaaS, dedicated private cloud, or on-premise hosting.'
+    role: 'Chief Technology Officer',
+    priority: 'Scalable, secure, cloud-ready architecture',
+    impact: 'Cloud-native microservices, open APIs and flexible deployment models.'
   },
   {
     role: 'Quality Director',
-    priority: 'Document Control, Training & CAPA Integration',
-    impact: 'Ensure full lifecycle control of SOPs, automated read-and-acknowledge training upon release, and seamless change-control linkage.'
+    priority: 'Document control, training, CAPA',
+    impact: 'Controlled document lifecycle, training-on release and change-control linkage.'
   },
   {
-    role: 'Compliance & Risk Officer',
-    priority: 'Data Integrity, Accountability & Audit Evidence',
-    impact: 'Immutable append-only audit trails, two-component e-signatures, ISO 15489 retention schedules, and continuous inspection readiness.'
+    role: 'Compliance Officer',
+    priority: 'Evidence, accountability, policy enforcement',
+    impact: 'Immutable audit trails, e-signatures, retention policies and compliance dashboards.'
   },
   {
-    role: 'Regulatory Affairs Director',
-    priority: 'Submission Readiness & Version Integrity',
-    impact: 'Version-locked document dossiers, automated PDF/A archival renditions, and traceable approvals ready for FDA, EMA, or notified bodies.'
+    role: 'Regulatory Affairs',
+    priority: 'Submission readiness, version integrity',
+    impact: 'Version-locked document sets, PDF/A renditions and traceable approvals.'
   },
   {
     role: 'Enterprise Architect',
-    priority: 'Standards, Interoperability & Integration',
-    impact: 'REST / OpenAPI specifications, OAuth 2.0 / SAML 2.0 SSO, SCIM provisioning, CMIS connectors, and BPMN 2.0 workflow interoperability.'
+    priority: 'Integration, standards, interoperability',
+    impact: 'REST APIs, webhooks, event streams, SSO and standards-based connectors.'
   },
   {
     role: 'Digital Transformation Leader',
-    priority: 'Paperless Operations, Speed & High Adoption',
-    impact: 'Consumer-grade user experience, Microsoft Office 365 / Outlook add-ins, native mobile capture, and no-code visual configuration.'
+    priority: 'Paperless operations, adoption, speed',
+    impact: 'Intuitive UX, mobile access and no-code process automation.'
   }
 ]
 
@@ -76,11 +76,11 @@ export default function Benefits({ onOpenDemoModal }) {
       <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#E8F3EC] border border-[#14532D]/20 text-[#14532D] text-xs font-semibold mb-3">
+          <div className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
             <TrendingUp className="h-3.5 w-3.5" />
             <span>Business Value</span>
           </div>
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-[#14532D] tracking-tight">
+          <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
             Measurable Outcomes Across the Enterprise
           </h2>
           <p className="mt-4 text-base sm:text-lg text-slate-700 leading-relaxed">
@@ -91,42 +91,42 @@ export default function Benefits({ onOpenDemoModal }) {
         {/* 4 Pillars of Value (Brochure Page 5) */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
           <div className="p-6 rounded-2xl glass-card-green">
-            <div className="text-3xl font-extrabold text-[#14532D] font-mono">Faster</div>
+            <div className="text-3xl font-semibold text-[#14532D] font-mono">Faster</div>
             <div className="text-xs font-bold uppercase tracking-wider text-slate-800 mt-1 mb-2">
-              Review & Approval Velocity
+              Review & Approval Cycles
             </div>
             <p className="text-xs text-slate-700 leading-relaxed">
-              Accelerate review and approval cycles by up to 70% using parallel electronic routing, automated reminders, and instant mobile e-signatures.
+              Document review & approval cycles through parallel electronic workflows.
             </p>
           </div>
 
           <div className="p-6 rounded-2xl glass-card-green">
-            <div className="text-3xl font-extrabold text-[#14532D] font-mono">Less</div>
+            <div className="text-3xl font-semibold text-[#14532D] font-mono">Less</div>
             <div className="text-xs font-bold uppercase tracking-wider text-slate-800 mt-1 mb-2">
               Manual Data Entry
             </div>
             <p className="text-xs text-slate-700 leading-relaxed">
-              Eliminate 80%+ of manual typing and indexing through multi-modal AI capture, multilingual OCR, and automated classification stations.
+              Manual data entry via AI-powered capture and extraction.
             </p>
           </div>
 
           <div className="p-6 rounded-2xl glass-card-green">
-            <div className="text-3xl font-extrabold text-[#14532D] font-mono">Lower</div>
+            <div className="text-3xl font-semibold text-[#14532D] font-mono">Lower</div>
             <div className="text-xs font-bold uppercase tracking-wider text-slate-800 mt-1 mb-2">
-              Physical & Storage Costs
+              Storage & Paper Costs
             </div>
             <p className="text-xs text-slate-700 leading-relaxed">
-              Dramatically reduce paper printing, off-site archive warehouse leases, courier logistics, and redundant legacy ECM software licenses.
+              Paper, printing, courier and physical storage costs.
             </p>
           </div>
 
           <div className="p-6 rounded-2xl glass-card-green">
-            <div className="text-3xl font-extrabold text-[#14532D] font-mono">Ready</div>
+            <div className="text-3xl font-semibold text-[#14532D] font-mono">Ready</div>
             <div className="text-xs font-bold uppercase tracking-wider text-slate-800 mt-1 mb-2">
-              Always Inspection-Ready
+              Always Audit-Ready
             </div>
             <p className="text-xs text-slate-700 leading-relaxed">
-              Continuous, tamper-evident audit trails and pre-packaged validation accelerators ensure your organization is prepared for audits every day.
+              For audits and inspections at any time, not just on audit day.
             </p>
           </div>
         </div>
@@ -134,10 +134,10 @@ export default function Benefits({ onOpenDemoModal }) {
         {/* Stakeholder Value Matrix & ROI Calculator Layout */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
           {/* Stakeholder Matrix (Brochure Page 5 Table) */}
-          <div className="lg:col-span-7 bg-[#F5F7F5] rounded-3xl border border-slate-200 p-8 shadow-xs">
+          <div className="lg:col-span-7 bg-slate-50 rounded-3xl border border-slate-200 p-8 shadow-xs">
             <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-6">
               <div>
-                <h3 className="text-xl font-bold text-[#14532D]">Value for Every Stakeholder</h3>
+                <h3 className="text-xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors">Value for Every Stakeholder</h3>
                 <p className="text-xs text-slate-600 mt-0.5">Explore how SmartiDP EDMS answers key executive priorities</p>
               </div>
               <Users className="h-5 w-5 text-[#14532D]" />
@@ -152,7 +152,7 @@ export default function Benefits({ onOpenDemoModal }) {
                     onClick={() => setActiveRoleIndex(idx)}
                     className={`p-4 rounded-xl transition-all cursor-pointer border ${
                       isActive
-                        ? 'bg-white border-[#14532D]/30 shadow-xs'
+                        ? 'bg-white border-[#14532D]/40 shadow-xs'
                         : 'bg-white/60 hover:bg-white border-slate-200/60'
                     }`}
                   >
@@ -160,7 +160,7 @@ export default function Benefits({ onOpenDemoModal }) {
                       <span className={`font-bold text-sm ${isActive ? 'text-[#14532D]' : 'text-slate-800'}`}>
                         {role.role}
                       </span>
-                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${isActive ? 'bg-[#E8F3EC] text-[#14532D]' : 'bg-slate-100 text-slate-600'}`}>
+                      <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full ${isActive ? 'bg-[#F0FDF4] text-[#14532D]' : 'bg-slate-100 text-slate-600'}`}>
                         {role.priority}
                       </span>
                     </div>
@@ -184,7 +184,7 @@ export default function Benefits({ onOpenDemoModal }) {
               </span>
             </div>
 
-            <h3 className="text-2xl font-bold text-[#14532D]">
+            <h3 className="text-2xl font-bold text-slate-900 group-hover:text-[#14532D] transition-colors">
               Calculate Your Organization's Annual Savings
             </h3>
 
@@ -222,12 +222,12 @@ export default function Benefits({ onOpenDemoModal }) {
                 <span className="text-[10px] font-bold uppercase tracking-wider text-slate-600">
                   Estimated Net Annual Savings
                 </span>
-                <div className="text-3xl sm:text-4xl font-extrabold text-[#14532D] font-mono mt-0.5">
+                <div className="text-3xl sm:text-4xl font-semibold text-[#14532D] font-mono mt-0.5">
                   ${savings.annualSaved.toLocaleString()}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4 pt-3 border-t border-[#14532D]/15 text-xs">
+              <div className="grid grid-cols-2 gap-4 pt-3 border-t border-emerald-900/10 text-xs">
                 <div>
                   <div className="text-slate-600 text-[11px]">Monthly Saved:</div>
                   <div className="text-base font-bold text-slate-900 font-mono mt-0.5">
@@ -245,10 +245,10 @@ export default function Benefits({ onOpenDemoModal }) {
 
             <button
               onClick={onOpenDemoModal}
-              className="w-full py-3.5 rounded-xl bg-[#14532D] hover:bg-[#064E3B] text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 cursor-pointer"
+              className="w-full py-3.5 rounded-full bg-[#14532D] hover:bg-[#166534] text-white font-bold text-sm shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all flex items-center justify-center gap-2 cursor-pointer group"
             >
               <span>Request Organisation-Specific ROI Model</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
         </div>
