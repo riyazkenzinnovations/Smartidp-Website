@@ -6,6 +6,7 @@ import InteractiveWorkbench from '../components/InteractiveWorkbench'
 import CtaBanner from '../components/CtaBanner'
 import AnimatedList from '../components/AnimatedList'
 import OperationalTransformation from '../components/OperationalTransformation'
+import CoordinationSteps from '../components/CoordinationSteps'
 import {
   ArrowRight,
   ShieldCheck,
@@ -22,15 +23,18 @@ import {
   FlaskConical,
   Stethoscope,
   TrendingUp,
+  TrendingDown,
   Workflow,
   ChevronRight,
   Users,
   Archive,
   BarChart3,
-  RotateCw
+  RotateCw,
+  Clock,
+  DollarSign
 } from 'lucide-react'
 
-// 1. Interactive 8 Capability Domains with Live Visual Preview
+// 1. Interactive 8 Capability Domains
 const CAPABILITIES_SHOWCASE = [
   {
     id: 'capture',
@@ -154,7 +158,7 @@ const CAPABILITIES_SHOWCASE = [
   }
 ]
 
-// 3. Industry Solutions Preview
+// Industry Solutions
 const INDUSTRY_HIGHLIGHTS = [
   {
     id: 'pharma',
@@ -165,7 +169,8 @@ const INDUSTRY_HIGHLIGHTS = [
     headline: 'Continuous Inspection-Readiness for Life Sciences',
     desc: 'SOPs, batch records, validation documents, regulatory submissions, CMC, and training records with automated change control and validation accelerator.',
     stat: '100% Audit Trail',
-    action: 'Explore Pharma Spec'
+    action: 'Explore Pharma Spec',
+    color: 'from-emerald-500 to-teal-600'
   },
   {
     id: 'meddev',
@@ -176,7 +181,8 @@ const INDUSTRY_HIGHLIGHTS = [
     headline: 'Design History Files & Device Master Records',
     desc: 'Design history files, technical documentation, device master records, risk files, and CAPA with complete verification trace matrix.',
     stat: '360° Lifecycle',
-    action: 'Explore MedDev Spec'
+    action: 'Explore MedDev Spec',
+    color: 'from-sky-500 to-blue-600'
   },
   {
     id: 'finance',
@@ -187,11 +193,12 @@ const INDUSTRY_HIGHLIGHTS = [
     headline: 'High-Volume Document Security & AP Automation',
     desc: 'KYC/onboarding, loan files, policies, claims, board papers, and regulatory reporting with tamper-evident audit trails and automated PO matching.',
     stat: '3 Deployments',
-    action: 'Explore BFSI Spec'
+    action: 'Explore BFSI Spec',
+    color: 'from-violet-500 to-purple-600'
   }
 ]
 
-// 4. 6-Stage Intelligent Capture Pipeline Stages (Brochure Page 06)
+// Pipeline Stages
 const PIPELINE_STAGES = [
   {
     step: '01',
@@ -203,7 +210,8 @@ const PIPELINE_STAGES = [
       'Mobile capture & watched folders',
       'Sub-340ms stream ingestion'
     ],
-    stat: 'Omnichannel'
+    stat: 'Omnichannel',
+    color: 'from-sky-500 to-blue-600'
   },
   {
     step: '02',
@@ -215,7 +223,8 @@ const PIPELINE_STAGES = [
       'Multilingual OCR in 50+ languages',
       'Handwriting & cursive recognition'
     ],
-    stat: '99.8% Precision'
+    stat: '99.8% Precision',
+    color: 'from-violet-500 to-purple-600'
   },
   {
     step: '03',
@@ -227,7 +236,8 @@ const PIPELINE_STAGES = [
       'Zero separator sheets needed',
       'Pre-trained for invoices & SOPs'
     ],
-    stat: 'Auto-Routing'
+    stat: 'Auto-Routing',
+    color: 'from-emerald-500 to-teal-600'
   },
   {
     step: '04',
@@ -239,7 +249,8 @@ const PIPELINE_STAGES = [
       'Complex nested table parsing',
       'Confidence scoring per field'
     ],
-    stat: 'High Confidence'
+    stat: 'High Confidence',
+    color: 'from-orange-500 to-amber-600'
   },
   {
     step: '05',
@@ -251,7 +262,8 @@ const PIPELINE_STAGES = [
       'Human-in-the-loop review station',
       '21 CFR Part 11 digital signatures'
     ],
-    stat: '100% Traceable'
+    stat: '100% Traceable',
+    color: 'from-rose-500 to-pink-600'
   },
   {
     step: '06',
@@ -263,8 +275,53 @@ const PIPELINE_STAGES = [
       'Event- & time-based retention',
       'Immediate legal hold freezing'
     ],
-    stat: 'ISO 15489'
+    stat: 'ISO 15489',
+    color: 'from-teal-500 to-cyan-600'
   }
+]
+
+// ROI Metrics
+const ROI_METRICS = [
+  {
+    metric: '80%',
+    label: 'Faster Approvals',
+    desc: 'Review & approval cycles through parallel electronic workflows.',
+    icon: Clock,
+    color: 'from-emerald-500 to-teal-600'
+  },
+  {
+    metric: '95%',
+    label: 'Less Manual Entry',
+    desc: 'Manual data entry eliminated via intelligent capture and extraction.',
+    icon: TrendingDown,
+    color: 'from-sky-500 to-blue-600'
+  },
+  {
+    metric: '60%',
+    label: 'Lower Storage Costs',
+    desc: 'Paper, printing, courier and physical storage costs cut.',
+    icon: DollarSign,
+    color: 'from-violet-500 to-purple-600'
+  },
+  {
+    metric: '100%',
+    label: 'Audit Ready',
+    desc: 'Continuous inspection readiness — not just on audit day.',
+    icon: ShieldCheck,
+    color: 'from-orange-500 to-amber-600'
+  }
+]
+
+const COMPLIANCE_STANDARDS = [
+  'FDA 21 CFR Part 11',
+  'EU GMP Annex 11',
+  'ISO 9001:2015',
+  'ISO 13485:2016',
+  'ISO/IEC 27001',
+  'GDPR & HIPAA',
+  'SOC 2 Type II',
+  'ISO 15489',
+  'GAMP 5'
 ]
 
 export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
@@ -287,34 +344,26 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
   return (
     <div className="space-y-0">
       {/* 1. Hero Section */}
-      <Hero 
-        onOpenDemoModal={onOpenDemoModal} 
-        onOpenVideoModal={onOpenVideoModal} 
+      <Hero
+        onOpenDemoModal={onOpenDemoModal}
+        onOpenVideoModal={onOpenVideoModal}
       />
 
-      {/* 2. Global Regulatory Standards Marquee */}
-      <section className="py-7 bg-[#F8FAFC] border-b border-slate-200/80">
+      {/* 2. Compliance Standards Bar */}
+      <section className="py-5 bg-slate-900 border-b border-slate-700/60">
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-            <div className="flex items-center gap-2 text-xs font-bold text-slate-800 uppercase tracking-wider shrink-0">
-              <ShieldCheck className="h-4 w-4 text-[#14532D]" />
-              <span>Certified Technical Controls For Global Compliance</span>
+            <div className="flex items-center gap-2 shrink-0">
+              <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+                Certified Controls For
+              </span>
             </div>
-            <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs">
-              {[
-                'FDA 21 CFR Part 11',
-                'EU GMP Annex 11',
-                'ISO 9001:2015',
-                'ISO 13485:2016',
-                'ISO/IEC 27001',
-                'GDPR & HIPAA',
-                'SOC 2 Type II',
-                'ISO 15489',
-                'GAMP 5'
-              ].map((std, i) => (
+            <div className="flex flex-wrap items-center gap-2">
+              {COMPLIANCE_STANDARDS.map((std, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 rounded-lg bg-white border border-slate-200 text-slate-800 text-[11px] font-bold shadow-2xs"
+                  className="px-3 py-1 rounded-lg bg-white/8 border border-white/12 text-slate-300 text-[11px] font-bold"
                 >
                   {std}
                 </span>
@@ -324,42 +373,49 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
         </div>
       </section>
 
-      {/* 3. The Executive Case for Change (Interactive Transformation Hub) */}
+      {/* 3. Operational Transformation */}
       <OperationalTransformation />
 
-      {/* 4. Platform Overview (Hub-and-Spoke Architecture) */}
+      {/* 4. Platform Hub */}
       <PlatformHub onSelectDomain={handleSelectDomain} />
 
-      {/* 5. Interactive 8 Foundational Capability Domains with Dynamic Live Preview Canvas */}
-      <section id="core-domains" className="py-20 lg:py-28 bg-slate-50 border-b border-slate-200">
+      {/* 5. From Creation to Co-ordination Steps (Interactive 4-Step Architecture) */}
+      <CoordinationSteps />
+
+      {/* 6. 8 Capability Domains */}
+      <section id="core-domains" className="py-20 lg:py-28 bg-white border-b border-slate-200">
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           {/* Header */}
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
-                <Layers className="h-3.5 w-3.5 text-[#14532D]" />
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold mb-4 uppercase tracking-wider">
+                <Layers className="h-3.5 w-3.5" />
                 <span>8 Core Integrated Domains</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight leading-tight">
-                An Integrated Suite for Every Stage of the Document Journey
+              <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
+                An Integrated Suite for{' '}
+                <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+                  Every Stage
+                </span>{' '}
+                of the Document Journey
               </h2>
-              <p className="mt-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p className="mt-4 text-slate-500 text-sm sm:text-base leading-relaxed">
                 Rather than cobbling together point-solution plugins, SmartiDP delivers 8 native capability domains built on one unified zero-trust core. Click each capability to inspect live controls.
               </p>
             </div>
             <Link
               to="/features"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#14532D] hover:bg-[#166534] text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all self-start lg:self-auto shrink-0 group"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-sm hover:shadow-md transition-all self-start lg:self-auto shrink-0 group"
             >
-              <span>Explore All Technical Specifications</span>
+              <span>All Technical Specs</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
 
-          {/* Interactive Capability Showcase: Left Pills, Right Live Simulated Screen */}
+          {/* Capability showcase */}
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-            
-            {/* Left Column: Capability Selectors (5 cols) */}
+
+            {/* Left — pill list */}
             <div className="lg:col-span-5">
               <AnimatedList
                 items={CAPABILITIES_SHOWCASE}
@@ -370,8 +426,8 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                 accentColor="#14532D"
                 width="100%"
                 maxHeight={700}
-                gap={10}
-                radius={16}
+                gap={8}
+                radius={14}
                 frame={false}
                 selectOnHover={false}
                 itemClassName="group !p-3.5 sm:!p-4"
@@ -383,30 +439,22 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                         <div
                           className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
                             isSelected
-                              ? 'bg-[#14532D] text-white shadow-sm'
-                              : 'bg-[#F0FDF4] text-[#14532D] group-hover:bg-[#14532D] group-hover:text-white'
+                              ? 'bg-slate-900 text-white shadow-sm'
+                              : 'bg-slate-100 text-slate-600 group-hover:bg-slate-900 group-hover:text-white'
                           }`}
                         >
                           <Icon className="h-5 w-5" />
                         </div>
                         <div className="min-w-0 text-left">
-                          <div
-                            className={`text-sm font-bold transition-colors ${
-                              isSelected ? 'text-[#14532D]' : 'text-slate-900'
-                            }`}
-                          >
+                          <div className={`text-sm font-bold transition-colors ${isSelected ? 'text-slate-900' : 'text-slate-700'}`}>
                             {cap.title}
                           </div>
-                          <div className="text-[11px] text-slate-500 font-medium truncate">
-                            {cap.tagline}
-                          </div>
+                          <div className="text-[11px] text-slate-400 font-medium truncate">{cap.tagline}</div>
                         </div>
                       </div>
                       <ChevronRight
                         className={`h-4 w-4 shrink-0 transition-transform ${
-                          isSelected
-                            ? 'text-[#14532D] translate-x-1'
-                            : 'text-slate-400 group-hover:text-slate-600'
+                          isSelected ? 'text-emerald-600 translate-x-1' : 'text-slate-300 group-hover:text-slate-500'
                         }`}
                       />
                     </div>
@@ -415,218 +463,188 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
               />
             </div>
 
-            {/* Right Column: Live Interactive Feature Simulator (7 cols) */}
-            <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden p-6 sm:p-8">
-              {/* Top Meta Bar */}
-              <div className="flex flex-wrap items-center justify-between gap-3 pb-6 border-b border-slate-100">
+            {/* Right — live preview */}
+            <div className="lg:col-span-7 rounded-3xl border border-slate-200 shadow-xl overflow-hidden bg-white">
+              {/* Top meta bar */}
+              <div className="flex items-center justify-between gap-3 px-6 py-4 bg-slate-900 border-b border-slate-700">
                 <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-[#14532D]" />
-                  <span className="text-xs font-bold text-[#14532D] uppercase tracking-wider">
+                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                     {currentCap.title}
                   </span>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-[#F0FDF4] text-[#14532D] text-xs font-bold border border-[#14532D]/20">
+                <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 text-xs font-bold border border-emerald-400/25">
                   {currentCap.badge}
                 </span>
               </div>
 
-              {/* Feature Description */}
-              <div className="py-6 space-y-4">
-                <h3 className="text-xl sm:text-2xl font-bold text-slate-900">
-                  {currentCap.tagline}
-                </h3>
-                <p className="text-slate-600 text-xs sm:text-sm leading-relaxed">
-                  {currentCap.desc}
-                </p>
-
-                {/* Key Specification Bullet Points */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-3">
-                  {currentCap.bullets.map((b, i) => (
-                    <div key={i} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-2.5">
-                      <CheckCircle2 className="h-4 w-4 text-[#14532D] shrink-0 mt-0.5" />
-                      <span className="text-xs text-slate-700 leading-snug">{b}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Dynamic Live Simulated UI Canvas */}
-              <div className="mt-4 p-5 rounded-2xl bg-gradient-to-br from-[#F5F7F5] to-white border border-slate-200/90">
-                <div className="text-[11px] font-mono text-slate-500 uppercase tracking-wider mb-3 flex flex-wrap items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span>Engine Simulation Console</span>
-                    <span className="text-[10px] text-slate-400 font-sans normal-case">(Illustrative example.)</span>
+              <div className="p-6 sm:p-8">
+                {/* Description */}
+                <div className="space-y-4 pb-6 border-b border-slate-100">
+                  <h3 className="text-xl sm:text-2xl font-bold text-slate-900">{currentCap.tagline}</h3>
+                  <p className="text-slate-500 text-sm leading-relaxed">{currentCap.desc}</p>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
+                    {currentCap.bullets.map((b, i) => (
+                      <div key={i} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-2.5">
+                        <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <span className="text-xs text-slate-600 leading-snug">{b}</span>
+                      </div>
+                    ))}
                   </div>
-                  <span className="text-[#14532D] font-bold">Status: Online · Latency 320ms</span>
                 </div>
 
-                {/* Render distinct simulated UI based on previewType */}
-                {currentCap.id === 'capture' && (
-                  <div className="space-y-3 font-mono text-xs">
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between">
-                      <span className="text-slate-700">Document Type Classification:</span>
-                      <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold">Standard Operating Procedure (SOP) · 99.9%</span>
+                {/* Simulation console */}
+                <div className="mt-5 rounded-2xl bg-slate-900 p-5">
+                  <div className="flex items-center justify-between mb-3 text-[11px] font-mono">
+                    <div className="flex items-center gap-2 text-slate-400">
+                      <span>Engine Simulation Console</span>
+                      <span className="text-slate-600 font-sans normal-case">(Illustrative)</span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
-                      <div className="p-2.5 bg-white rounded-lg border border-slate-200">
-                        <div className="text-slate-500">Document ID</div>
-                        <div className="text-[#14532D] font-bold">SOP-QA-0142 (100%)</div>
-                      </div>
-                      <div className="p-2.5 bg-white rounded-lg border border-slate-200">
-                        <div className="text-slate-500">Effective Date</div>
-                        <div className="text-[#14532D] font-bold">2026-03-14 (99.8%)</div>
-                      </div>
-                      <div className="p-2.5 bg-white rounded-lg border border-slate-200">
-                        <div className="text-slate-500">Validation Status</div>
-                        <div className="text-[#14532D] font-bold">Automated Pass (100%)</div>
-                      </div>
-                    </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
+                    <span className="text-emerald-400 font-bold">Status: Online · 320ms</span>
                   </div>
-                )}
 
-                {currentCap.id === 'manage' && (
-                  <div className="space-y-2 font-mono text-xs">
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
-                      <span className="text-slate-700">Active Revision:</span>
-                      <span className="px-2.5 py-0.5 rounded bg-[#14532D] text-white font-bold">v4.0 Effective (Locked)</span>
-                    </div>
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-[11px]">
-                      <span className="text-slate-500">v3.2 Draft &rarr; v4.0 Redline Comparison:</span>
-                      <span className="text-[#14532D] font-bold">+14 clauses added · -2 withdrawn · 0 conflicts</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
-
-                {currentCap.id === 'automate' && (
-                  <div className="space-y-2 font-mono text-xs">
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
-                      <span className="text-slate-700">BPMN 2.0 Active Route:</span>
-                      <span className="text-[#14532D] font-bold">Author &rarr; Technical Review (3/3) &rarr; QA Release</span>
-                    </div>
-                    <div className="p-3.5 bg-white rounded-xl border border-[#14532D]/15 space-y-1.5">
-                      <div className="flex items-center justify-between font-bold text-[#14532D]">
-                        <span>✓ 21 CFR Part 11 Signature Validated</span>
-                        <span>SHA-256 Valid</span>
+                  {currentCap.id === 'capture' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">Document Type:</span>
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">SOP · 99.9%</span>
                       </div>
-                      <div className="text-[11px] text-slate-600">
-                        Signer: <strong>Dr. Evelyn Vance (QA Head)</strong> · Meaning: <strong>Regulatory Approval</strong>
+                      <div className="grid grid-cols-3 gap-2 text-[11px]">
+                        {[['Document ID','SOP-QA-0142 (100%)'],['Effective Date','2026-03-14 (99.8%)'],['Validation','Auto Pass (100%)']].map(([k,v],i)=>(
+                          <div key={i} className="p-2.5 bg-white/5 rounded-lg border border-white/8">
+                            <div className="text-slate-500">{k}</div>
+                            <div className="text-emerald-400 font-bold text-[10px]">{v}</div>
+                          </div>
+                        ))}
                       </div>
                     </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
-
-                {currentCap.id === 'collaborate' && (
-                  <div className="space-y-2.5 font-mono text-xs">
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
-                      <span className="text-slate-700">Active Co-Authors (3 Online):</span>
-                      <div className="flex items-center gap-1.5">
-                        <span className="px-2 py-0.5 rounded bg-blue-100 text-blue-800 font-bold text-[11px]">Dr. E. Vance (Editing §4.2)</span>
-                        <span className="px-2 py-0.5 rounded bg-emerald-100 text-emerald-800 font-bold text-[11px]">M. Al-Mansoor (Reviewing)</span>
+                  )}
+                  {currentCap.id === 'manage' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">Active Revision:</span>
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">v4.0 Effective (Locked)</span>
+                      </div>
+                      <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
+                        <span className="text-slate-500">v3.2 → v4.0 Redline:</span>
+                        <span className="text-emerald-400 font-bold">+14 added · -2 withdrawn</span>
                       </div>
                     </div>
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-[11px]">
-                      <span className="text-slate-500">Live Workspace Sync:</span>
-                      <span className="text-[#14532D] font-bold">0 conflicts · WebSocket TLS 1.3 connected</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
-
-                {currentCap.id === 'discover' && (
-                  <div className="space-y-2 font-mono text-xs">
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
-                      <span className="text-slate-700">Query: "SOP batch deviation autoclave"</span>
-                      <span className="px-2 py-0.5 rounded bg-[#14532D] text-white font-bold text-[11px]">18 results · 180ms</span>
-                    </div>
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-[11px]">
-                      <span className="text-slate-500">Search Security Gate:</span>
-                      <span className="text-[#14532D] font-bold">RBAC Permission-Trimmed (3 records redacted)</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
-
-                {currentCap.id === 'govern' && (
-                  <div className="space-y-2 font-mono text-xs">
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between">
-                      <span className="text-slate-700">Retention Schedule:</span>
-                      <span className="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-bold text-[11px]">7 Years Post-Release · 2033-04-01</span>
-                    </div>
-                    <div className="p-3 bg-white rounded-xl border border-slate-200 flex items-center justify-between text-[11px]">
-                      <span className="text-slate-500">Litigation Hold Status:</span>
-                      <span className="text-[#14532D] font-bold">Inactive (Schedule Enforced)</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
-
-                {currentCap.id === 'secure' && (
-                  <div className="p-3.5 bg-white rounded-xl border border-slate-200 font-mono text-xs space-y-2">
-                    <div className="flex items-center justify-between text-slate-700">
-                      <span>Zero-Trust Security Gate:</span>
-                      <span className="text-[#14532D] font-bold">AES-256-GCM / TLS 1.3 Enforced</span>
-                    </div>
-                    <div className="flex items-center justify-between text-[11px] text-slate-500">
-                      <span>Audit Trail Hash Chain:</span>
-                      <span className="text-[#14532D] font-bold font-mono">SHA-256 Hash Chained (Verified)</span>
-                    </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
-
-                {currentCap.id === 'analyse' && (
-                  <div className="space-y-2 font-mono text-xs">
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px]">
-                      <div className="p-2.5 bg-white rounded-lg border border-slate-200">
-                        <div className="text-slate-500">Avg Approval Time</div>
-                        <div className="text-[#14532D] font-bold">4.2 Hours (-68%)</div>
+                  )}
+                  {currentCap.id === 'automate' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">BPMN 2.0 Route:</span>
+                        <span className="text-emerald-400 font-bold">Author → Review (3/3) → QA</span>
                       </div>
-                      <div className="p-2.5 bg-white rounded-lg border border-slate-200">
-                        <div className="text-slate-500">Active Workflows</div>
-                        <div className="text-[#14532D] font-bold">142 In Progress</div>
-                      </div>
-                      <div className="p-2.5 bg-white rounded-lg border border-slate-200">
-                        <div className="text-slate-500">SLA Adherence</div>
-                        <div className="text-[#14532D] font-bold">99.4% On-Time</div>
+                      <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-400/20 space-y-1">
+                        <div className="flex items-center justify-between font-bold text-emerald-400 text-[11px]">
+                          <span>✓ 21 CFR Part 11 Signature Validated</span>
+                          <span>SHA-256 ✓</span>
+                        </div>
+                        <div className="text-[11px] text-slate-400">Signer: <strong className="text-slate-300">Dr. E. Vance (QA)</strong> · Meaning: Regulatory Approval</div>
                       </div>
                     </div>
-                    <div className="text-[10px] text-slate-400 italic font-sans pt-1">Illustrative example.</div>
-                  </div>
-                )}
+                  )}
+                  {currentCap.id === 'collaborate' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">Active Co-Authors:</span>
+                        <div className="flex gap-1.5">
+                          <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[11px] font-bold">Dr. E. Vance</span>
+                          <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">M. Al-Mansoor</span>
+                        </div>
+                      </div>
+                      <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
+                        <span className="text-slate-500">Sync Status:</span>
+                        <span className="text-emerald-400 font-bold">0 conflicts · TLS 1.3</span>
+                      </div>
+                    </div>
+                  )}
+                  {currentCap.id === 'discover' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">"SOP batch deviation autoclave"</span>
+                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">18 results · 180ms</span>
+                      </div>
+                      <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
+                        <span className="text-slate-500">Security Gate:</span>
+                        <span className="text-emerald-400 font-bold">RBAC Trimmed (3 redacted)</span>
+                      </div>
+                    </div>
+                  )}
+                  {currentCap.id === 'govern' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">Retention Schedule:</span>
+                        <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">7 Yrs · 2033-04-01</span>
+                      </div>
+                      <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
+                        <span className="text-slate-500">Litigation Hold:</span>
+                        <span className="text-emerald-400 font-bold">Inactive (Enforced)</span>
+                      </div>
+                    </div>
+                  )}
+                  {currentCap.id === 'secure' && (
+                    <div className="space-y-2 font-mono text-xs">
+                      <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
+                        <span className="text-slate-300">Encryption:</span>
+                        <span className="text-emerald-400 font-bold">AES-256-GCM / TLS 1.3</span>
+                      </div>
+                      <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
+                        <span className="text-slate-500">Audit Hash Chain:</span>
+                        <span className="text-emerald-400 font-bold">SHA-256 Verified ✓</span>
+                      </div>
+                    </div>
+                  )}
+                  {currentCap.id === 'analyse' && (
+                    <div className="grid grid-cols-3 gap-2 font-mono text-[11px]">
+                      {[['Avg Approval','4.2 hrs (-68%)'],['Active Workflows','142 In Progress'],['SLA Adherence','99.4% On-Time']].map(([k,v],i)=>(
+                        <div key={i} className="p-2.5 bg-white/5 rounded-lg border border-white/8">
+                          <div className="text-slate-500">{k}</div>
+                          <div className="text-emerald-400 font-bold">{v}</div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
 
-                {/* Bottom Trigger Action */}
-                <div className="mt-4 pt-3 border-t border-slate-200 flex items-center justify-between">
-                  <span className="text-[11px] text-slate-500">Pre-configured validation test scripts included.</span>
-                  <button
-                    onClick={onOpenDemoModal}
-                    className="text-xs font-bold text-[#14532D] hover:underline flex items-center gap-1 cursor-pointer"
-                  >
-                    <span>Request Live Platform Test</span>
-                    <ArrowRight className="h-3 w-3" />
-                  </button>
+                  <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
+                    <span className="text-[11px] text-slate-500">Pre-configured validation test scripts included.</span>
+                    <button
+                      onClick={onOpenDemoModal}
+                      className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer transition"
+                    >
+                      <span>Live Platform Test</span>
+                      <ArrowRight className="h-3 w-3" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
-
           </div>
         </div>
       </section>
 
-      {/* 5. 6-Stage Governed Document Processing Pipeline */}
-      <section className="py-20 lg:py-24 bg-[#F8FAFC] text-slate-900 border-y border-slate-200/80 relative overflow-hidden">
+      {/* 6. 6-Stage Pipeline — dark section */}
+      <section className="py-20 lg:py-28 bg-slate-900 border-b border-slate-700/60 relative overflow-hidden">
+        {/* glow */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-teal-500/6 rounded-full blur-3xl" />
+
         <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3 shadow-2xs">
-              <Workflow className="h-3.5 w-3.5 text-[#14532D]" />
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-bold mb-4 uppercase tracking-widest">
+              <Workflow className="h-3.5 w-3.5" />
               <span>End-to-End Processing Flow</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
-              The 6-Stage Intelligent Document Pipeline
+            <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
+              The{' '}
+              <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
+                6-Stage
+              </span>{' '}
+              Intelligent Document Pipeline
             </h2>
-            <p className="mt-4 text-base sm:text-lg text-slate-600 leading-relaxed font-normal">
+            <p className="mt-4 text-base text-slate-400 leading-relaxed">
               From the moment an unstructured document arrives until its permanent defensible disposition, every step is automated, audited, and secured.
             </p>
           </div>
@@ -635,60 +653,56 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
             {PIPELINE_STAGES.map((p, i) => (
               <div
                 key={i}
-                className="flip-card-container h-[245px] sm:h-[255px] w-full cursor-pointer group"
+                className="flip-card-container h-[255px] w-full cursor-pointer group"
                 tabIndex={0}
                 role="region"
                 aria-label={`${p.step} ${p.title}`}
               >
                 <div className="flip-card-inner">
-                  {/* Front Side: Glassmorphic Faded Green Card */}
-                  <div className="flip-card-front p-5 glass-card-green flex flex-col justify-between shadow-xs hover:shadow-md transition-shadow">
+                  {/* Front — white card */}
+                  <div className="flip-card-front p-5 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between">
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <div className="h-9 w-9 rounded-xl bg-[#F0FDF4] text-[#14532D] font-mono font-bold text-sm flex items-center justify-center border border-[#14532D]/20 shadow-2xs group-hover:bg-[#14532D] group-hover:text-white transition-all">
+                        <div className="h-9 w-9 rounded-xl bg-slate-100 text-slate-700 font-mono font-bold text-sm flex items-center justify-center border border-slate-200 group-hover:bg-slate-900 group-hover:text-white transition-all">
                           {p.step}
                         </div>
-                        <span className="text-[10px] text-[#14532D] font-semibold flex items-center gap-1 bg-[#F0FDF4]/90 px-2 py-0.5 rounded-full border border-[#14532D]/15">
-                          Flip <RotateCw className="h-2.5 w-2.5" />
-                        </span>
-                      </div>
-                      <h3 className="text-sm font-bold text-slate-900 group-hover:text-[#14532D] transition-colors mb-1.5 leading-snug">
-                        {p.title}
-                      </h3>
-                      <p className="text-xs text-slate-600 leading-relaxed font-normal">
-                        {p.desc}
-                      </p>
-                    </div>
-
-                    <div className="pt-2 border-t border-[#14532D]/15 flex items-center justify-between text-[10px] text-slate-500 font-mono">
-                      <span>Stage {p.step}</span>
-                      <span className="text-[#14532D] font-bold">{p.stat}</span>
-                    </div>
-                  </div>
-
-                  {/* Back Side: Forest Green Detail Card */}
-                  <div className="flip-card-back p-5 bg-gradient-to-br from-[#064E3B] via-[#14532D] to-[#0F766E] text-white flex flex-col justify-between shadow-xl border border-emerald-400/40">
-                    <div>
-                      <div className="flex items-center justify-between pb-2 border-b border-white/20 mb-2.5">
-                        <span className="font-mono text-xs font-bold text-emerald-200">STAGE {p.step}</span>
-                        <span className="text-[10px] uppercase font-bold text-emerald-100 tracking-wider bg-white/10 px-2 py-0.5 rounded-full">
+                        <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
                           {p.badge}
                         </span>
                       </div>
-                      <h4 className="text-xs font-bold text-white mb-2">{p.title} Specs</h4>
-                      <ul className="space-y-1.5 text-[11px] text-white/95 leading-tight">
-                        {p.details.map((d, idx) => (
-                          <li key={idx} className="flex items-start gap-1.5">
+                      <h3 className="text-sm font-bold text-slate-900 mb-1.5 leading-snug group-hover:text-emerald-700 transition-colors">
+                        {p.title}
+                      </h3>
+                      <p className="text-xs text-slate-500 leading-relaxed">{p.desc}</p>
+                    </div>
+                    <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-400">
+                      <span>Stage {p.step}</span>
+                      <span className="font-bold text-emerald-600">{p.stat}</span>
+                    </div>
+                  </div>
+
+                  {/* Back — dark green card */}
+                  <div className="flip-card-back p-5 bg-gradient-to-br from-[#064E3B] via-[#14532D] to-[#0F766E] rounded-2xl text-white flex flex-col justify-between shadow-xl border border-emerald-400/40">
+                    <div>
+                      <div className="flex items-center justify-between pb-2 border-b border-white/20 mb-3">
+                        <span className="font-mono text-xs font-bold text-emerald-200">STAGE {p.step}</span>
+                        <span className="text-[9px] uppercase font-bold text-emerald-100 tracking-wider bg-white/10 px-2 py-0.5 rounded-full">
+                          {p.badge}
+                        </span>
+                      </div>
+                      <h4 className="text-xs font-bold text-white mb-3 leading-tight">{p.title} Specs</h4>
+                      <ul className="space-y-2 text-[11px] text-white/90 leading-tight">
+                        {p.details.map((d, di) => (
+                          <li key={di} className="flex items-start gap-1.5">
                             <CheckCircle2 className="h-3 w-3 text-emerald-300 shrink-0 mt-0.5" />
                             <span>{d}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-
-                    <div className="pt-2 border-t border-white/20 flex items-center justify-between text-[10px] text-emerald-200 font-mono">
+                    <div className="pt-2.5 border-t border-white/20 flex items-center justify-between text-[10px] text-emerald-200 font-mono">
                       <span>{p.stat}</span>
-                      <span className="text-white/80 font-sans">SmartiDP EDMS</span>
+                      <span className="text-white/70 font-sans">SmartiDP EDMS</span>
                     </div>
                   </div>
                 </div>
@@ -696,40 +710,46 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
             ))}
           </div>
 
+
+
           <div className="mt-10 text-center">
             <Link
               to="/how-it-works"
-              className="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#14532D] hover:underline transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition group"
             >
               <span>Explore Detailed Stage-by-Stage Architecture Specifications</span>
-              <ArrowRight className="h-4 w-4" />
+              <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 6. Interactive Platform Simulation Workbench */}
+      {/* 7. Interactive Platform Workbench */}
       <InteractiveWorkbench onOpenDemoModal={onOpenDemoModal} />
 
-      {/* 7. Industry Solutions Hub */}
-      <section className="py-20 lg:py-28 bg-[#F8FAFC] border-b border-slate-200/80">
+      {/* 8. Industry Solutions Hub */}
+      <section className="py-20 lg:py-28 bg-white border-b border-slate-200/80">
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-16 gap-6">
+          <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
-                <Building2 className="h-3.5 w-3.5 text-[#14532D]" />
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold mb-4 uppercase tracking-wider">
+                <Building2 className="h-3.5 w-3.5" />
                 <span>Tailored Vertical Configurations</span>
               </div>
-              <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
-                Engineered for High-Stakes Regulated Sectors
+              <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+                Engineered for{' '}
+                <span className="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                  High-Stakes
+                </span>{' '}
+                Regulated Sectors
               </h2>
-              <p className="mt-3 text-slate-700 text-sm sm:text-base leading-relaxed">
+              <p className="mt-4 text-slate-500 text-sm sm:text-base leading-relaxed">
                 Out-of-the-box regulatory frameworks and pre-configured workflows tailored for strict inspection requirements.
               </p>
             </div>
             <Link
               to="/solutions"
-              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-[#14532D] hover:bg-[#166534] text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all self-start lg:self-auto shrink-0 group"
+              className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded-full bg-slate-900 hover:bg-slate-800 text-white font-bold text-sm shadow-sm hover:shadow-md transition-all self-start lg:self-auto shrink-0 group"
             >
               <span>View All 8 Industry Modules</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -742,33 +762,28 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
               return (
                 <div
                   key={ind.id}
-                  className="p-8 rounded-2xl glass-card-green flex flex-col justify-between group"
+                  className="group relative rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col p-8"
                 >
-                  <div>
-                    <div className="flex items-center justify-between mb-6">
-                      <div className="h-12 w-12 rounded-2xl bg-white text-[#14532D] border border-slate-200 flex items-center justify-center shadow-xs group-hover:bg-[#14532D] group-hover:text-white transition-colors">
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <span className="px-3 py-1 rounded-full bg-white text-[#14532D] border border-[#14532D]/20 text-[11px] font-bold">
-                        {ind.badge}
-                      </span>
+                  <div className="flex items-center justify-between mb-6">
+                    <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${ind.color} text-white flex items-center justify-center shadow-sm`}>
+                      <Icon className="h-6 w-6" />
                     </div>
-
-                    <h3 className="text-xl font-bold text-slate-900 mb-1">{ind.name}</h3>
-                    <div className="text-[10px] font-mono font-bold text-slate-500 mb-4 uppercase tracking-wider">
-                      {ind.standards}
-                    </div>
-
-                    <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal mb-6">
-                      {ind.desc}
-                    </p>
+                    <span className={`px-3 py-1 rounded-full text-[11px] font-bold bg-gradient-to-r ${ind.color} text-white`}>
+                      {ind.badge}
+                    </span>
                   </div>
 
-                  <div className="pt-6 border-t border-slate-200/80 flex items-center justify-between">
-                    <span className="text-xs font-bold text-[#14532D] font-mono">{ind.stat}</span>
+                  <h3 className="text-xl font-bold text-slate-900 mb-1">{ind.name}</h3>
+                  <div className="text-[10px] font-mono font-bold text-slate-400 mb-4 uppercase tracking-wider">
+                    {ind.standards}
+                  </div>
+                  <p className="text-sm text-slate-500 leading-relaxed mb-6 flex-1">{ind.desc}</p>
+
+                  <div className="pt-5 border-t border-slate-100 flex items-center justify-between">
+                    <span className="text-xs font-bold text-slate-900 font-mono">{ind.stat}</span>
                     <Link
                       to="/solutions"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#14532D] hover:text-[#166534] group-hover:translate-x-1 transition-transform"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-600 group-hover:translate-x-1 transition-all"
                     >
                       <span>{ind.action}</span>
                       <ArrowRight className="h-3.5 w-3.5" />
@@ -781,84 +796,66 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
         </div>
       </section>
 
-      {/* 8. Quantified Business Impact & Measurable ROI */}
-      <section className="py-20 lg:py-28 bg-[#F8FAFC] border-b border-slate-200/80">
+      {/* 9. ROI Metrics */}
+      <section className="py-20 lg:py-28 bg-slate-50 border-b border-slate-200/80">
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
-          <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-[#14532D]/15 text-[#14532D] text-xs font-semibold mb-3">
-              <TrendingUp className="h-3.5 w-3.5 text-[#14532D]" />
+          <div className="text-center max-w-3xl mx-auto mb-14">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-bold mb-4 uppercase tracking-wider shadow-sm">
+              <TrendingUp className="h-3.5 w-3.5" />
               <span>Business Value</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-semibold text-slate-900 tracking-tight">
-              Measurable outcomes across the enterprise
+            <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
+              Measurable outcomes{' '}
+              <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+                across the enterprise
+              </span>
             </h2>
-            <p className="mt-3 text-base text-slate-700 leading-relaxed font-normal">
-              SmartiDP EDMS delivers value on four fronts at once: productivity, risk reduction, cost optimisation and better decisions. Typical improvement areas identified in business-case workshops include:
+            <p className="mt-4 text-base text-slate-500 leading-relaxed">
+              SmartiDP EDMS delivers value on four fronts at once: productivity, risk reduction, cost optimisation and better decisions.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm text-center flex flex-col justify-between">
-              <div>
-                <div className="text-4xl sm:text-5xl font-semibold text-[#14532D] font-mono mb-2">Faster</div>
-                <div className="text-sm font-bold text-slate-900 mb-2">Review & Approval Cycles</div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Document review & approval cycles through parallel electronic workflows.
-                </p>
+            {ROI_METRICS.map((m, i) => (
+              <div
+                key={i}
+                className="group relative rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-7 overflow-hidden flex flex-col text-center"
+              >
+                <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${m.color} text-white flex items-center justify-center mx-auto mb-4 shadow-sm`}>
+                  <m.icon className="h-6 w-6" />
+                </div>
+                <div className="text-5xl font-black text-slate-900 leading-none mb-2">{m.metric}</div>
+                <div className="text-sm font-bold text-slate-800 mb-2">{m.label}</div>
+                <p className="text-xs text-slate-500 leading-relaxed">{m.desc}</p>
               </div>
-            </div>
-
-            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm text-center flex flex-col justify-between">
-              <div>
-                <div className="text-4xl sm:text-5xl font-semibold text-[#14532D] font-mono mb-2">Less</div>
-                <div className="text-sm font-bold text-slate-900 mb-2">Manual Data Entry</div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Manual data entry via AI-powered capture and extraction.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm text-center flex flex-col justify-between">
-              <div>
-                <div className="text-4xl sm:text-5xl font-semibold text-[#14532D] font-mono mb-2">Lower</div>
-                <div className="text-sm font-bold text-slate-900 mb-2">Storage & Paper Costs</div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  Paper, printing, courier and physical storage costs.
-                </p>
-              </div>
-            </div>
-
-            <div className="p-8 rounded-3xl bg-white border border-slate-200 shadow-sm text-center flex flex-col justify-between">
-              <div>
-                <div className="text-4xl sm:text-5xl font-semibold text-[#14532D] font-mono mb-2">Ready</div>
-                <div className="text-sm font-bold text-slate-900 mb-2">Continuous Audit Readiness</div>
-                <p className="text-xs text-slate-600 leading-relaxed">
-                  For audits and inspections at any time, not just on audit day.
-                </p>
-              </div>
-            </div>
+            ))}
           </div>
 
-          <div className="mt-12 max-w-3xl mx-auto p-6 rounded-2xl bg-white border border-slate-200 text-center shadow-xs">
-            <span className="text-xs font-bold uppercase tracking-wider text-[#14532D] block mb-1">Business Case</span>
-            <p className="text-xs sm:text-sm text-slate-700 leading-relaxed">
-              Our consultants build a quantified, organisation-specific ROI model with you — covering labour savings, cycle-time reduction, storage and licence consolidation, and compliance risk avoidance.
-            </p>
-          </div>
-
-          <div className="mt-8 text-center">
+          {/* Business case callout */}
+          <div className="mt-12 max-w-4xl mx-auto rounded-3xl bg-slate-900 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              <div className="h-12 w-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/25 text-emerald-400 flex items-center justify-center shrink-0">
+                <BarChart3 className="h-6 w-6" />
+              </div>
+              <div>
+                <div className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-1">Business Case</div>
+                <p className="text-sm text-slate-300 leading-relaxed">
+                  Our consultants build a quantified, organisation-specific ROI model — covering labour savings, cycle-time reduction, storage consolidation, and compliance risk avoidance.
+                </p>
+              </div>
+            </div>
             <Link
               to="/benefits"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#14532D] hover:bg-[#166534] text-white font-bold text-xs sm:text-sm shadow-md shadow-emerald-950/20 hover:shadow-lg transition-all group"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-900/30 transition-all shrink-0 group"
             >
-              <span>Explore Stakeholder Business Value & ROI</span>
+              <span>Explore ROI & Business Value</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
         </div>
       </section>
 
-      {/* 9. Final Executive Closing Banner */}
+      {/* 10. Final CTA Banner */}
       <CtaBanner onOpenDemoModal={onOpenDemoModal} />
     </div>
   )

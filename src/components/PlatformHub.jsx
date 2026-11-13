@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import initialLogo from '../assets/initial.png'
 import {
   ScanText,
@@ -9,9 +9,7 @@ import {
   Archive,
   ShieldCheck,
   BarChart3,
-  ArrowRight,
-  Play,
-  Pause
+  ArrowRight
 } from 'lucide-react'
 
 const DOMAINS = [
@@ -85,8 +83,6 @@ const DOMAINS = [
 ]
 
 export default function PlatformHub({ onSelectDomain }) {
-  const [isRotating, setIsRotating] = useState(true)
-
   return (
     <section
       id="platform-overview"
@@ -123,25 +119,6 @@ export default function PlatformHub({ onSelectDomain }) {
                 <span>Explore All 8 Domains</span>
                 <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </a>
-
-              <button
-                type="button"
-                onClick={() => setIsRotating((prev) => !prev)}
-                aria-label={isRotating ? 'Pause orbit animation' : 'Play orbit animation'}
-                className="inline-flex items-center gap-2 px-4 py-3 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold border border-slate-200 transition-all cursor-pointer"
-              >
-                {isRotating ? (
-                  <>
-                    <Pause className="h-3.5 w-3.5 text-[#0284C7]" />
-                    <span>Pause Orbit</span>
-                  </>
-                ) : (
-                  <>
-                    <Play className="h-3.5 w-3.5 text-[#10B981]" />
-                    <span>Rotate Orbit</span>
-                  </>
-                )}
-              </button>
             </div>
           </div>
 
@@ -250,13 +227,7 @@ export default function PlatformHub({ onSelectDomain }) {
               </svg>
 
               {/* Rotating Orbit Container for the 8 Domain Nodes */}
-              <div
-                className={`absolute inset-0 w-full h-full pointer-events-none transition-transform duration-700 ${
-                  isRotating
-                    ? 'animate-[spin_55s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none'
-                    : ''
-                }`}
-              >
+              <div className="absolute inset-0 w-full h-full pointer-events-none transition-transform duration-700 animate-[spin_55s_linear_infinite] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
                 {DOMAINS.map((domain) => {
                   const Icon = domain.icon
                   return (
@@ -266,13 +237,7 @@ export default function PlatformHub({ onSelectDomain }) {
                       className="absolute -translate-x-1/2 -translate-y-1/2 pointer-events-auto"
                     >
                       {/* Counter-rotation to keep icons and labels upright at all times */}
-                      <div
-                        className={`${
-                          isRotating
-                            ? 'animate-[spin_55s_linear_infinite_reverse] group-hover:[animation-play-state:paused] motion-reduce:animate-none'
-                            : ''
-                        }`}
-                      >
+                      <div className="animate-[spin_55s_linear_infinite_reverse] group-hover:[animation-play-state:paused] motion-reduce:animate-none">
                         <button
                           type="button"
                           onClick={() => onSelectDomain?.(domain.id)}

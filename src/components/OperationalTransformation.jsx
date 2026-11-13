@@ -82,7 +82,11 @@ export default function OperationalTransformation() {
           })}
         </div>
 
-        {/* 3. The Transformation Matrix (Exact Layout from Client Image 1) */}
+        {/* =========================================================================
+            COMMENTED OUT: The Transformation Matrix ("The transformation" table)
+            ========================================================================= */}
+        {/* 3. The Transformation Matrix (Exact Layout from Client Image 1) - COMMENTED OUT */}
+        {false && (
         <div className="mb-16">
           <h3 className="text-2xl sm:text-3xl font-extrabold text-[#0B192C] tracking-tight mb-6">
             The transformation
@@ -151,6 +155,7 @@ export default function OperationalTransformation() {
             ))}
           </div>
         </div>
+        )}
 
         {/* 4. Quantified Business Outcomes (Brochure Page 5) */}
         <div className="pt-10 border-t border-slate-200/80">

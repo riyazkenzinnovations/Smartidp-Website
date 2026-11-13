@@ -6,12 +6,12 @@ import RequestDemoButton from './RequestDemoButton'
 
 const NAV_LINKS = [
   { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
   { name: 'Features', path: '/features' },
   { name: 'Solutions', path: '/solutions' },
-  { name: 'How It Works', path: '/how-it-works' },
   { name: 'Compliance', path: '/compliance' },
+  { name: 'How It Works', path: '/how-it-works' },
   { name: 'Benefits & ROI', path: '/benefits' },
+  { name: 'About', path: '/about' },
   { name: 'Contact', path: '/contact' }
 ]
 
