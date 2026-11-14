@@ -38,10 +38,10 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
   }, [prefersReducedMotion])
 
   return (
-    <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24 overflow-hidden bg-gradient-to-b from-slate-50/60 via-white to-white border-b border-slate-200/70">
-      {/* Background soft ambient green glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1720px] h-[500px] pointer-events-none overflow-hidden opacity-50">
-        <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-r from-emerald-100/40 via-green-100/30 to-teal-100/30 rounded-full blur-3xl" />
+    <section className="relative pt-10 pb-14 sm:pt-14 sm:pb-20 lg:pt-16 lg:pb-24 overflow-hidden bg-gradient-to-b from-[#F0FDF4]/50 via-white to-white border-b border-slate-200/80">
+      {/* Background soft ambient emerald glow */}
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-[1720px] h-[500px] pointer-events-none overflow-hidden opacity-60">
+        <div className="absolute -top-48 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-gradient-to-r from-emerald-100/40 via-teal-100/30 to-slate-100/20 rounded-full blur-3xl" />
       </div>
 
       <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
@@ -50,18 +50,8 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
           
           {/* Left Column: Clear Hierarchy */}
           <div className="lg:col-span-6 text-left space-y-6">
-            
-            {/* 1. Single Top Badge */}
-            <div>
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#F0FDF4] border border-emerald-900/15 text-[#14532D] text-xs font-semibold shadow-2xs">
-                <Sparkles className="h-3.5 w-3.5 text-[#14532D]" />
-                <span className="tracking-wider uppercase text-[11px] font-bold">
-                  {BROCHURE_META.companyName} · {BROCHURE_META.productName}
-                </span>
-              </div>
-            </div>
 
-            {/* 2. Headline with Forest Green Second Line */}
+            {/* Headline with Forest Green Second Line */}
             <h1 className="text-3xl sm:text-5xl lg:text-5xl xl:text-6xl font-semibold tracking-tight text-slate-900 leading-[1.14]">
               The intelligent platform for{' '}
               <span className="block text-[#14532D]">
@@ -115,16 +105,16 @@ export default function Hero({ onOpenDemoModal, onOpenVideoModal }) {
                 key={i}
                 className={`text-left ${
                   i === 0
-                    ? 'lg:pr-8'
+                    ? 'lg:pr-8 xl:pr-10'
                     : i === 3
-                    ? 'lg:pl-8 lg:border-l border-slate-200/80'
-                    : 'lg:px-8 lg:border-l border-slate-200/80'
+                    ? 'lg:pl-8 xl:pl-10 lg:border-l border-slate-200/80'
+                    : 'lg:px-8 xl:px-10 lg:border-l border-slate-200/80'
                 }`}
               >
-                <div className="font-mono text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-[#14532D]">
+                <div className="text-3xl sm:text-4xl lg:text-[44px] font-bold tracking-tight text-[#14532D] leading-tight">
                   {stat.value}
                 </div>
-                <p className="mt-2 text-xs sm:text-sm text-slate-700 font-medium leading-relaxed">
+                <p className="mt-2 text-xs sm:text-sm text-slate-600 font-normal leading-relaxed">
                   {stat.label}
                 </p>
               </div>

@@ -95,8 +95,7 @@ export default function PlatformHub({ onSelectDomain }) {
           
           {/* Left Column: Headline, Paragraph & CTA */}
           <div className="lg:col-span-5 space-y-6 text-left">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0284C7]">
-              <span className="w-5 h-0.5 bg-[#0284C7] inline-block" />
+            <div className="text-xs font-bold uppercase tracking-wider text-[#0067B8]">
               <span>Platform Overview</span>
             </div>
 

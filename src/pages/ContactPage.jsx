@@ -48,11 +48,23 @@ const TRUST_CHIPS = [
 
 const OFFICES = [
   {
-    badge: 'USA HEAD OFFICE',
+    badge: 'HEAD OFFICE',
+    city: 'Nepean, ON',
+    flag: '🇨🇦',
+    name: 'SmartIDP Group Inc.',
+    icon: MapPin,
+    address: '65 Aura Avenue, Nepean\nOntario K2J 6R9, Canada',
+    email: 'info@smartidp.ai',
+    phone: '+91 8065904278',
+    tel: '+918065904278',
+    color: 'from-emerald-600 to-teal-700'
+  },
+  {
+    badge: 'USA OFFICE',
     city: 'Austin, TX',
     flag: '🇺🇸',
     name: 'SmartIDP Group Inc.',
-    icon: MapPin,
+    icon: Building2,
     address: '5900 Balcones Drive STE 13688\nAustin, TX 78731, USA',
     email: 'info@smartidp.ai',
     phone: '+91 8065904278',
@@ -375,7 +387,7 @@ export default function ContactPage() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-6xl mx-auto">
             {OFFICES.map((office, i) => {
               const Icon = office.icon
               return (

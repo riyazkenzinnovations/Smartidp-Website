@@ -17,12 +17,12 @@ export default function GlobalOffices() {
             Our Global Offices
           </h2>
           <p className="text-sm sm:text-base text-slate-600 mt-3 leading-relaxed">
-            Headquartered in Austin, Texas with our primary Offshore Development Center (ODC) in Hyderabad, India.
+            Headquartered in Nepean, Ontario, Canada with regional operations in Austin, Texas and our primary Offshore Development Center (ODC) in Hyderabad, India.
           </p>
         </div>
 
-        {/* 2 Equal Cards (Austin HQ first, Hyderabad ODC second) */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* 3 Global Office Cards */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 sm:gap-8">
           {OFFICE_LOCATIONS.map((office) => (
             <div
               key={office.id}

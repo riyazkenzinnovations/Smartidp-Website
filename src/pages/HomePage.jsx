@@ -31,7 +31,9 @@ import {
   BarChart3,
   RotateCw,
   Clock,
-  DollarSign
+  DollarSign,
+  Plus,
+  Minus
 } from 'lucide-react'
 
 // 1. Interactive 8 Capability Domains
@@ -170,7 +172,7 @@ const INDUSTRY_HIGHLIGHTS = [
     desc: 'SOPs, batch records, validation documents, regulatory submissions, CMC, and training records with automated change control and validation accelerator.',
     stat: '100% Audit Trail',
     action: 'Explore Pharma Spec',
-    color: 'from-emerald-500 to-teal-600'
+    color: 'from-blue-600 to-indigo-600'
   },
   {
     id: 'meddev',
@@ -194,7 +196,7 @@ const INDUSTRY_HIGHLIGHTS = [
     desc: 'KYC/onboarding, loan files, policies, claims, board papers, and regulatory reporting with tamper-evident audit trails and automated PO matching.',
     stat: '3 Deployments',
     action: 'Explore BFSI Spec',
-    color: 'from-violet-500 to-purple-600'
+    color: 'from-indigo-600 to-blue-700'
   }
 ]
 
@@ -287,7 +289,7 @@ const ROI_METRICS = [
     label: 'Faster Approvals',
     desc: 'Review & approval cycles through parallel electronic workflows.',
     icon: Clock,
-    color: 'from-emerald-500 to-teal-600'
+    color: 'from-blue-600 to-sky-600'
   },
   {
     metric: '95%',
@@ -301,14 +303,38 @@ const ROI_METRICS = [
     label: 'Lower Storage Costs',
     desc: 'Paper, printing, courier and physical storage costs cut.',
     icon: DollarSign,
-    color: 'from-violet-500 to-purple-600'
+    color: 'from-indigo-600 to-blue-700'
   },
   {
     metric: '100%',
     label: 'Audit Ready',
     desc: 'Continuous inspection readiness — not just on audit day.',
     icon: ShieldCheck,
-    color: 'from-orange-500 to-amber-600'
+    color: 'from-blue-700 to-cyan-600'
+  }
+]
+
+// Frequently Asked Questions (from Client Design Theme)
+const HOME_FAQ_ITEMS = [
+  {
+    q: 'What is a document management system used for?',
+    a: 'A document management system (DMS / EDMS) captures, tracks, stores, and governs electronic documents and digital assets. It replaces paper-based records and disparate file shares with a single, searchable repository that manages the entire information lifecycle — from initial ingestion and OCR to versioning, collaboration, automated approval workflows, and compliant archival.'
+  },
+  {
+    q: 'What are the main benefits of using a DMS?',
+    a: 'Key benefits include up to 80% faster review and approval cycles through parallel electronic workflows, elimination of manual data entry via intelligent OCR and automated classification, strict revision control preventing concurrent editing conflicts, reduced physical storage and courier costs, and continuous audit-readiness with immutable cryptographic logs.'
+  },
+  {
+    q: 'How does a DMS differ from file storage or cloud sync?',
+    a: 'Unlike standard cloud storage (such as Google Drive or Dropbox), an enterprise DMS provides regulatory compliance controls, automated metadata tagging, granular lifecycle states (Draft, Under Review, Effective, Obsolete), mandatory check-in/out locks, BPMN 2.0 multi-tier approval routing, 21 CFR Part 11 digital signatures, and automated retention and disposition schedules complying with ISO 15489.'
+  },
+  {
+    q: 'Is a document management system secure?',
+    a: 'Yes. SmartiDP EDMS implements zero-trust security with AES-256 encryption at rest and TLS 1.3 in transit, role-based (RBAC) and attribute-based (ABAC) access permissions, SSO integration (SAML 2.0 / OIDC), multi-factor authentication, and append-only SHA-256 cryptographic audit trails capturing every view, edit, export, and signature.'
+  },
+  {
+    q: 'How do I choose the best document management system?',
+    a: 'Evaluate solutions based on regulatory compliance needs (FDA 21 CFR Part 11, GAMP 5, ISO 13485, SOC 2), scalability, deployment flexibility (SaaS, private cloud, or on-premise air-gapped), integration capabilities with existing ERP/LIMS systems, ease of user adoption, and whether the platform supports intelligent end-to-end automation rather than requiring piecemeal third-party add-ons.'
   }
 ]
 
@@ -326,6 +352,21 @@ const COMPLIANCE_STANDARDS = [
 
 export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
   const [activeCapability, setActiveCapability] = useState(0)
+  const [openFaqs, setOpenFaqs] = useState({ 0: true })
+
+  const toggleFaq = (idx) => {
+    setOpenFaqs(prev => ({ ...prev, [idx]: !prev[idx] }))
+  }
+
+  const expandAllFaqs = () => {
+    const all = {}
+    HOME_FAQ_ITEMS.forEach((_, i) => { all[i] = true })
+    setOpenFaqs(all)
+  }
+
+  const collapseAllFaqs = () => {
+    setOpenFaqs({})
+  }
 
   const handleSelectDomain = (domainId) => {
     const idx = CAPABILITIES_SHOWCASE.findIndex(c => c.id === domainId)
@@ -350,12 +391,12 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
       />
 
       {/* 2. Compliance Standards Bar */}
-      <section className="py-5 bg-slate-900 border-b border-slate-700/60">
+      <section className="py-5 bg-[#EEF5FC] border-b border-blue-100/80">
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
             <div className="flex items-center gap-2 shrink-0">
-              <ShieldCheck className="h-4 w-4 text-emerald-400" />
-              <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
+              <ShieldCheck className="h-4 w-4 text-[#0067B8]" />
+              <span className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                 Certified Controls For
               </span>
             </div>
@@ -363,7 +404,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
               {COMPLIANCE_STANDARDS.map((std, i) => (
                 <span
                   key={i}
-                  className="px-3 py-1 rounded-lg bg-white/8 border border-white/12 text-slate-300 text-[11px] font-bold"
+                  className="px-3.5 py-1.5 rounded-lg bg-white border border-blue-200/60 text-slate-700 text-[11px] font-bold shadow-2xs hover:border-[#0067B8]/40 transition-colors"
                 >
                   {std}
                 </span>
@@ -388,13 +429,13 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
           {/* Header */}
           <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-700 text-xs font-bold mb-4 uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#0067B8] text-xs font-bold mb-4 uppercase tracking-wider">
                 <Layers className="h-3.5 w-3.5" />
                 <span>8 Core Integrated Domains</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
                 An Integrated Suite for{' '}
-                <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-[#0067B8] via-[#0078D4] to-[#0284C7] bg-clip-text text-transparent">
                   Every Stage
                 </span>{' '}
                 of the Document Journey
@@ -423,7 +464,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                 onItemSelect={(item, index) => setActiveCapability(index)}
                 animation="pop"
                 theme="light"
-                accentColor="#14532D"
+                accentColor="#0067B8"
                 width="100%"
                 maxHeight={700}
                 gap={8}
@@ -439,8 +480,8 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                         <div
                           className={`h-10 w-10 rounded-xl flex items-center justify-center shrink-0 transition-colors ${
                             isSelected
-                              ? 'bg-slate-900 text-white shadow-sm'
-                              : 'bg-slate-100 text-slate-600 group-hover:bg-slate-900 group-hover:text-white'
+                              ? 'bg-[#0067B8] text-white shadow-sm'
+                              : 'bg-slate-100 text-slate-600 group-hover:bg-[#0067B8] group-hover:text-white'
                           }`}
                         >
                           <Icon className="h-5 w-5" />
@@ -454,7 +495,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                       </div>
                       <ChevronRight
                         className={`h-4 w-4 shrink-0 transition-transform ${
-                          isSelected ? 'text-emerald-600 translate-x-1' : 'text-slate-300 group-hover:text-slate-500'
+                          isSelected ? 'text-[#0067B8] translate-x-1' : 'text-slate-300 group-hover:text-slate-500'
                         }`}
                       />
                     </div>
@@ -466,14 +507,14 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
             {/* Right — live preview */}
             <div className="lg:col-span-7 rounded-3xl border border-slate-200 shadow-xl overflow-hidden bg-white">
               {/* Top meta bar */}
-              <div className="flex items-center justify-between gap-3 px-6 py-4 bg-slate-900 border-b border-slate-700">
+              <div className="flex items-center justify-between gap-3 px-6 py-4 bg-[#0B1A2F] border-b border-blue-950/60">
                 <div className="flex items-center gap-2">
-                  <span className="h-2.5 w-2.5 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="h-2.5 w-2.5 rounded-full bg-sky-400 animate-pulse" />
                   <span className="text-xs font-bold text-slate-300 uppercase tracking-wider">
                     {currentCap.title}
                   </span>
                 </div>
-                <span className="px-3 py-1 rounded-full bg-emerald-500/15 text-emerald-300 text-xs font-bold border border-emerald-400/25">
+                <span className="px-3 py-1 rounded-full bg-sky-500/15 text-sky-300 text-xs font-bold border border-sky-400/25">
                   {currentCap.badge}
                 </span>
               </div>
@@ -486,7 +527,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-1">
                     {currentCap.bullets.map((b, i) => (
                       <div key={i} className="p-3 rounded-xl bg-slate-50 border border-slate-200/80 flex items-start gap-2.5">
-                        <CheckCircle2 className="h-4 w-4 text-emerald-600 shrink-0 mt-0.5" />
+                        <CheckCircle2 className="h-4 w-4 text-[#0067B8] shrink-0 mt-0.5" />
                         <span className="text-xs text-slate-600 leading-snug">{b}</span>
                       </div>
                     ))}
@@ -494,26 +535,26 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                 </div>
 
                 {/* Simulation console */}
-                <div className="mt-5 rounded-2xl bg-slate-900 p-5">
+                <div className="mt-5 rounded-2xl bg-[#0B1A2F] p-5 border border-blue-950/60">
                   <div className="flex items-center justify-between mb-3 text-[11px] font-mono">
                     <div className="flex items-center gap-2 text-slate-400">
                       <span>Engine Simulation Console</span>
-                      <span className="text-slate-600 font-sans normal-case">(Illustrative)</span>
+                      <span className="text-slate-500 font-sans normal-case">(Illustrative)</span>
                     </div>
-                    <span className="text-emerald-400 font-bold">Status: Online · 320ms</span>
+                    <span className="text-sky-400 font-bold">Status: Online · 320ms</span>
                   </div>
 
                   {currentCap.id === 'capture' && (
                     <div className="space-y-2 font-mono text-xs">
                       <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
                         <span className="text-slate-300">Document Type:</span>
-                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">SOP · 99.9%</span>
+                        <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">SOP · 99.9%</span>
                       </div>
                       <div className="grid grid-cols-3 gap-2 text-[11px]">
                         {[['Document ID','SOP-QA-0142 (100%)'],['Effective Date','2026-03-14 (99.8%)'],['Validation','Auto Pass (100%)']].map(([k,v],i)=>(
                           <div key={i} className="p-2.5 bg-white/5 rounded-lg border border-white/8">
-                            <div className="text-slate-500">{k}</div>
-                            <div className="text-emerald-400 font-bold text-[10px]">{v}</div>
+                            <div className="text-slate-400">{k}</div>
+                            <div className="text-sky-400 font-bold text-[10px]">{v}</div>
                           </div>
                         ))}
                       </div>
@@ -523,11 +564,11 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                     <div className="space-y-2 font-mono text-xs">
                       <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
                         <span className="text-slate-300">Active Revision:</span>
-                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">v4.0 Effective (Locked)</span>
+                        <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">v4.0 Effective (Locked)</span>
                       </div>
                       <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
-                        <span className="text-slate-500">v3.2 → v4.0 Redline:</span>
-                        <span className="text-emerald-400 font-bold">+14 added · -2 withdrawn</span>
+                        <span className="text-slate-400">v3.2 → v4.0 Redline:</span>
+                        <span className="text-sky-400 font-bold">+14 added · -2 withdrawn</span>
                       </div>
                     </div>
                   )}
@@ -535,10 +576,10 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                     <div className="space-y-2 font-mono text-xs">
                       <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
                         <span className="text-slate-300">BPMN 2.0 Route:</span>
-                        <span className="text-emerald-400 font-bold">Author → Review (3/3) → QA</span>
+                        <span className="text-sky-400 font-bold">Author → Review (3/3) → QA</span>
                       </div>
-                      <div className="p-3 bg-emerald-500/10 rounded-xl border border-emerald-400/20 space-y-1">
-                        <div className="flex items-center justify-between font-bold text-emerald-400 text-[11px]">
+                      <div className="p-3 bg-sky-500/10 rounded-xl border border-sky-400/20 space-y-1">
+                        <div className="flex items-center justify-between font-bold text-sky-300 text-[11px]">
                           <span>✓ 21 CFR Part 11 Signature Validated</span>
                           <span>SHA-256 ✓</span>
                         </div>
@@ -552,12 +593,12 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                         <span className="text-slate-300">Active Co-Authors:</span>
                         <div className="flex gap-1.5">
                           <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 text-[11px] font-bold">Dr. E. Vance</span>
-                          <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 text-[11px] font-bold">M. Al-Mansoor</span>
+                          <span className="px-2 py-0.5 rounded bg-blue-500/20 text-blue-300 text-[11px] font-bold">M. Al-Mansoor</span>
                         </div>
                       </div>
                       <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
-                        <span className="text-slate-500">Sync Status:</span>
-                        <span className="text-emerald-400 font-bold">0 conflicts · TLS 1.3</span>
+                        <span className="text-slate-400">Sync Status:</span>
+                        <span className="text-sky-400 font-bold">0 conflicts · TLS 1.3</span>
                       </div>
                     </div>
                   )}
@@ -565,11 +606,11 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                     <div className="space-y-2 font-mono text-xs">
                       <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
                         <span className="text-slate-300">"SOP batch deviation autoclave"</span>
-                        <span className="px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 font-bold">18 results · 180ms</span>
+                        <span className="px-2 py-0.5 rounded bg-sky-500/20 text-sky-300 font-bold">18 results · 180ms</span>
                       </div>
                       <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
-                        <span className="text-slate-500">Security Gate:</span>
-                        <span className="text-emerald-400 font-bold">RBAC Trimmed (3 redacted)</span>
+                        <span className="text-slate-400">Security Gate:</span>
+                        <span className="text-sky-400 font-bold">RBAC Trimmed (3 redacted)</span>
                       </div>
                     </div>
                   )}
@@ -580,8 +621,8 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                         <span className="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 font-bold">7 Yrs · 2033-04-01</span>
                       </div>
                       <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
-                        <span className="text-slate-500">Litigation Hold:</span>
-                        <span className="text-emerald-400 font-bold">Inactive (Enforced)</span>
+                        <span className="text-slate-400">Litigation Hold:</span>
+                        <span className="text-sky-400 font-bold">Inactive (Enforced)</span>
                       </div>
                     </div>
                   )}
@@ -589,11 +630,11 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                     <div className="space-y-2 font-mono text-xs">
                       <div className="p-3 bg-white/8 rounded-xl border border-white/10 flex items-center justify-between">
                         <span className="text-slate-300">Encryption:</span>
-                        <span className="text-emerald-400 font-bold">AES-256-GCM / TLS 1.3</span>
+                        <span className="text-sky-400 font-bold">AES-256-GCM / TLS 1.3</span>
                       </div>
                       <div className="p-3 bg-white/5 rounded-xl border border-white/8 flex items-center justify-between text-[11px]">
-                        <span className="text-slate-500">Audit Hash Chain:</span>
-                        <span className="text-emerald-400 font-bold">SHA-256 Verified ✓</span>
+                        <span className="text-slate-400">Audit Hash Chain:</span>
+                        <span className="text-sky-400 font-bold">SHA-256 Verified ✓</span>
                       </div>
                     </div>
                   )}
@@ -601,18 +642,18 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                     <div className="grid grid-cols-3 gap-2 font-mono text-[11px]">
                       {[['Avg Approval','4.2 hrs (-68%)'],['Active Workflows','142 In Progress'],['SLA Adherence','99.4% On-Time']].map(([k,v],i)=>(
                         <div key={i} className="p-2.5 bg-white/5 rounded-lg border border-white/8">
-                          <div className="text-slate-500">{k}</div>
-                          <div className="text-emerald-400 font-bold">{v}</div>
+                          <div className="text-slate-400">{k}</div>
+                          <div className="text-sky-400 font-bold">{v}</div>
                         </div>
                       ))}
                     </div>
                   )}
 
                   <div className="mt-4 pt-3 border-t border-white/10 flex items-center justify-between">
-                    <span className="text-[11px] text-slate-500">Pre-configured validation test scripts included.</span>
+                    <span className="text-[11px] text-slate-400">Pre-configured validation test scripts included.</span>
                     <button
                       onClick={onOpenDemoModal}
-                      className="text-xs font-bold text-emerald-400 hover:text-emerald-300 flex items-center gap-1 cursor-pointer transition"
+                      className="text-xs font-bold text-sky-400 hover:text-sky-300 flex items-center gap-1 cursor-pointer transition"
                     >
                       <span>Live Platform Test</span>
                       <ArrowRight className="h-3 w-3" />
@@ -625,26 +666,26 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
         </div>
       </section>
 
-      {/* 6. 6-Stage Pipeline — dark section */}
-      <section className="py-20 lg:py-28 bg-slate-900 border-b border-slate-700/60 relative overflow-hidden">
-        {/* glow */}
-        <div className="absolute top-0 left-1/4 w-96 h-96 bg-emerald-500/8 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-teal-500/6 rounded-full blur-3xl" />
+      {/* 6. 6-Stage Pipeline — Soft Ice-Blue Theme from Client Design */}
+      <section className="py-20 lg:py-28 bg-[#EDF5FD] border-b border-blue-100/80 relative overflow-hidden">
+        {/* Soft Ambient Glows */}
+        <div className="absolute top-0 left-1/4 w-96 h-96 bg-blue-300/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-sky-200/25 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-300 text-xs font-bold mb-4 uppercase tracking-widest">
+            <div className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-blue-100/80 border border-blue-200 text-[#0067B8] text-xs font-bold mb-4 uppercase tracking-widest">
               <Workflow className="h-3.5 w-3.5" />
               <span>End-to-End Processing Flow</span>
             </div>
-            <h2 className="text-3xl sm:text-5xl font-bold text-white tracking-tight">
+            <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
               The{' '}
-              <span className="bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0067B8] via-[#0078D4] to-[#0284C7] bg-clip-text text-transparent">
                 6-Stage
               </span>{' '}
               Intelligent Document Pipeline
             </h2>
-            <p className="mt-4 text-base text-slate-400 leading-relaxed">
+            <p className="mt-4 text-base text-slate-600 leading-relaxed">
               From the moment an unstructured document arrives until its permanent defensible disposition, every step is automated, audited, and secured.
             </p>
           </div>
@@ -659,50 +700,50 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                 aria-label={`${p.step} ${p.title}`}
               >
                 <div className="flip-card-inner">
-                  {/* Front — white card */}
-                  <div className="flip-card-front p-5 bg-white border border-slate-200 rounded-2xl shadow-sm flex flex-col justify-between">
+                  {/* Front — white card matching client photo */}
+                  <div className="flip-card-front p-5 bg-white border border-blue-100/90 rounded-2xl shadow-sm hover:shadow-md flex flex-col justify-between transition-all">
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <div className="h-9 w-9 rounded-xl bg-slate-100 text-slate-700 font-mono font-bold text-sm flex items-center justify-center border border-slate-200 group-hover:bg-slate-900 group-hover:text-white transition-all">
+                        <div className="h-9 w-9 rounded-xl bg-blue-50 text-[#0067B8] font-mono font-bold text-sm flex items-center justify-center border border-blue-200/60 group-hover:bg-[#0067B8] group-hover:text-white transition-all">
                           {p.step}
                         </div>
-                        <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 border border-slate-200">
+                        <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200/60">
                           {p.badge}
                         </span>
                       </div>
-                      <h3 className="text-sm font-bold text-slate-900 mb-1.5 leading-snug group-hover:text-emerald-700 transition-colors">
+                      <h3 className="text-sm font-bold text-slate-900 mb-1.5 leading-snug group-hover:text-[#0067B8] transition-colors">
                         {p.title}
                       </h3>
-                      <p className="text-xs text-slate-500 leading-relaxed">{p.desc}</p>
+                      <p className="text-xs text-slate-600 leading-relaxed">{p.desc}</p>
                     </div>
                     <div className="pt-2.5 border-t border-slate-100 flex items-center justify-between text-[10px] font-mono text-slate-400">
                       <span>Stage {p.step}</span>
-                      <span className="font-bold text-emerald-600">{p.stat}</span>
+                      <span className="font-bold text-[#0067B8]">{p.stat}</span>
                     </div>
                   </div>
 
-                  {/* Back — dark green card */}
-                  <div className="flip-card-back p-5 bg-gradient-to-br from-[#064E3B] via-[#14532D] to-[#0F766E] rounded-2xl text-white flex flex-col justify-between shadow-xl border border-emerald-400/40">
+                  {/* Back — deep enterprise navy & royal blue card */}
+                  <div className="flip-card-back p-5 bg-gradient-to-br from-[#0B1A2F] via-[#004E8C] to-[#0067B8] rounded-2xl text-white flex flex-col justify-between shadow-xl border border-blue-400/40">
                     <div>
                       <div className="flex items-center justify-between pb-2 border-b border-white/20 mb-3">
-                        <span className="font-mono text-xs font-bold text-emerald-200">STAGE {p.step}</span>
-                        <span className="text-[9px] uppercase font-bold text-emerald-100 tracking-wider bg-white/10 px-2 py-0.5 rounded-full">
+                        <span className="font-mono text-xs font-bold text-sky-200">STAGE {p.step}</span>
+                        <span className="text-[9px] uppercase font-bold text-white tracking-wider bg-white/10 px-2 py-0.5 rounded-full">
                           {p.badge}
                         </span>
                       </div>
                       <h4 className="text-xs font-bold text-white mb-3 leading-tight">{p.title} Specs</h4>
-                      <ul className="space-y-2 text-[11px] text-white/90 leading-tight">
+                      <ul className="space-y-2 text-[11px] text-white/95 leading-tight">
                         {p.details.map((d, di) => (
                           <li key={di} className="flex items-start gap-1.5">
-                            <CheckCircle2 className="h-3 w-3 text-emerald-300 shrink-0 mt-0.5" />
+                            <CheckCircle2 className="h-3 w-3 text-sky-300 shrink-0 mt-0.5" />
                             <span>{d}</span>
                           </li>
                         ))}
                       </ul>
                     </div>
-                    <div className="pt-2.5 border-t border-white/20 flex items-center justify-between text-[10px] text-emerald-200 font-mono">
+                    <div className="pt-2.5 border-t border-white/20 flex items-center justify-between text-[10px] text-sky-200 font-mono">
                       <span>{p.stat}</span>
-                      <span className="text-white/70 font-sans">SmartiDP EDMS</span>
+                      <span className="text-white/80 font-sans">SmartiDP EDMS</span>
                     </div>
                   </div>
                 </div>
@@ -710,12 +751,10 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
             ))}
           </div>
 
-
-
           <div className="mt-10 text-center">
             <Link
               to="/how-it-works"
-              className="inline-flex items-center gap-2 text-sm font-semibold text-emerald-400 hover:text-emerald-300 transition group"
+              className="inline-flex items-center gap-2 text-sm font-semibold text-[#0067B8] hover:text-[#005A9E] transition group"
             >
               <span>Explore Detailed Stage-by-Stage Architecture Specifications</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -732,13 +771,13 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 gap-6">
             <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-slate-100 border border-slate-200 text-slate-700 text-xs font-bold mb-4 uppercase tracking-wider">
+              <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-[#0067B8] text-xs font-bold mb-4 uppercase tracking-wider">
                 <Building2 className="h-3.5 w-3.5" />
                 <span>Tailored Vertical Configurations</span>
               </div>
               <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
                 Engineered for{' '}
-                <span className="bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-slate-900 to-[#0067B8] bg-clip-text text-transparent">
                   High-Stakes
                 </span>{' '}
                 Regulated Sectors
@@ -762,7 +801,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
               return (
                 <div
                   key={ind.id}
-                  className="group relative rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col p-8"
+                  className="group relative rounded-3xl border border-blue-100/80 bg-white shadow-sm hover:shadow-xl hover:border-blue-300 hover:-translate-y-1 transition-all duration-300 overflow-hidden flex flex-col p-8"
                 >
                   <div className="flex items-center justify-between mb-6">
                     <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${ind.color} text-white flex items-center justify-center shadow-sm`}>
@@ -783,7 +822,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
                     <span className="text-xs font-bold text-slate-900 font-mono">{ind.stat}</span>
                     <Link
                       to="/solutions"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-600 group-hover:translate-x-1 transition-all"
+                      className="inline-flex items-center gap-1.5 text-xs font-bold text-[#0067B8] hover:text-[#005A9E] group-hover:translate-x-1 transition-all"
                     >
                       <span>{ind.action}</span>
                       <ArrowRight className="h-3.5 w-3.5" />
@@ -796,21 +835,21 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
         </div>
       </section>
 
-      {/* 9. ROI Metrics */}
-      <section className="py-20 lg:py-28 bg-slate-50 border-b border-slate-200/80">
+      {/* 9. ROI Metrics — Soft Ice-Blue Theme from Client Design */}
+      <section className="py-20 lg:py-28 bg-[#EDF5FD] border-b border-blue-100/80">
         <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-700 text-xs font-bold mb-4 uppercase tracking-wider shadow-sm">
+            <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-blue-200/60 text-[#0067B8] text-xs font-bold mb-4 uppercase tracking-wider shadow-2xs">
               <TrendingUp className="h-3.5 w-3.5" />
               <span>Business Value</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight">
               Measurable outcomes{' '}
-              <span className="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">
+              <span className="bg-gradient-to-r from-[#0067B8] via-[#0078D4] to-[#0284C7] bg-clip-text text-transparent">
                 across the enterprise
               </span>
             </h2>
-            <p className="mt-4 text-base text-slate-500 leading-relaxed">
+            <p className="mt-4 text-base text-slate-600 leading-relaxed">
               SmartiDP EDMS delivers value on four fronts at once: productivity, risk reduction, cost optimisation and better decisions.
             </p>
           </div>
@@ -819,7 +858,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
             {ROI_METRICS.map((m, i) => (
               <div
                 key={i}
-                className="group relative rounded-3xl border border-slate-200 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-7 overflow-hidden flex flex-col text-center"
+                className="group relative rounded-3xl border border-blue-100/90 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 p-7 overflow-hidden flex flex-col text-center"
               >
                 <div className={`h-12 w-12 rounded-2xl bg-gradient-to-br ${m.color} text-white flex items-center justify-center mx-auto mb-4 shadow-sm`}>
                   <m.icon className="h-6 w-6" />
@@ -832,13 +871,13 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
           </div>
 
           {/* Business case callout */}
-          <div className="mt-12 max-w-4xl mx-auto rounded-3xl bg-slate-900 p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+          <div className="mt-12 max-w-4xl mx-auto rounded-3xl bg-[#0B1A2F] border border-blue-900/60 p-8 flex flex-col md:flex-row items-center justify-between gap-6 shadow-xl">
             <div className="flex items-start gap-4">
-              <div className="h-12 w-12 rounded-2xl bg-emerald-500/15 border border-emerald-400/25 text-emerald-400 flex items-center justify-center shrink-0">
+              <div className="h-12 w-12 rounded-2xl bg-sky-500/15 border border-sky-400/25 text-sky-400 flex items-center justify-center shrink-0">
                 <BarChart3 className="h-6 w-6" />
               </div>
               <div>
-                <div className="text-xs font-bold uppercase tracking-widest text-emerald-400 mb-1">Business Case</div>
+                <div className="text-xs font-bold uppercase tracking-widest text-sky-400 mb-1">Business Case</div>
                 <p className="text-sm text-slate-300 leading-relaxed">
                   Our consultants build a quantified, organisation-specific ROI model — covering labour savings, cycle-time reduction, storage consolidation, and compliance risk avoidance.
                 </p>
@@ -846,7 +885,7 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
             </div>
             <Link
               to="/benefits"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm shadow-lg shadow-emerald-900/30 transition-all shrink-0 group"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#0067B8] hover:bg-[#005A9E] text-white font-bold text-sm shadow-lg shadow-blue-950/30 transition-all shrink-0 group"
             >
               <span>Explore ROI & Business Value</span>
               <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
@@ -855,7 +894,67 @@ export default function HomePage({ onOpenDemoModal, onOpenVideoModal }) {
         </div>
       </section>
 
-      {/* 10. Final CTA Banner */}
+      {/* 10. Frequently Asked Questions (from Client Design Theme) */}
+      <section className="py-20 lg:py-28 bg-white border-b border-slate-200">
+        <div className="w-full max-w-[1720px] mx-auto px-4 sm:px-8 lg:px-12 xl:px-16">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-10 pb-6 border-b border-slate-200">
+            <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-900 tracking-tight">
+              Frequently asked questions
+            </h2>
+            <div className="flex items-center gap-2 self-start sm:self-auto">
+              <button
+                type="button"
+                onClick={collapseAllFaqs}
+                className="px-4 py-1.5 text-xs font-semibold rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+              >
+                Collapse all
+              </button>
+              <button
+                type="button"
+                onClick={expandAllFaqs}
+                className="px-4 py-1.5 text-xs font-semibold rounded-full border border-slate-300 text-slate-700 hover:bg-slate-100 transition-colors cursor-pointer"
+              >
+                Expand all
+              </button>
+            </div>
+          </div>
+
+          <div className="divide-y divide-slate-200">
+            {HOME_FAQ_ITEMS.map((item, idx) => {
+              const isOpen = !!openFaqs[idx]
+              return (
+                <div key={idx} className="py-6 transition-colors">
+                  <button
+                    type="button"
+                    onClick={() => toggleFaq(idx)}
+                    className="w-full flex items-center justify-between text-left gap-4 group cursor-pointer focus:outline-none"
+                    aria-expanded={isOpen}
+                  >
+                    <span className="text-lg sm:text-xl font-bold text-slate-900 group-hover:text-[#0067B8] transition-colors leading-snug">
+                      {item.q}
+                    </span>
+                    <div className={`h-8 w-8 rounded-full flex items-center justify-center shrink-0 border transition-all ${
+                      isOpen
+                        ? 'bg-[#0067B8] text-white border-[#0067B8]'
+                        : 'bg-white text-slate-900 border-slate-300 group-hover:border-[#0067B8] group-hover:text-[#0067B8]'
+                    }`}>
+                      {isOpen ? <Minus className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                    </div>
+                  </button>
+
+                  {isOpen && (
+                    <div className="mt-4 pr-12 text-sm sm:text-base text-slate-600 leading-relaxed font-normal animate-fadeIn">
+                      <p>{item.a}</p>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* 11. Final CTA Banner */}
       <CtaBanner onOpenDemoModal={onOpenDemoModal} />
     </div>
   )

@@ -7,6 +7,7 @@ import RequestDemoButton from './RequestDemoButton'
 const NAV_LINKS = [
   { name: 'Home', path: '/' },
   { name: 'Features', path: '/features' },
+  { name: 'Content Model', path: '/content-model' },
   { name: 'Solutions', path: '/solutions' },
   { name: 'Compliance', path: '/compliance' },
   { name: 'How It Works', path: '/how-it-works' },

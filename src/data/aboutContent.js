@@ -129,12 +129,27 @@ export const IMPLEMENTATION_STEPS = [
 // Note: Legal entity is Kenz Innovations (proprietor of SmartiDP EDMS per PDF pages 1 & 20)
 export const OFFICE_LOCATIONS = [
   {
-    id: 'austin',
+    id: 'nepean',
     isHeadquarters: true,
     badge: 'GLOBAL HEADQUARTERS',
-    locationName: 'Austin, Texas, USA',
-    companyName: 'Kenz Innovations',
+    locationName: 'Nepean, Ontario, Canada',
+    companyName: 'SmartIDP Group Inc.',
     subTitle: 'Corporate & Global Operations Headquarters',
+    addressLines: [
+      '65 Aura Avenue',
+      'Nepean, Ontario K2J 6R9, Canada'
+    ],
+    email: 'info@smartidp.ai',
+    phone: '+91 8065904278',
+    mapUrl: 'https://www.google.com/maps/search/?api=1&query=65+Aura+Avenue+Nepean+ON+Canada'
+  },
+  {
+    id: 'austin',
+    isHeadquarters: false,
+    badge: 'USA OPERATIONS HUB',
+    locationName: 'Austin, Texas, USA',
+    companyName: 'SmartIDP Group Inc.',
+    subTitle: 'US Enterprise & Commercial Operations',
     addressLines: [
       '5900 Balcones Drive STE 13688',
       'Austin, TX 78731, USA'

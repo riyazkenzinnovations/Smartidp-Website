@@ -167,13 +167,11 @@ const SMARTIDP_STEPS = [
 
 export default function CoordinationSteps() {
   const [activeStep, setActiveStep] = useState(0)
-  const [selectedOption, setSelectedOption] = useState(0)
 
   const current = SMARTIDP_STEPS[activeStep]
 
   const handleStepChange = (idx) => {
     setActiveStep(idx)
-    setSelectedOption(0)
   }
 
   return (
@@ -185,10 +183,6 @@ export default function CoordinationSteps() {
         
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-14 lg:mb-16">
-          <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-white border border-slate-200 text-slate-800 text-xs font-semibold shadow-2xs mb-4">
-            <Sparkles className="h-3.5 w-3.5 text-[#14532D]" />
-            <span className="uppercase tracking-wider text-[11px] font-bold">HOW SMARTIDP WORKS</span>
-          </div>
           <h2 className="text-3xl sm:text-5xl font-bold text-slate-900 tracking-tight leading-tight">
             From Ingestion to Defensible Archival
           </h2>
@@ -245,20 +239,11 @@ export default function CoordinationSteps() {
               )
             })}
 
-            {/* Quick Assurance Pill */}
-            <div className="hidden lg:block p-4 rounded-2xl bg-gradient-to-br from-emerald-50 to-teal-50 border border-emerald-100/80 text-xs text-emerald-950 space-y-1">
-              <div className="flex items-center gap-1.5 font-bold text-[#14532D]">
-                <ShieldCheck className="h-4 w-4" />
-                <span>GxP & ISO 15489 Governed</span>
-              </div>
-              <p className="text-[11px] text-slate-600 leading-relaxed font-normal">
-                Cryptographic ALCOA+ audit trails and compliance gates enforce every document state transition.
-              </p>
-            </div>
+           
           </div>
 
           {/* 2. CENTER COLUMN: Visual Interactive Canvas (6 cols - Spacious & Perfectly Centered) */}
-          <div className="lg:col-span-6 bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-900/5 p-5 sm:p-7 min-h-[500px] flex flex-col justify-between relative overflow-hidden transition-all duration-300">
+          <div className="lg:col-span-6 bg-white rounded-3xl border border-slate-200 shadow-xl shadow-slate-900/5 p-6 sm:p-10 min-h-[500px] flex items-center justify-center relative overflow-hidden transition-all duration-300">
             
             {/* Background MagicRings Interactive WebGL Field */}
             <div className="absolute inset-0 pointer-events-none z-0">
@@ -270,7 +255,7 @@ export default function CoordinationSteps() {
                 speed={current.rings.speed}
                 lineThickness={current.rings.lineThickness}
                 glow={current.rings.glow}
-                baseRadius={0.24}
+                baseRadius={0.28}
                 radiusStep={0.08}
                 expansion={0.08}
                 taper={1.35}
@@ -279,191 +264,36 @@ export default function CoordinationSteps() {
                 tilt={-4}
                 dispersion={0.06}
                 grain={0}
-                opacity={0.88}
+                opacity={0.9}
                 followMouse={true}
-                mouseInfluence={0.15}
-                hoverScale={1.12}
+                mouseInfluence={0.18}
+                hoverScale={1.15}
                 hoverIntensity={1}
-                parallax={0.04}
+                parallax={0.05}
                 clickBurst={true}
                 intro={true}
                 theme="light"
               />
             </div>
 
-            {/* SVG Connecting Flow Lines across the 3 sections */}
-            <svg
-              className="hidden sm:block absolute inset-0 w-full h-full pointer-events-none z-0"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              {/* Curve from left prompt bubble down to center agent */}
-              <path
-                d="M 180 120 C 230 140, 240 180, 260 210"
-                fill="none"
-                stroke="#cbd5e1"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
+            {/* Central smartIDP.gif Hero Banner Card - Clean & Prominent */}
+            <div className="relative z-10 w-full max-w-[380px] sm:max-w-[440px] group cursor-pointer">
+              {/* Glowing Ambient Backdrop Aura matched to active step */}
+              <div
+                className="absolute -inset-1.5 rounded-3xl blur-2xl opacity-70 group-hover:opacity-100 transition duration-500"
+                style={{
+                  background: `linear-gradient(to right, ${current.rings.color}40, ${current.rings.colorTwo}40)`
+                }}
               />
-              {/* Curve from center agent over to right engine selection card */}
-              <path
-                d="M 370 240 C 400 230, 410 180, 440 170"
-                fill="none"
-                stroke="#cbd5e1"
-                strokeWidth="1.5"
-                strokeDasharray="4 4"
-              />
-            </svg>
-
-            {/* 3-Column Illustrated Stage: Left (User) | Middle (smartIDP.gif) | Right (Engine Card) */}
-            <div className="relative z-10 grid grid-cols-1 sm:grid-cols-12 gap-3 sm:gap-4 items-center h-full my-auto">
               
-              {/* === LEFT COLUMN: User Prompt & Workstation (3 cols) === */}
-              <div className="sm:col-span-3 flex flex-col justify-between h-full space-y-3">
-                {/* User Prompt Speech Bubble */}
-                <div className="relative p-2.5 rounded-2xl rounded-bl-xs bg-[#F4F5F7] border border-slate-200 shadow-2xs text-slate-700 leading-relaxed">
-                  <div className="flex items-start gap-1.5">
-                    <div className="h-4 w-4 rounded-full bg-slate-200 text-slate-700 flex items-center justify-center shrink-0 mt-0.5">
-                      <MessageSquare className="h-2.5 w-2.5" />
-                    </div>
-                    <p className="font-medium text-slate-800 text-[10px] leading-snug">
-                      {current.userPrompt}
-                    </p>
-                  </div>
-                  {/* Bubble Tail */}
-                  <div className="absolute -bottom-1.5 left-4 w-2 h-2 bg-[#F4F5F7] border-b border-r border-slate-200 rotate-45 transform" />
-                </div>
-
-                {/* Workstation / Laptop */}
-                <div className="pt-1">
-                  <div className="p-2.5 rounded-xl bg-slate-900 border border-slate-700 shadow-lg space-y-1.5">
-                    <div className="flex items-center justify-between pb-1 border-b border-slate-800">
-                      <div className="flex gap-1">
-                        <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
-                        <span className="h-1.5 w-1.5 rounded-full bg-amber-400" />
-                        <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-                      </div>
-                      <span className="text-[7.5px] font-mono text-slate-400">SmartiDP EDMS</span>
-                    </div>
-
-                    <div className="p-1.5 rounded-lg bg-slate-800/90 text-[8.5px] text-slate-300 font-mono space-y-0.5">
-                      <div className="text-emerald-400 font-bold truncate">Stage {current.id}: {current.category}</div>
-                      <div className="text-[7.5px] text-slate-400 truncate">SOP-QA-0142_v4.0.pdf</div>
-                    </div>
-
-                    <div className="w-full py-1.5 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-center font-bold text-[8.5px] shadow-sm flex items-center justify-center gap-1 cursor-pointer transition">
-                      <span>Send Instruction</span>
-                      <ArrowRight className="h-2 w-2" />
-                    </div>
-                  </div>
-
-                  {/* Desk surface accessories */}
-                  <div className="flex items-center gap-1.5 mt-2 px-1">
-                    <div className="h-4 w-4 rounded bg-slate-900 text-white font-mono font-bold text-[8px] flex items-center justify-center shadow-xs border border-slate-700">
-                      S
-                    </div>
-                    <div className="h-2.5 w-4 rounded bg-slate-200 border border-slate-300" />
-                    <div className="h-1 flex-1 bg-slate-200 rounded-full" />
-                  </div>
-                </div>
+              {/* Card wrapping smartIDP.gif */}
+              <div className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-2xl shadow-slate-900/10 flex items-center justify-center p-5 sm:p-7 overflow-hidden hover:scale-105 transition-transform duration-300">
+                <img
+                  src={smartIdpGif}
+                  alt="SmartIDP Intelligent Document Processing"
+                  className="w-full h-full object-contain filter drop-shadow-sm select-none"
+                />
               </div>
-
-              {/* === MIDDLE COLUMN: The Animated smartIDP.gif in True Center (6 cols - Big & Prominent) === */}
-              <div className="sm:col-span-6 flex flex-col items-center justify-center text-center space-y-3 py-1">
-                {/* Agent Response Speech Bubble directly above smartIDP.gif */}
-                <div className="relative w-full max-w-[280px] p-2.5 rounded-2xl rounded-br-xs bg-[#F0FDF4]/95 backdrop-blur-xs border border-[#14532D]/20 shadow-2xs text-[10.5px] text-emerald-950 font-medium leading-snug">
-                  <div className="flex items-start gap-1.5">
-                    <span className="text-sm leading-none shrink-0">🤖</span>
-                    <p className="text-left font-semibold text-emerald-900 leading-tight">
-                      {current.agentReply}
-                    </p>
-                  </div>
-                  {/* Bubble Tail pointing directly down to the gif */}
-                  <div className="absolute -bottom-1.5 left-1/2 -translate-x-1/2 w-2.5 h-2.5 bg-[#F0FDF4] border-b border-r border-[#14532D]/20 rotate-45 transform" />
-                </div>
-
-                {/* smartIDP.gif Hero Banner Card - 16:9 Landscape Showcase */}
-                <div className="relative group w-full max-w-[320px] sm:max-w-[360px] my-1">
-                  {/* Glowing Ambient Backdrop Aura matched to active step */}
-                  <div
-                    className="absolute -inset-1 rounded-3xl blur-xl opacity-75 group-hover:opacity-100 transition duration-500"
-                    style={{
-                      background: `linear-gradient(to right, ${current.rings.color}33, ${current.rings.colorTwo}33)`
-                    }}
-                  />
-                  
-                  {/* Card wrapping smartIDP.gif */}
-                  <div className="relative w-full aspect-[16/9] rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-md border border-slate-200/90 shadow-xl shadow-slate-900/5 flex items-center justify-center p-3 sm:p-5 overflow-hidden hover:scale-105 transition-transform duration-300">
-                    <img
-                      src={smartIdpGif}
-                      alt="SmartIDP Intelligent Document Processing"
-                      className="w-full h-full object-contain filter drop-shadow-sm"
-                    />
-                  </div>
-                </div>
-
-                {/* Status Indicator Badge */}
-                <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-slate-900/5 backdrop-blur-xs border border-slate-200/80 text-slate-800 font-mono text-[9.5px] font-bold shadow-2xs">
-                  <span
-                    className="h-2 w-2 rounded-full animate-pulse"
-                    style={{ backgroundColor: current.rings.color }}
-                  />
-                  <span>SmartIDP Core Engine</span>
-                </div>
-              </div>
-
-              {/* === RIGHT COLUMN: Choose Your Engine / Model Card (3 cols) === */}
-              <div className="sm:col-span-3 flex flex-col justify-center">
-                <div className="p-2.5 sm:p-3 rounded-2xl bg-white border border-slate-200 shadow-md space-y-1.5">
-                  <div className="flex items-center justify-between pb-1 border-b border-slate-100">
-                    <span className="text-[9px] font-bold uppercase tracking-wider text-slate-700 font-mono truncate">
-                      {current.cardTitle}
-                    </span>
-                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 shrink-0" />
-                  </div>
-
-                  {/* Radio option items */}
-                  <div className="space-y-1.5">
-                    {current.cardOptions.map((opt, oIdx) => {
-                      const isSelected = selectedOption === oIdx
-                      return (
-                        <button
-                          key={opt.name}
-                          onClick={() => setSelectedOption(oIdx)}
-                          className={`w-full p-1.5 rounded-xl border text-left transition-all flex items-center justify-between cursor-pointer ${
-                            isSelected
-                              ? 'bg-slate-950 text-white border-slate-950 shadow-xs'
-                              : 'bg-slate-50/70 hover:bg-slate-100/80 border-slate-200 text-slate-700'
-                          }`}
-                        >
-                          <div className="min-w-0 pr-1">
-                            <div className="text-[9px] font-bold truncate leading-tight">
-                              {opt.name}
-                            </div>
-                            <div className={`text-[7.5px] font-mono truncate ${isSelected ? 'text-slate-300' : 'text-slate-400'}`}>
-                              {opt.note}
-                            </div>
-                          </div>
-
-                          <div
-                            className={`h-3.5 w-3.5 rounded-full flex items-center justify-center shrink-0 border ${
-                              isSelected
-                                ? 'bg-white text-slate-950 border-white'
-                                : 'border-slate-300 bg-white'
-                            }`}
-                          >
-                            {isSelected && <Check className="h-2 w-2 stroke-[3]" />}
-                          </div>
-                        </button>
-                      )
-                    })}
-                  </div>
-
-                  <div className="pt-0.5 text-[7.5px] font-mono text-slate-400 text-center">
-                    Click engine to switch
-                  </div>
-                </div>
-              </div>
-
             </div>
 
           </div>

@@ -9,6 +9,7 @@ import VideoModal from './components/VideoModal'
 import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import FeaturesPage from './pages/FeaturesPage'
+import ContentModelPage from './pages/ContentModelPage'
 import SolutionsPage from './pages/SolutionsPage'
 import HowItWorksPage from './pages/HowItWorksPage'
 import BenefitsPage from './pages/BenefitsPage'
@@ -46,6 +47,10 @@ export default function App() {
             <Route 
               path="/features" 
               element={<FeaturesPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
+            />
+            <Route 
+              path="/content-model" 
+              element={<ContentModelPage onOpenDemoModal={() => setDemoModalOpen(true)} />} 
             />
             <Route 
               path="/solutions" 

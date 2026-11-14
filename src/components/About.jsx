@@ -32,13 +32,13 @@ export default function About({ onOpenDemoModal }) {
         {/* 1. Header (Matching Client Image 1) */}
         <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-14 lg:mb-16 gap-6">
           <div className="max-w-4xl xl:max-w-5xl">
-            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#0284C7] mb-3">
-              <span className="w-5 h-0.5 bg-[#0284C7] inline-block" />
+            <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#14532D] mb-3">
+              <span className="w-5 h-0.5 bg-[#14532D] inline-block" />
               <span>The Case for Change</span>
             </div>
             <h2 className="text-3xl sm:text-5xl font-extrabold text-[#0B192C] tracking-tight leading-tight">
               From document chaos to <br className="hidden sm:inline" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#0284C7] via-[#0D9488] to-[#10B981]">
+              <span className="text-[#14532D]">
                 intelligent information flow
               </span>
             </h2>

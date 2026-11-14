@@ -265,22 +265,34 @@ export default function Footer({ onOpenDemoModal }) {
               </div>
 
               {/* Phone */}
-              <div className="flex items-center gap-3">
+              {/* <div className="flex items-center gap-3">
                 <div className="h-9 w-9 rounded-lg bg-[#F0FDF4] text-[#14532D] border border-emerald-900/10 flex items-center justify-center shrink-0">
                   <Phone className="h-4.5 w-4.5" />
                 </div>
                 <a href="tel:+918065904278" className="text-slate-700 hover:text-[#14532D] transition-colors font-medium text-sm sm:text-base">
                   +91 8065904278
                 </a>
-              </div>
-
-              {/* USA Head Office */}
+              </div> */}
+              {/* Head Office (Canada) */}
               <div className="flex items-start gap-3 pt-1">
                 <div className="h-9 w-9 rounded-lg bg-[#F0FDF4] text-[#14532D] border border-emerald-900/10 flex items-center justify-center shrink-0 mt-0.5">
                   <MapPin className="h-4.5 w-4.5" />
                 </div>
                 <div className="space-y-1">
-                  <span className="font-semibold text-slate-900 text-sm sm:text-base block">USA Head Office · SmartIDP Group Inc.</span>
+                  <span className="font-semibold text-slate-900 text-sm sm:text-base block">Head Office · SmartIDP Group Inc.</span>
+                  <span className="text-slate-600 text-xs sm:text-sm leading-relaxed block">
+                    65 Aura Avenue, Nepean, K2J 6R9, Ontario, Canada
+                  </span>
+                </div>
+              </div>
+
+              {/* USA Office */}
+              <div className="flex items-start gap-3 pt-1">
+                <div className="h-9 w-9 rounded-lg bg-[#F0FDF4] text-[#14532D] border border-emerald-900/10 flex items-center justify-center shrink-0 mt-0.5">
+                  <Building2 className="h-4.5 w-4.5" />
+                </div>
+                <div className="space-y-1">
+                  <span className="font-semibold text-slate-900 text-sm sm:text-base block">USA Office · SmartIDP Group Inc.</span>
                   <span className="text-slate-600 text-xs sm:text-sm leading-relaxed block">
                     5900 Balcones Drive STE 13688, Austin, TX 78731, USA
                   </span>
